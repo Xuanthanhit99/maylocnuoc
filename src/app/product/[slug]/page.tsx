@@ -40,6 +40,22 @@ const productnews = [
     type: "product",
     evaluate: "4",
   },
+  {
+    key: 5,
+    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
+    price: "8.999.999",
+    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
+    type: "accessory",
+    evaluate: "5",
+  },
+  {
+    key: 6,
+    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
+    price: "7.999.999",
+    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
+    type: "product",
+    evaluate: "6",
+  },
 ];
 
 const ProductDetail = (props: any) => {
@@ -502,7 +518,7 @@ const ProductDetail = (props: any) => {
           <hr className="mb-4" />
           <div>
             <div className="w-full grid grid-cols-5 gap-5">
-              {productnews.map((item: any) => {
+              {productnews?.filter(item => item?.key <= 2)?.map((item: any) => {
                 return (
                   <div
                     className={`${item.key > 1 && item.key < 6 ? "mr-1" : ""}`}
@@ -594,6 +610,76 @@ const ProductDetail = (props: any) => {
             {collapseHeight ? <div className="h-56 bottom-0 left-0 right-0 w-full absolute bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500 opacity-25"></div> : ""}
           </div>
             <div className="cursor-pointer w-full h-14 bg-red-500 flex justify-center items-center text-white text-base font-medium bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500 rounded-md" onClick={() => setCollapseHeight(!collapseHeight)}>Thu Gọn</div>
+        </div>
+        <div className="mt-4 bg-white">
+          <div className="p-3 flex justify-start items-center ">
+            <b>SẢN PHẨM TƯƠNG TỰ</b>
+          </div>
+          <hr className="mb-4" />
+          <div>
+            <div className="w-full grid grid-cols-6 gap-6">
+              {productnews?.map((item: any) => {
+                return (
+                  <div
+                    className={`${item.key > 1 && item.key < 6 ? "mr-1" : ""}`}
+                    key={item.key}
+                  >
+                    <Card
+                      hoverable
+                      cover={<img alt="example" src={item?.imgage} />}
+                    >
+                      <div className="mt-1">
+                        <h5 className="text-base font-medium	text-center">
+                          {item?.label}
+                        </h5>
+                        <p className="text-sx font-medium	text-center text-red-500">
+                          <span className="">{item?.price} </span>đ
+                        </p>
+                        <p className="font-medium	text-sx text-center">
+                          Liên hệ
+                        </p>
+                      </div>
+                    </Card>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+        <div className="mt-4 bg-white">
+          <div className="p-3 flex justify-start items-center ">
+            <b>SẢN PHẨM ĐÃ XEM</b>
+          </div>
+          <hr className="mb-4" />
+          <div>
+            <div className="w-full grid grid-cols-6 gap-6">
+              {productnews?.map((item: any) => {
+                return (
+                  <div
+                    className={`${item.key > 1 && item.key < 6 ? "mr-1" : ""}`}
+                    key={item.key}
+                  >
+                    <Card
+                      hoverable
+                      cover={<img alt="example" src={item?.imgage} />}
+                    >
+                      <div className="mt-1">
+                        <h5 className="text-base font-medium	text-center">
+                          {item?.label}
+                        </h5>
+                        <p className="text-sx font-medium	text-center text-red-500">
+                          <span className="">{item?.price} </span>đ
+                        </p>
+                        <p className="font-medium	text-sx text-center">
+                          Liên hệ
+                        </p>
+                      </div>
+                    </Card>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </div>
