@@ -19,28 +19,18 @@ const FloatLabel: FC<Props> = ({
 }) => {
   const [focus, setFocus] = useState(false);
 
+  const labelClass =
+  focus || (value && value.length !== 0) ? "label label-float" : "label !top-0";
+
+
   return (
     <div
-      className={classNames(
-        "relative min-w-[100px] rounded-lg border-ink200 h-14",
-        disabled ? "border-none text-ink300" : "border bg-white",
-        className
-      )}
+      className="float-label"
       onBlur={() => setFocus(false)}
       onFocus={() => setFocus(true)}
-      onClick={() => setFocus(true)}
     >
       {children}
-      <label
-        className={classNames(
-          "absolute left-3 top-1/2 -translate-y-1/2 duration-200 ease-linear select-none pointer-events-none z-[1]",
-          focus || (value && value.length !== 0)
-            ? "top-2 text-xs translate-y-0 text-ink300"
-            : "text-base text-ink400"
-        )}
-      >
-        {label}
-      </label>
+      <label className={labelClass}>{label}</label>
     </div>
   );
 };

@@ -1,21 +1,24 @@
-import { GetServerSideProps } from 'next';
+import { Card, Image } from 'antd';
+import Link from 'next/link';
 
-const index = () => {
-    return (
-        <div>
-            Enter
-        </div>
-    );
+const { Meta } = Card;
+
+type cartType = {
+    label?: string,
+    image?: string,
+    time?: string,
+    url?: string
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-
-
-    return {
-        props:{
-
-        }
-    }
+const index = ({label, image, time, url}:cartType) => {
+    return (
+        <Card
+        hoverable
+        cover={<Image alt="example" src={image} />}
+      >
+        {url ? <Link href={url}><Meta title={label} description={time} /></Link> : <Meta title={label} description={time} />}
+      </Card>
+    );
 }
 
 export default index

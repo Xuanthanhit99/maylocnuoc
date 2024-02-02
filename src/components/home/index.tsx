@@ -47,7 +47,7 @@ const index = ({productnews }:any) => {
           </div>
         </Carousel>
       </div>
-      <div className=" border-[#f4f5f6] py-12">
+      <div className=" border-[#f4f5f6] pb-6 pt-3">
         <div className="flex justify-center">
           <div className="prioritize-arrow--left relative w-3/12"></div>
           <div className="w-6/12 h-14 text-white flex justify-center items-center text-xl font-medium bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500">

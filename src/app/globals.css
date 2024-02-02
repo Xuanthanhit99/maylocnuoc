@@ -20,6 +20,7 @@ body {
   color: rgb(var(--foreground-rgb));
   background: white;
   width: 100%;
+  height: 100vh;
 }
 
 .prioritize-arrow--left::before{
@@ -45,4 +46,43 @@ body {
   border-bottom: 28px solid transparent;
   border-right: 28px solid white;
 }
+
+/* Force update ant style */
+.ant-input {
+  padding: 16px 12px 4px 11px;
+}
+
+.ant-select .ant-select-selector {
+  padding: 16px 10px 4px 11px;
+}
+
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  padding: 16px 10px 4px 11px;
+  height: 48px;
+}
+
+.ant-select-single .ant-select-selector .ant-select-selection-search {
+  top: 16px;
+}
+
+.float-label {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 12px;
+  top: 12px;
+  transition: 0.2s ease all;
+}
+
+.label-float {
+  top: 6px;
+  font-size: 10px;
+}
+
 

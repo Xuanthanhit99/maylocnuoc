@@ -1,6 +1,5 @@
 import { DatePicker } from "antd";
 import classNames from "classnames";
-import { DEFAULT_DATE_FORMAT } from "constants/const";
 import moment from "moment";
 import React from "react";
 import { FC } from "react";
@@ -34,7 +33,7 @@ const CustomDatePicker: FC<Props> = ({
 }) => {
   const valueToMoment = value
     ? typeof value === "string"
-      ? moment(value, format || DEFAULT_DATE_FORMAT)
+      ? moment(value, format || "DD/MM/YYYY")
       : value
     : undefined;
 
@@ -45,8 +44,8 @@ const CustomDatePicker: FC<Props> = ({
         value
           ? typeof value === "string"
             ? value
-            : moment(value, format || DEFAULT_DATE_FORMAT).format(
-                format || DEFAULT_DATE_FORMAT
+            : moment(value, format || "DD/MM/YYYY").format(
+                format || "DD/MM/YYYY"
               )
           : ""
       }
@@ -55,9 +54,9 @@ const CustomDatePicker: FC<Props> = ({
       <DatePicker
         name={name}
         //suffixIcon={deleteIcon}
-        defaultValue={valueToMoment}
-        value={valueToMoment}
-        format={format || DEFAULT_DATE_FORMAT}
+        // defaultValue={valueToMoment}
+        // value={valueToMoment}
+        format={format || "DD/MM/YYYY"}
         className={classNames(
           "border-none bg-transparent outline-none h-full pt-[22px] pb-0 w-full rounded-lg",
           className

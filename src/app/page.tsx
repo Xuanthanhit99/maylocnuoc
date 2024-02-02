@@ -125,13 +125,13 @@ export default function Home() {
   };
   return (
     <div>
-      <input
+      {/* <input
         type="file"
         id="avatar"
         name="avatar"
         accept="image/*"
         onChange={(e) => covertToBase64(e)}
-      />
+      /> */}
       <HomeComponentComponent productnews={productnews} />
     </div>
   );
