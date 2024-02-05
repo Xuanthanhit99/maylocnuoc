@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "cross-env NODE_ENV=production node server.ts",
     "lint": "next lint",
-    "type": "module",
-    "output": "export"
+    "type": "module"
   },
   "dependencies": {
     "@types/react": "18.2.45",
