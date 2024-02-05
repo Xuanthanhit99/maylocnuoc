@@ -8,7 +8,7 @@
     "start": "cross-env NODE_ENV=production node server.ts",
     "lint": "next lint",
     "type": "module",
-    "export": "next export"
+    "output": "export"
   },
   "dependencies": {
     "@types/react": "18.2.45",
