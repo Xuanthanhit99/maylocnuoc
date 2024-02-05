@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import { Breadcrumb, Button, Card, Checkbox, Col, Row } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
