@@ -119,7 +119,8 @@ const ProductDetail = (props: any) => {
     },
   ];
 
-  const paramSlug = props?.params.slug;
+  // const paramSlug = props?.params.slug;
+  const paramSlug = "may-loc-nuoc-nong-lanh-karofi-kad-d66"
 
   return (
     <div className="flex justify-center bg-[#f3f3f3]">
