@@ -1,18 +1,31 @@
+import mongoose from 'mongoose';
 import MongoClient, { ConnectOptions } from 'mongoose'
 
 // const mongoose = require('mongoose')
 // const config = require('config')
 // const db = config.get('mongoURI')
-const uri = "mongodb+srv://thanhdx:Xuanthanh1909@maylocnuocdungduyen.qdggd9x.mongodb.net/";
+// const uri = "mongodb+srv://thanhdx:Xuanthanh1909@maylocnuocdungduyen.qdggd9x.mongodb.net/";
+const uri = "mongodb+srv://poppypos:Xuanthanh1909@maylocnuocdungduyen.4c7fdgs.mongodb.net/";
+let isConnected = false;
+
 
 export const connectDB = async () => {
+  mongoose.set("strictQuery", true);
+
+  if(isConnected) {
+    console.log('MongoDB is already connected');
+    return
+  }
   try {
     await MongoClient.connect(uri, {
+      dbName: "maylocnuoctiendung",
     //   useCreateIndex: true,
       useNewUrlParser: true,
       useUnifiedTopology: true,
-    //   useFindAndModify: false
+      // useFindAndModify: false
     } as ConnectOptions)
+
+    isConnected = true;
 
     console.log('Da ket noi co so du lieu')
   } catch (error: any) {
