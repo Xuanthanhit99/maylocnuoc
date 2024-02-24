@@ -1,24 +1,29 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 export default function index(props: any) {
   console.log("props", props);
     const itemsMenu = [
         {
           label: "Trang chủ",
           key: "home",
+          url: "/"
         },
         {
           label: "Sản phẩm",
           key: "product",
+          url: "/product"
         },
         {
           label: "Dịch vụ",
           key: "service",
+          url: "/service"
         },
         {
           label: "Tin tức",
           key: "news",
+          url: "/news"
         },
       ];
     return (
@@ -50,14 +55,14 @@ export default function index(props: any) {
         <div className="w-full flex justify-center bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500">
         <div className="w-9/12 flex">
           <div className="w-3/12 flex justify-center">
-            <img src="/image/home/logo.png" alt="" />
+            <Link href={"/"}><img src="/image/home/logo.png" alt="" /></Link>
           </div>
           <div className="w-9/12">
             <ul className="flex justify-center">
               {itemsMenu?.map((items) => {
                 return (
-                  <li key={items?.key} className="p-4 cursor-pointer">
-                    {items?.label}
+                  <li key={items?.key} className="cursor-pointer flex justify-center items-center">
+                    <Link href={items?.url || ""} className="p-4 ">{items?.label}</Link>
                   </li>
                 );
               })}

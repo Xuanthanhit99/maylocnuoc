@@ -1,3 +1,4 @@
+'use client'
 import { Input } from "antd";
 import classNames from "classnames";
 import React, { useState } from "react";
@@ -40,7 +41,7 @@ const CustomInput: FC<Props> = ({
   const [isTextSearch, setIsTextSearch] = useState(false);
   return (
     <>
-      <FloatLabel
+      {/* <FloatLabel
         label={label}
         value={value}
         disabled={props.disabled}
@@ -49,12 +50,17 @@ const CustomInput: FC<Props> = ({
             ? "border-x border-y border-red_500"
             : "border-ink200"
         } form-item-float-label flex-1 ${props.disabled ? "text-ink300" : ""}`}
-      >
+      > */}
+        <FloatLabel label={label} value={value} className={`${
+          invalid === true
+            ? "border-x border-y border-red_500"
+            : "border-ink200"
+        } form-item-float-label flex-1 ${props.disabled ? "text-ink300" : ""}`}>
         <Input
           name={name}
           value={value}
           className={classNames(
-            "border-none bg-transparent outline-none h-full pt-[30px] pb-0 rounded-lg max-h-full pl-3 ",
+            "border bg-transparent outline-none h-full pt-[30px] pb-0 rounded-lg max-h-full pl-3 ",
             className,
             props.disabled ? "text-ink300" : "",
             label == "Tìm kiếm" ? "relative" : ""

@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
     async headers() {
         return [
           {
@@ -14,6 +15,12 @@ const nextConfig = {
           },
         ];
       },
+      images: {
+        loader: 'akamai',
+        path: '',
+        unoptimized: true 
+      },
+      assetPrefix: './',
 }
 
 module.exports = nextConfig
