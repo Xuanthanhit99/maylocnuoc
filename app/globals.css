@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: white;
+  width: 100%;
+  height: 100vh;
+}
+
+.prioritize-arrow--left::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -28px;
+  width: 0; 
+  height: 0; 
+  border-top: 28px solid transparent;
+  border-bottom: 28px solid transparent;
+  border-left: 28px solid white;
+}
+
+.prioritize-arrow--right::after{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -28px;
+  width: 0; 
+  height: 0; 
+  border-top: 28px solid transparent;
+  border-bottom: 28px solid transparent;
+  border-right: 28px solid white;
+}
+
+/* Force update ant style */
+.ant-input {
+  padding: 16px 12px 4px 11px;
+}
+
+.ant-select .ant-select-selector {
+  padding: 16px 10px 4px 11px;
+}
+
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  padding: 16px 10px 4px 11px;
+  height: 48px;
+}
+
+.ant-select-single .ant-select-selector .ant-select-selection-search {
+  top: 16px;
+}
+
+.float-label {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 12px;
+  top: 12px;
+  transition: 0.2s ease all;
+}
+
+.label-float {
+  top: 6px;
+  font-size: 10px;
+}
+
+
