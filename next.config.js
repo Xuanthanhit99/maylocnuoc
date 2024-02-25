@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
     async headers() {
         return [
           {
@@ -15,10 +14,22 @@ const nextConfig = {
           },
         ];
       },
+      experimental: {
+        appDir: true,
+        serverComponentsExternalPackages: ["mongoose"],
+      },
       images: {
+        domains: ['lh3.googleusercontent.com'],
         loader: 'akamai',
         path: '',
         unoptimized: true 
+      },
+      webpack(config) {
+        config.experiments = {
+          ...config.experiments,
+          topLevelAwait: true,
+        }
+        return config
       },
       assetPrefix: './',
 }

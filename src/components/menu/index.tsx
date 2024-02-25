@@ -2,8 +2,23 @@
 
 import Image from "next/image";
 import Link from "next/link";
-export default function index(props: any) {
-  console.log("props", props);
+import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { useEffect, useState } from "react";
+
+const Menu = (props: any) => {
+  const { data: session } = useSession<any>();
+
+  const [providers, setProviders] = useState<any>(null);
+  const [toggleDropdown, setToggleDropdown] = useState<any>(false);
+
+  useEffect(() => {
+    (async () => {
+      const res = await getProviders();
+      console.log("res", res);
+      setProviders(res);
+    })();
+  }, []);
+
     const itemsMenu = [
         {
           label: "Trang chủ",
@@ -25,7 +40,14 @@ export default function index(props: any) {
           key: "news",
           url: "/news"
         },
+        {
+          label: "signin",
+          key: "news",
+          url: ""
+        },
       ];
+
+      console.log("providers", providers ? "1" : "2");
     return (
       <>
       <div className="min-h-12 flex justify-center flex-col border-b border-solid border-[#f4f5f6] items-center">
@@ -62,7 +84,30 @@ export default function index(props: any) {
               {itemsMenu?.map((items) => {
                 return (
                   <li key={items?.key} className="cursor-pointer flex justify-center items-center">
-                    <Link href={items?.url || ""} className="p-4 ">{items?.label}</Link>
+                    {items?.label !== "signin" && <Link href={items?.url || ""} className="p-4 ">{items?.label}</Link>}
+                    {items?.label === "signin" && <button
+                  type='button'
+                  onClick={() => {
+                    signIn();
+                  }}
+                  className='black_btn'
+                >
+                  Sign in
+                </button>
+                    // providers &&
+              // Object.values(providers).map((provider :any) => (
+              //   <button
+              //     type='button'
+              //     key={provider?.name}
+              //     onClick={() => {
+              //       signIn(provider?.id);
+              //     }}
+              //     className='black_btn'
+              //   >
+              //     Sign in
+              //   </button>
+              // ))
+              }
                   </li>
                 );
               })}
@@ -73,3 +118,5 @@ export default function index(props: any) {
       </>
     );
 }
+
+export default Menu;
