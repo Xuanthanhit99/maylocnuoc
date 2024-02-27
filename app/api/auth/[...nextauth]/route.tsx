@@ -1,7 +1,8 @@
 import NextAuth from "next-auth"
 import GoogleProvider from 'next-auth/providers/google';
 import { connectDB } from "../../../../backend/config/db";
-import User from "../../../../backend/models/UserModel";
+import User from "../../../../models/UserModel";
+// import User from "../../../../models/UserModel";
 // import { connectDB } from "../../../../../backend/config/db";
 // import User from "../../../../../backend/models/UserModel";
 
@@ -18,10 +19,9 @@ const hanlder = NextAuth({
 
   callbacks: {
       async session({session}: any) {
-        const sessionUser = await User.findOne({email: session.email});
-
-        sessionUser.user.id = session._id.toString();
-
+        const sessionUser = await User.findOne({email: session.user.email});
+        console.log("first123", sessionUser);
+        session.user.id = sessionUser?._id?.toString();
         return session;
       },
 
@@ -29,10 +29,10 @@ const hanlder = NextAuth({
         try {
           await connectDB();
           console.log("1")
-          const UserExits = User.findOne({email: profile?.email});
-          console.log("2")
+          const UserExits = User.findOne({email: profile.email});
+          console.log("2", profile)
           if(!UserExits) {
-            console.log("2")
+            console.log("3")
             await User.create({
               email: profile?.email,
               username: profile?.name?.replace(" ", "").toLowerCase(),

@@ -1,5 +1,5 @@
 import { GridFsStorage } from 'multer-gridfs-storage'
-import ProductModel from '../models/ProductModel'
+import ProductModel from '../../models/ProductModel'
 import multer from 'multer';
 
 export const getApiProduct = async (req: any,res: any) => {

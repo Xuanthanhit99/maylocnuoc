@@ -1,13 +1,13 @@
 import './globals.css'
 // import { Inter } from 'next/font/google'
-import MenuComponentComponent from '../components/menu/index'
-import FooterComponent from '../components/footer/index'
-import SocialSupport from '../components/menu-chat/index'
+import MenuComponentComponent from '../src/components/menu/index'
+import FooterComponent from '../src/components/footer/index'
+import SocialSupport from '../src/components/menu-chat/index'
 import CustomInput from '@/components/FormItemFloatLabel/CustomInput'
 import CustomTextArea from '@/components/FormItemFloatLabel/CustomTextArea'
 import { Button } from 'antd'
 import { useState } from 'react'
-import Provider from '../components/Provider/Provider'
+import Provider from '../src/components/Provider/Provider'
 // import Provider from '@/components/Provider/Provider'
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -27,7 +27,7 @@ export default function RootLayout({
       <Provider>
       <MenuComponentComponent />
         {children}
-        <div className='fixed bottom-2/4 right-10'><SocialSupport /></div>
+        <div className='fixed bottom-[50%] left-10'><SocialSupport /></div>
       <FooterComponent />
       </Provider>
       </body>

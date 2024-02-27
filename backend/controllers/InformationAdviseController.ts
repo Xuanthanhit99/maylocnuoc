@@ -1,5 +1,5 @@
 import { GridFsStorage } from 'multer-gridfs-storage'
-import InformationAdviseModel from '../models/InformationAdviseModel'
+import InformationAdviseModel from '../../models/InformationAdviseModel'
 import multer from 'multer';
 
 

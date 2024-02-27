@@ -57,7 +57,7 @@ const index = ({productnews }:any) => {
         </div>
         <div className="flex justify-center">
           <div className="flex w-10/12 justify-center mt-3">
-            <div className="w-full grid grid-cols-6 gap-6">
+            <div className="w-full grid grid-cols-1 gap-1 lg:grid-cols-4 lg:gap-4 sm:grid-cols-1 sm:gap-1 md:grid-cols-2 md:gap-2 xl:grid-cols-6 xl:gap-6">
               {productnews.map((item: any) => {
                 return (
                   item.key >= 1 &&

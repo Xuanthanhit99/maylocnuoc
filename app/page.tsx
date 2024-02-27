@@ -1,7 +1,7 @@
 "use client";
 import { Button, type MenuProps } from "antd";
 import { useEffect, useState } from "react";
-import HomeComponentComponent from "../components/home/index";
+import HomeComponentComponent from "../src/components/home/index";
 import axios from "axios";
 import { error } from "console";
 import { uuid } from "uuidv4";
@@ -87,7 +87,6 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       const getData = await axios.get("/api/getApiProduct")
-      console.log("getData", getData);
     };
     fetchData();
   }, [imageValue]);
