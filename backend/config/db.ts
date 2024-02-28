@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import MongoClient, { ConnectOptions } from 'mongoose'
 
-const uri = "mongodb+srv://thanhdx:Xuanthanh1909@maylocnuocdungduyen.qdggd9x.mongodb.net/";
-// const uri = "mongodb+srv://poppypos:Xuanthanh1909@maylocnuocdungduyen.4c7fdgs.mongodb.net/";
+// const uri = "mongodb+srv://thanhdx:Xuanthanh1909@maylocnuocdungduyen.qdggd9x.mongodb.net/";
+const uri = "mongodb+srv://poppypos:Xuanthanh1909@maylocnuocdungduyen.4c7fdgs.mongodb.net/";
 let isConnected = false;
 
 

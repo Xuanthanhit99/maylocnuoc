@@ -6,7 +6,7 @@ import { getProviders, signIn } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Loading from "../Loading/Loading";
 
 interface TypeSignin {
@@ -36,6 +36,9 @@ const Signin = ({ type }: TypeSignin) => {
     })();
   }, []);
 
+    const searchParams = useSearchParams();
+
+
   const postCreateUser = async () => {
     setIsLoadding(true);
     try {
@@ -56,6 +59,19 @@ const Signin = ({ type }: TypeSignin) => {
     }
   };
 
+
+  const btnClickSignup = async () => {
+    try {
+      const fetchApi = await axios.post("/api/user/register", {
+        username: informationTextNameLogin,
+        email: informationTextNameEmail,
+        password: informationTextPassword,
+      })
+      console.log("fetchApi", fetchApi);
+    } catch (error) {
+      
+    }
+  }
   return (
     <div>
       <div className="flex flex-col items-center justify-center h-full">
@@ -151,7 +167,7 @@ const Signin = ({ type }: TypeSignin) => {
             {type === "register" && (
               <div className="">
                 <div
-                  onClick={() => postCreateUser()}
+                  onClick={() => btnClickSignup()}
                   className="h-14 my-3 flex cursor-pointer text-white justify-center items-center bg-blue-500 rounded-xl shadow-xl border"
                 >
                   Đăng kí tài khoản
