@@ -23,12 +23,14 @@ export default function RootLayout({
 }) {
    return (
     <html lang="en">
-      <body className="relative">
+      <body>
       <Provider>
+        <div className="relative h-full">
       <MenuComponentComponent />
         {children}
         <div className='fixed bottom-[50%] left-10'><SocialSupport /></div>
       <FooterComponent />
+      </div>
       </Provider>
       </body>
     </html>

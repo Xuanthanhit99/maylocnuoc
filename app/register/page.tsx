@@ -5,7 +5,7 @@ const page = () => {
   return (
     <div>
       <div className="flex justify-center">
-            <SigninComponent type='signin'/>
+            <SigninComponent type='register'/>
       </div>
     </div>
   )

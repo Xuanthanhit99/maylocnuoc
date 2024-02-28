@@ -28,16 +28,14 @@ const hanlder = NextAuth({
       async signIn({ account, profile, user, credentials } : any){
         try {
           await connectDB();
-          console.log("1")
           const UserExits = User.findOne({email: profile.email});
-          console.log("2", profile)
           if(!UserExits) {
-            console.log("3")
-            await User.create({
+            const createGoogle = await User.create({
               email: profile?.email,
               username: profile?.name?.replace(" ", "").toLowerCase(),
               image: profile?.picture,
             })
+            await createGoogle.save()
           }
 
           return true

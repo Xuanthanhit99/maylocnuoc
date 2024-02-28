@@ -163,13 +163,11 @@ const Menu = (props: any) => {
                     key={items?.key}
                     className="cursor-pointer flex justify-center items-center"
                   >
-                    {items?.label !== "signin" && (
                       <Link href={items?.url || ""} className="p-4 ">
                         {items?.label}
                       </Link>
-                    )}
 
-                    {items?.label === "signin" &&
+                    {/* {items?.label === "signin" &&
                       providers &&
                       Object.values(providers).map((provider: any) => (
                         <button
@@ -182,7 +180,7 @@ const Menu = (props: any) => {
                         >
                           Sign in 
                         </button>
-                      ))}
+                      ))} */}
                   </li>
                 );
               })}
