@@ -150,12 +150,12 @@ const Menu = (props: any) => {
           </div>
         </div>
       </div>
-      <div className="w-full flex justify-center bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500">
+      <div className="w-full flex justify-center bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500 ">
         <div className="w-9/12 flex">
           <div className="w-3/12 flex justify-center">
             {/* <Link href={"/"}><img src="/image/home/logo.png" alt="" /></Link> */}
           </div>
-          <div className="w-9/12">
+          <div className="w-9/12 lg:block sm:hidden md:hidden xl:block"> 
             <ul className="flex justify-center">
               {itemsMenu?.map((items) => {
                 return (
@@ -166,21 +166,6 @@ const Menu = (props: any) => {
                       <Link href={items?.url || ""} className="p-4 ">
                         {items?.label}
                       </Link>
-
-                    {/* {items?.label === "signin" &&
-                      providers &&
-                      Object.values(providers).map((provider: any) => (
-                        <button
-                          type="button"
-                          key={provider.name}
-                          onClick={() => {
-                            signIn(provider.id);
-                          }}
-                          className="black_btn"
-                        >
-                          Sign in 
-                        </button>
-                      ))} */}
                   </li>
                 );
               })}

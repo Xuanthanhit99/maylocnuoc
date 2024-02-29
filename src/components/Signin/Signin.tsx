@@ -8,6 +8,7 @@ import Image from "next/image";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import Loading from "../Loading/Loading";
+import { AuthContextDefault } from "../../../app/context/AuthContext";
 
 interface TypeSignin {
   type: string;
@@ -26,7 +27,7 @@ const Signin = ({ type }: TypeSignin) => {
     setInformationTextAgainPassRegister,
   ] = useState<string>();
   const [isLoadding, setIsLoadding] = useState<boolean>(false);
-
+  const {Login} = AuthContextDefault()
   const router = useRouter();
 
   useEffect(() => {
@@ -59,19 +60,6 @@ const Signin = ({ type }: TypeSignin) => {
     }
   };
 
-
-  const btnClickSignup = async () => {
-    try {
-      const fetchApi = await axios.post("/api/user/register", {
-        username: informationTextNameLogin,
-        email: informationTextNameEmail,
-        password: informationTextPassword,
-      })
-      console.log("fetchApi", fetchApi);
-    } catch (error) {
-      
-    }
-  }
   return (
     <div>
       <div className="flex flex-col items-center justify-center h-full">
@@ -167,7 +155,11 @@ const Signin = ({ type }: TypeSignin) => {
             {type === "register" && (
               <div className="">
                 <div
-                  onClick={() => btnClickSignup()}
+                  onClick={() => Login({
+        username: informationTextNameLogin,
+        email: informationTextNameEmail,
+        password: informationTextPassword,
+      })}
                   className="h-14 my-3 flex cursor-pointer text-white justify-center items-center bg-blue-500 rounded-xl shadow-xl border"
                 >
                   Đăng kí tài khoản
