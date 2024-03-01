@@ -5,6 +5,12 @@ import Link from "next/link";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import { useEffect, useState } from "react";
 
+type typeUserGoogle = {
+  email: string,
+  image: string,
+  name: string,
+}
+
 const Menu = (props: any) => {
   const { data: session } = useSession<any>();
   console.log("session", session);
@@ -12,6 +18,7 @@ const Menu = (props: any) => {
   const [toggleDropdown, setToggleDropdown] = useState<any>(false);
   const [isMenuMobile, setIsMenuMobile] = useState<any>(false);
   const [isMenuLeft, setIsMenuLeft] = useState<any>(false);
+  const [userGoogle, setUserGoogle] = useState<typeUserGoogle>();
 
   useEffect(() => {
     (async () => {
@@ -19,6 +26,12 @@ const Menu = (props: any) => {
       setProviders(res);
     })();
   }, []);
+
+  useEffect(() => {
+    if(session) {
+      // setUserGoogle(session.user)
+    }
+  }, [session])
 
   const itemsMenu = [
     {
@@ -89,9 +102,9 @@ const Menu = (props: any) => {
                   <li className="p-3 border-b cursor-pointer hover:bg-slate-400 hover:text-slate-900">
                     <Link href={"/product"}>Dịch vụ</Link>
                   </li>
-                  <li className="p-3 rounded-b-lg cursor-pointer hover:bg-slate-400 hover:text-slate-900">
+                  {session && <li className="p-3 rounded-b-lg cursor-pointer hover:bg-slate-400 hover:text-slate-900">
                   <Link href={"/signin"}>sign In</Link>
-                  </li>
+                  </li>}
                 </ul>
               </div>
             </div>

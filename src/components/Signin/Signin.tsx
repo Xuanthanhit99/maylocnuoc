@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import CustomInput from "../FormItemFloatLabel/CustomInput";
-import { getProviders, signIn } from "next-auth/react";
+import { getProviders, signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
@@ -15,6 +15,7 @@ interface TypeSignin {
 }
 
 const Signin = ({ type }: TypeSignin) => {
+  const { data: session } = useSession<any>();
   const [providers, setProviders] = useState<any>(null);
   const [informationTextNameLogin, setInformationTextNameLogin] =
     useState<string>();
@@ -36,6 +37,14 @@ const Signin = ({ type }: TypeSignin) => {
       setProviders(res);
     })();
   }, []);
+
+  useEffect(() => {
+    if(session) {
+      router.push("/")
+    } else {
+      router.push("/signin")
+    }
+  }, [session]) 
 
     const searchParams = useSearchParams();
 

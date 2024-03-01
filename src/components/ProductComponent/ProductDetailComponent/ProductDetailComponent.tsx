@@ -57,7 +57,7 @@ const productnews = [
   },
 ];
 
-const ProductDetailComponent = (props: any) => {
+const ProductDetailComponent = ({paramSlug}: any) => {
   const [collapseHeight, setCollapseHeight] = useState(true)
   const detailProduct = [
     {
@@ -119,7 +119,7 @@ const ProductDetailComponent = (props: any) => {
   ];
 
 //   const paramSlug = props?.params.slug;
-  const paramSlug = "";
+  // const paramSlug = "";
   return (
     <div className="flex justify-center bg-[#f3f3f3]">
       <div className="w-9/12">

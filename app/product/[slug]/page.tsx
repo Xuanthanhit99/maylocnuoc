@@ -119,10 +119,10 @@ const ProductDetail = (props: any) => {
   //   },
   // ];
 
-  // const paramSlug = props?.params.slug;
+  const paramSlug = props?.params.slug;
 
   return (
-    <ProductDetailComponent/>
+    <ProductDetailComponent paramSlug={paramSlug}/>
   );
 };
 
