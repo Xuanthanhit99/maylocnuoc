@@ -1,6 +1,6 @@
 import express from "express";
 import {getApiProduct, postApiProduct} from "../controllers/ProductController"
-import multer from "multer";
+// import multer from "multer";
 // import { GridFsStorage } from "multer-gridfs-storage";
 
 export const ApiProductRouter = express.Router()

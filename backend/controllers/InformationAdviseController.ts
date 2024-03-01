@@ -1,6 +1,6 @@
-import { GridFsStorage } from 'multer-gridfs-storage'
+// import { GridFsStorage } from 'multer-gridfs-storage'
 import InformationAdviseModel from '../../models/InformationAdviseModel'
-import multer from 'multer';
+// import multer from 'multer';
 
 
 export const postApiInformationAdvise  = async (req: any, res: any) => {

@@ -1,6 +1,6 @@
-import { GridFsStorage } from 'multer-gridfs-storage'
+// import { GridFsStorage } from 'multer-gridfs-storage'
 import UserModel from '../../models/UserModel'
-import multer from 'multer';
+// import multer from 'multer';
 
 export const createUserApi  = async (req: any, res: any) => {
      console.log(req);
