@@ -41,7 +41,7 @@ const index = ({productnews }:any) => {
       <div className=" border-[#f4f5f6] pb-6 pt-3">
         <div className="flex justify-center">
           <div className="prioritize-arrow--left relative w-3/12"></div>
-          <div className="lg:text-lg sm:text-sm md:text-md xl:text-xl w-6/12 h-14 text-white flex justify-center items-center text-xl font-medium bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500">
+          <div className="bg-[url('/image/home/bg-title-free.png')] lg:text-lg sm:text-sm md:text-md xl:text-xl w-6/12 h-14 text-white flex justify-center items-center text-xl font-medium ">
             Sản phẩm máy lọc nước được khách hàng quan tâm tại cửa hàng
           </div>
           <div className="prioritize-arrow--right relative w-3/12"></div>
@@ -50,25 +50,25 @@ const index = ({productnews }:any) => {
       </div>
       <hr className="my-4" />
       <div className="flex flex-col items-center justify-center">
-        <div className="flex w-10/12 border-y">
-          <div className="w-4/12 h-14 text-white flex justify-center items-center text-xl font-medium bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500">
-            <span className="">Lõi lọc nước và linh kiện</span>
+        <div className="flex w-10/12">
+          <div className="w-full h-14 text-white flex justify-start border-b border-[#00a2e9]  items-center text-xl font-medium bg-[url('/image/home/bg-title-product.png')] bg-no-repeat bg-contain">
+              <span className="">Lõi lọc nước và linh kiện</span>
           </div>
-          <div className="prioritize-arrow--right relative w-6/12 justify-start flex items-center ">
+          {/* <div className="prioritize-arrow--right relative w-6/12 justify-start flex items-center ">
             <Input defaultValue="Tìm kiếm sản phẩm" className="w-6/12" />
-          </div>
+          </div> */}
         </div>
         <ListProduct valueproduct={productnews}/>
       </div>
       <hr className="my-4" />
       <div className="flex flex-col items-center justify-center">
         <div className="flex w-10/12 border-y">
-          <div className="w-4/12 h-14 text-white flex justify-center items-center text-xl font-medium bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500">
+          <div className="w-full h-14 text-white flex justify-center items-center text-xl font-medium bg-[url('/image/home/bg-title-product.png')] bg-no-repeat bg-contain">
             <span className="">Lõi lọc nước và linh kiện</span>
           </div>
-          <div className="prioritize-arrow--right relative w-6/12 justify-start flex items-center ">
+          {/* <div className="prioritize-arrow--right relative w-6/12 justify-start flex items-center ">
             <Input defaultValue="Tìm kiếm sản phẩm" className="w-6/12" />
-          </div>
+          </div> */}
         </div>
         <ListProduct valueproduct={productnews}/>
       </div>
