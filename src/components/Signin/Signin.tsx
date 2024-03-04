@@ -28,7 +28,7 @@ const Signin = ({ type }: TypeSignin) => {
     setInformationTextAgainPassRegister,
   ] = useState<string>();
   const [isLoadding, setIsLoadding] = useState<boolean>(false);
-  const {Login} = AuthContextDefault()
+  const {Register, Login} = AuthContextDefault()
   const router = useRouter();
 
   useEffect(() => {
@@ -38,13 +38,13 @@ const Signin = ({ type }: TypeSignin) => {
     })();
   }, []);
 
-  useEffect(() => {
-    if(session) {
-      router.push("/")
-    } else {
-      router.push("/signin")
-    }
-  }, [session]) 
+  // useEffect(() => {
+  //   if(session) {
+  //     router.push("/")
+  //   } else {
+  //     router.push("/signin")
+  //   }
+  // }, [session]) 
 
     const searchParams = useSearchParams();
 
@@ -84,7 +84,7 @@ const Signin = ({ type }: TypeSignin) => {
                   label=""
                   name="name-login"
                   onChange={(e) =>
-                    setInformationTextNameLogin(e?.target?.value)
+                    setInformationTextNameEmail(e?.target?.value)
                   }
                 />
               </div>
@@ -93,9 +93,9 @@ const Signin = ({ type }: TypeSignin) => {
                   <div>Email</div>
                   <CustomInput
                     label=""
-                    name="name-email"
+                    name="name-login"
                     onChange={(e) =>
-                      setInformationTextNameEmail(e?.target?.value)
+                      setInformationTextNameLogin(e?.target?.value)
                     }
                   />
                 </div>
@@ -125,7 +125,10 @@ const Signin = ({ type }: TypeSignin) => {
               <div>
                 <div>Quên mật khẩu</div>
                 <div className="">
-                  <div className="h-14 my-3 flex cursor-pointer text-white justify-center items-center bg-blue-500 rounded-xl shadow-xl border">
+                  <div onClick={() => Login({
+        email: informationTextNameEmail,
+        password: informationTextPassword,
+      })} className="h-14 my-3 flex cursor-pointer text-white justify-center items-center bg-blue-500 rounded-xl shadow-xl border">
                     Đăng nhập
                   </div>
                   <div className="h-14 font-sans flex my-3 cursor-pointer text-white justify-center items-center bg-[#ff0000] rounded-xl shadow-xl border">
@@ -164,7 +167,7 @@ const Signin = ({ type }: TypeSignin) => {
             {type === "register" && (
               <div className="">
                 <div
-                  onClick={() => Login({
+                  onClick={() => Register({
         username: informationTextNameLogin,
         email: informationTextNameEmail,
         password: informationTextPassword,

@@ -90,4 +90,10 @@ body {
   right: 40px;
 }
 
+.shopping-cart--children {
+  display: none;
+}
 
+.shopping-cart:hover .shopping-cart--children {
+  display: block;
+}

@@ -4,22 +4,24 @@ import Image from "next/image";
 import Link from "next/link";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import { useEffect, useState } from "react";
+import CustomInput from "../FormItemFloatLabel/CustomInput";
+import { AuthContextDefault } from "../../../app/context/AuthContext";
 
 type typeUserGoogle = {
-  email: string,
-  image: string,
-  name: string,
-}
+  email: string;
+  image: string;
+  name: string;
+};
 
 const Menu = (props: any) => {
   const { data: session } = useSession<any>();
-  console.log("session", session);
   const [providers, setProviders] = useState<any>(null);
   const [toggleDropdown, setToggleDropdown] = useState<any>(false);
   const [isMenuMobile, setIsMenuMobile] = useState<any>(false);
   const [isMenuLeft, setIsMenuLeft] = useState<any>(false);
   const [userGoogle, setUserGoogle] = useState<typeUserGoogle>();
-
+  const {user} = AuthContextDefault()
+  console.log("user", user);
   useEffect(() => {
     (async () => {
       const res = await getProviders();
@@ -28,10 +30,10 @@ const Menu = (props: any) => {
   }, []);
 
   useEffect(() => {
-    if(session) {
+    if (session) {
       // setUserGoogle(session.user)
     }
-  }, [session])
+  }, [session]);
 
   const itemsMenu = [
     {
@@ -75,17 +77,24 @@ const Menu = (props: any) => {
                   onClick={() => setIsMenuLeft(true)}
                 />
               </div>
-              <div className={`${isMenuLeft ? "block" : "hidden"} absolute top-0 right-0 z-30 w-full flex h-full`}>
-                <div className="w-1/3 bg-slate-700 opacity-20" onClick={() => setIsMenuLeft(false)}></div>
+              <div
+                className={`${
+                  isMenuLeft ? "block" : "hidden"
+                } absolute top-0 right-0 z-30 w-full flex h-full`}
+              >
+                <div
+                  className="w-1/3 bg-slate-700 opacity-20"
+                  onClick={() => setIsMenuLeft(false)}
+                ></div>
                 <ul className="flex flex-col w-2/3 h-full bg-slate-700 text-white">
-                <li className="p-3 cursor-pointer border-b flex justify-end items-end bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500">
-                  <Image
-                    src={"/image/icon-support/x.png"}
-                    alt=""
-                    width={22}
-                    height={22}
-                    onClick={() => setIsMenuLeft(false)}
-                  />
+                  <li className="p-3 cursor-pointer border-b flex justify-end items-end bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500">
+                    <Image
+                      src={"/image/icon-support/x.png"}
+                      alt=""
+                      width={22}
+                      height={22}
+                      onClick={() => setIsMenuLeft(false)}
+                    />
                   </li>
                   <li className="p-3 border-b cursor-pointer hover:bg-slate-400 hover:text-slate-900">
                     <Link href={"/"}>Trang chủ</Link>
@@ -102,9 +111,11 @@ const Menu = (props: any) => {
                   <li className="p-3 border-b cursor-pointer hover:bg-slate-400 hover:text-slate-900">
                     <Link href={"/product"}>Dịch vụ</Link>
                   </li>
-                  {session && <li className="p-3 rounded-b-lg cursor-pointer hover:bg-slate-400 hover:text-slate-900">
-                  <Link href={"/signin"}>sign In</Link>
-                  </li>}
+                  {session && (
+                    <li className="p-3 rounded-b-lg cursor-pointer hover:bg-slate-400 hover:text-slate-900">
+                      <Link href={"/signin"}>sign In</Link>
+                    </li>
+                  )}
                 </ul>
               </div>
             </div>
@@ -168,7 +179,7 @@ const Menu = (props: any) => {
           <div className="w-3/12 flex justify-center">
             {/* <Link href={"/"}><img src="/image/home/logo.png" alt="" /></Link> */}
           </div>
-          <div className="w-9/12 lg:block sm:hidden md:hidden xl:block"> 
+          <div className="w-9/12 lg:block sm:hidden md:hidden xl:block">
             <ul className="flex justify-center">
               {itemsMenu?.map((items) => {
                 return (
@@ -176,13 +187,76 @@ const Menu = (props: any) => {
                     key={items?.key}
                     className="cursor-pointer flex justify-center items-center"
                   >
-                      <Link href={items?.url || ""} className="p-4 ">
-                        {items?.label}
-                      </Link>
+                    <Link href={items?.url || ""} className="p-4 ">
+                      {items?.label}
+                    </Link>
                   </li>
                 );
               })}
             </ul>
+          </div>
+        </div>
+      </div>
+      <div className="p-4 w-full grid grid-cols-1 gap-1 lg:grid-cols-3 lg:gap-3 sm:grid-cols-1 sm:gap-1 md:grid-cols-2 md:gap-2 xl:grid-cols-3 xl:gap-3">
+        <div className="flex justify-center items-center">
+          <Image
+            src={"/image/home/logo-karofi.png"}
+            alt=""
+            width={240}
+            height={45}
+            className="mr-2"
+          />
+        </div>
+        <div className="flex justify-center items-center relative">
+          <input
+            type="text"
+            placeholder="Bạn cần tìm sản phẩm nào"
+            name="search-product--home"
+            className="w-full border h-10 rounded-lg p-2"
+          />
+          <div className="absolute right-0 cursor-pointer">
+            <Image
+              src={"/image/home/search-svg.png"}
+              alt=""
+              width={25}
+              height={25}
+              className="mr-2"
+            />
+          </div>
+        </div>
+        <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center relative shopping-cart w-56 cursor-pointer">
+          <Image
+            src={"/image/home/shopping-cart.png"}
+            alt=""
+            width={45}
+            height={45}
+            className="mr-2"
+          />
+          <div className="flex flex-col mx-4 ">
+            <span>Giỏ hàng</span>
+            <span>Có 0 sản phẩm</span>
+
+            <div className="shopping-cart--children w-[380px] h-[280px] z-10 bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500  absolute right-0 top-12">
+              <div className="flex justify-center items-center flex-col h-full text-white text-lg font-medium	">
+                <Image
+                  src={"/image/home/shopping-cart.png"}
+                  alt=""
+                  width={150}
+                  height={150}
+                  className="mr-2"
+                />
+                Chưa có sản phẩm
+              </div>
+            </div>
+          </div>
+          <Image
+            src={"/image/home/h-tamgiac.png"}
+            alt=""
+            width={22}
+            height={22}
+            className="mr-2"
+          />
           </div>
         </div>
       </div>

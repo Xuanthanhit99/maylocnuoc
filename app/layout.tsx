@@ -9,6 +9,7 @@ import { Button } from "antd";
 import { useState } from "react";
 import Provider from "../src/components/Provider/Provider";
 import { AuthContextProvider } from "./context/AuthContext";
+import ReactQueryProvider from "../providers/ReactQueryProvider";
 // import Provider from '@/components/Provider/Provider'
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -25,18 +26,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-      <AuthContextProvider>
-        <Provider>
-            <div className="relative h-full">
-              <MenuComponentComponent />
-              {children}
-              <div className="fixed social-support">
-                <SocialSupport />
+        <ReactQueryProvider>
+          <AuthContextProvider>
+            <Provider>
+              <div className="relative h-full">
+                <MenuComponentComponent />
+                {children}
+                <div className="fixed social-support">
+                  <SocialSupport />
+                </div>
+                <FooterComponent />
               </div>
-              <FooterComponent />
-            </div>
-        </Provider>
-        </AuthContextProvider>
+            </Provider>
+          </AuthContextProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );
