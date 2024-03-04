@@ -1,7 +1,9 @@
 'use client';
+
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import React, { useState } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { ReactQueryDevtools } from 'react-query-devtools'
+// import { ReactQueryDevtools } from 'react-query-devtools'
 
 const ReactQueryProvider = ({children}: React.PropsWithChildren) => {
     const client = new QueryClient()
