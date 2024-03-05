@@ -2,7 +2,7 @@
 
 import axios from "axios"
 import { useRouter } from "next/navigation";
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 
 type TypeUser = {
     username?: any,
@@ -11,7 +11,7 @@ type TypeUser = {
 }
 
 interface TypeAuthContext {
-    user?: string | null,
+    user?: any,
     isAuth?: boolean,
     Login: (user: TypeUser) => Promise<any>,
     Logout?: (user: TypeUser) => Promise<any>,
@@ -29,6 +29,7 @@ export const AuthContextProvider = ({children}: {children: React.ReactNode}) => 
     const [user, setUser] = useState();
     const [isAuth, setIsAuth] = useState(false)
     const router = useRouter();
+
     const Register = async ({username, email, password}: TypeUser) => {
         try {
           const fetchApiLogin = await axios.post("/api/user/register", {

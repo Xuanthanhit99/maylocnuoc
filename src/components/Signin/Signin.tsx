@@ -38,13 +38,11 @@ const Signin = ({ type }: TypeSignin) => {
     })();
   }, []);
 
-  // useEffect(() => {
-  //   if(session) {
-  //     router.push("/")
-  //   } else {
-  //     router.push("/signin")
-  //   }
-  // }, [session]) 
+  useEffect(() => {
+    if(session) {
+      router.push("/")
+    }
+  }, [session]) 
 
     const searchParams = useSearchParams();
 

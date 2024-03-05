@@ -19,8 +19,8 @@ const Menu = (props: any) => {
   const [toggleDropdown, setToggleDropdown] = useState<any>(false);
   const [isMenuMobile, setIsMenuMobile] = useState<any>(false);
   const [isMenuLeft, setIsMenuLeft] = useState<any>(false);
-  const [userGoogle, setUserGoogle] = useState<typeUserGoogle>();
-  const {user} = AuthContextDefault()
+  const [isSign, setIsSign] = useState<boolean>(true);
+  const { user } = AuthContextDefault();
   console.log("user", user);
   useEffect(() => {
     (async () => {
@@ -30,10 +30,12 @@ const Menu = (props: any) => {
   }, []);
 
   useEffect(() => {
-    if (session) {
-      // setUserGoogle(session.user)
+    if (session || user?.success) {
+      setIsSign(true);
+    } else {
+      setIsSign(false);
     }
-  }, [session]);
+  }, [session, user]);
 
   const itemsMenu = [
     {
@@ -62,6 +64,8 @@ const Menu = (props: any) => {
       url: "/signin",
     },
   ];
+
+  console.log("isSign", session?.user?.name);
   return (
     <>
       <div className="min-h-12 flex justify-center flex-col border-b border-solid border-[#f4f5f6] items-center">
@@ -111,7 +115,9 @@ const Menu = (props: any) => {
                   <li className="p-3 border-b cursor-pointer hover:bg-slate-400 hover:text-slate-900">
                     <Link href={"/product"}>Dịch vụ</Link>
                   </li>
-                  {session && (
+                  {isSign ? (
+                    ""
+                  ) : (
                     <li className="p-3 rounded-b-lg cursor-pointer hover:bg-slate-400 hover:text-slate-900">
                       <Link href={"/signin"}>sign In</Link>
                     </li>
@@ -185,11 +191,51 @@ const Menu = (props: any) => {
                 return (
                   <li
                     key={items?.key}
-                    className="cursor-pointer flex justify-center items-center"
+                    className={`cursor-pointer flex justify-center items-center ${items?.label === "signin" && isSign ? "signin-user relative": ""}`}
                   >
-                    <Link href={items?.url || ""} className="p-4 ">
-                      {items?.label}
-                    </Link>
+                    {items?.label === "signin" &&
+                      (isSign ? (
+                        <div className="border-l flex pl-3">
+                          <Image
+                            src={session?.user?.image || ""}
+                            alt=""
+                            width={25}
+                            height={25}
+                            className="mr-2 rounded-full"
+                          />
+                          {session
+                            ? session?.user?.email?.split("@")?.[0]
+                            : user?.data?.username}
+                          <Image
+                            src="/image/home/h-tamgiac.png"
+                            alt=""
+                            width={25}
+                            height={25}
+                            className="ml-2 rounded-full"
+                          />
+                          <div className="signin-user--children w-[180px] h-[240px] z-10 bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500  absolute left-0 top-full">
+                            <div className="flex justify-center items-center flex-col h-full text-white text-lg font-medium	">
+                              <Image
+                                src={"/image/home/shopping-cart.png"}
+                                alt=""
+                                width={150}
+                                height={150}
+                                className="mr-2"
+                              />
+                              Chưa có sản phẩm
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <Link href={items?.url || ""} className="p-4 ">
+                          {items?.label}
+                        </Link>
+                      ))}
+                    {items?.label !== "signin" && (
+                      <Link href={items?.url || ""} className="p-4 ">
+                        {items?.label}
+                      </Link>
+                    )}
                   </li>
                 );
               })}
@@ -226,37 +272,37 @@ const Menu = (props: any) => {
         </div>
         <div className="flex justify-center items-center">
           <div className="flex justify-center items-center relative shopping-cart w-56 cursor-pointer">
-          <Image
-            src={"/image/home/shopping-cart.png"}
-            alt=""
-            width={45}
-            height={45}
-            className="mr-2"
-          />
-          <div className="flex flex-col mx-4 ">
-            <span>Giỏ hàng</span>
-            <span>Có 0 sản phẩm</span>
+            <Image
+              src={"/image/home/shopping-cart.png"}
+              alt=""
+              width={45}
+              height={45}
+              className="mr-2"
+            />
+            <div className="flex flex-col mx-4 ">
+              <span>Giỏ hàng</span>
+              <span>Có 0 sản phẩm</span>
 
-            <div className="shopping-cart--children w-[380px] h-[280px] z-10 bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500  absolute right-0 top-12">
-              <div className="flex justify-center items-center flex-col h-full text-white text-lg font-medium	">
-                <Image
-                  src={"/image/home/shopping-cart.png"}
-                  alt=""
-                  width={150}
-                  height={150}
-                  className="mr-2"
-                />
-                Chưa có sản phẩm
+              <div className="shopping-cart--children w-[380px] h-[280px] z-10 bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500  absolute right-0 top-12">
+                <div className="flex justify-center items-center flex-col h-full text-white text-lg font-medium	">
+                  <Image
+                    src={"/image/home/shopping-cart.png"}
+                    alt=""
+                    width={150}
+                    height={150}
+                    className="mr-2"
+                  />
+                  Chưa có sản phẩm
+                </div>
               </div>
             </div>
-          </div>
-          <Image
-            src={"/image/home/h-tamgiac.png"}
-            alt=""
-            width={22}
-            height={22}
-            className="mr-2"
-          />
+            <Image
+              src={"/image/home/h-tamgiac.png"}
+              alt=""
+              width={22}
+              height={22}
+              className="mr-2"
+            />
           </div>
         </div>
       </div>

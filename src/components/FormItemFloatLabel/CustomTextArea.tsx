@@ -54,7 +54,7 @@ const CustomTextArea: FC<Props> = ({
         } form-item-float-label flex-1 ${props.disabled ? "text-ink300" : ""}`}
       > */}
         <FloatLabel label={label || ""} value={value}>
-        <TextArea rows={4} placeholder="maxLength is 6" maxLength={6} />
+        <TextArea rows={4} placeholder="" maxLength={6} />
       </FloatLabel>
     </>
   );

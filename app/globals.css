@@ -97,3 +97,11 @@ body {
 .shopping-cart:hover .shopping-cart--children {
   display: block;
 }
+
+.signin-user--children {
+  display: none;
+}
+
+.signin-user:hover .signin-user--children {
+  display: block;
+}

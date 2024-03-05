@@ -19,10 +19,7 @@ export async function POST(request: NextRequest){
             return NextResponse.json({error: "User already exists"}, {status: 401})
         }
 
-        console.log("1", user);
-
         const validPassword = await bcryptjs.compare(password,user.password);
-        console.log("2", validPassword);
 
         if(!validPassword) {
             return NextResponse.json({error: "User already exists"}, {status: 401})
@@ -33,7 +30,6 @@ export async function POST(request: NextRequest){
             email: user.email,
             password: user.password
         }
-        console.log("3")
 
         const token = jwt.sign(tokenData, process.env.TOKEN_SECRET!, {expiresIn: "1d"});
 
@@ -43,7 +39,6 @@ export async function POST(request: NextRequest){
                 user: {email: user?.email,username: user?.username}
             }
         }, {status: 201})
-        console.log("4")
         reponse.cookies.set("token",token, {
             httpOnly: true
         })

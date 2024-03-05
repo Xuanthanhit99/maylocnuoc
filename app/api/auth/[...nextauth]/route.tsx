@@ -2,25 +2,20 @@ import NextAuth from "next-auth"
 import GoogleProvider from 'next-auth/providers/google';
 import { connectDB } from "../../../../backend/config/db";
 import User from "../../../../models/UserModel";
-// import User from "../../../../models/UserModel";
-// import { connectDB } from "../../../../../backend/config/db";
-// import User from "../../../../../backend/models/UserModel";
+import jwt from 'jsonwebtoken'
 
 console.log("first", process.env.GOOGLE_ID );
 const hanlder = NextAuth({
-  // Configure one or more authentication providers
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || ""
     }),
-    // ...add more providers here
   ],
 
   callbacks: {
       async session({session}: any) {
         const sessionUser = await User.findOne({email: session.user.email});
-        console.log("first123", sessionUser);
         session.user.id = sessionUser?._id?.toString();
         return session;
       },
@@ -36,8 +31,14 @@ const hanlder = NextAuth({
               image: profile?.picture,
             })
             await createGoogle.save()
-          }
 
+            const token = jwt.sign(createGoogle, process.env.TOKEN_SECRET!, {expiresIn: "1d"});
+
+            createGoogle.cookies.set("token",token, {
+              httpOnly: true
+          })
+
+          }
           return true
         } catch ({error} : any) {
           console.log("Error checking if user exists: ", error?.message);
