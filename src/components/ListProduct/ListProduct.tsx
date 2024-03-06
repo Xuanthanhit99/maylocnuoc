@@ -4,15 +4,13 @@ import React from 'react'
 
 const ListProduct = ({valueproduct}: any) => {
   return (
-    <div className="flex justify-center">
-    <div className="flex w-10/12 justify-center mt-3">
       <div className="w-full grid grid-cols-1 gap-1 lg:grid-cols-4 lg:gap-4 sm:grid-cols-1 sm:gap-1 md:grid-cols-2 md:gap-2 xl:grid-cols-6 xl:gap-6">
         {valueproduct.map((item: any) => {
           return (
             item.key >= 1 &&
             item.key <= 6 && (
               <div
-                className={`${
+                className={`sm:mb-6 ${
                   item.key > 1 && item.key < 6 ? "mr-1" : ""
                 }`}
                 key={item.key}
@@ -40,8 +38,6 @@ const ListProduct = ({valueproduct}: any) => {
           );
         })}
       </div>
-    </div>
-  </div>
   )
 }
 

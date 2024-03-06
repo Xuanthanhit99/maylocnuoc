@@ -35,7 +35,7 @@ const CustomSelect: FC<Props> = ({ label, value, className, ...props }) => {
       <Select
         value={value}
         className={classNames(
-          "border-none bg-transparent outline-none h-full rounded-lg min-h-[56px] max-h-full",
+          "border-none bg-transparent outline-none h-full rounded-lg min-h-[56px] max-h-full w-full max-w-full",
           className
         )}
         {...props}

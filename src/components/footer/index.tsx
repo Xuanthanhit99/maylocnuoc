@@ -5,8 +5,8 @@ import { GetServerSideProps } from 'next';
 const index = () => {
     return (
         <div className="flex justify-center bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500">
-        <div className="w-10/12 flex justify-center items-center p-9">
-          <div className="w-full grid grid-cols-4 gap-4">
+        <div className="w-10/12 sm:w-full flex justify-center items-center p-9 md:p-0 md:py-9 md:11/12">
+          <div className="w-full grid grid-cols-4 gap-4 sm:grid-cols-none	md:grid-cols-2 md:gap-2">
             <div className="text-white">
               <h3 className="text-xl font-medium mb-4">Cửa hàng dũng duyên</h3>
               <ul>

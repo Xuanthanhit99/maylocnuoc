@@ -21,7 +21,7 @@ const Menu = (props: any) => {
   const [isMenuLeft, setIsMenuLeft] = useState<any>(false);
   const [isSign, setIsSign] = useState<boolean>(true);
   const { user } = AuthContextDefault();
-  console.log("user", user);
+  
   useEffect(() => {
     (async () => {
       const res = await getProviders();
@@ -65,7 +65,6 @@ const Menu = (props: any) => {
     },
   ];
 
-  console.log("isSign", session?.user?.name);
   return (
     <>
       <div className="min-h-12 flex justify-center flex-col border-b border-solid border-[#f4f5f6] items-center">
@@ -213,7 +212,7 @@ const Menu = (props: any) => {
                             height={25}
                             className="ml-2 rounded-full"
                           />
-                          <div className="signin-user--children w-[180px] h-[240px] z-10 bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500  absolute left-0 top-full">
+                          <div className="signin-user--children w-[180px] h-[240px] z-10 bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500 absolute left-0 top-full">
                             <div className="flex justify-center items-center flex-col h-full text-white text-lg font-medium	">
                               <Image
                                 src={"/image/home/shopping-cart.png"}
@@ -243,7 +242,7 @@ const Menu = (props: any) => {
           </div>
         </div>
       </div>
-      <div className="p-4 w-full grid grid-cols-1 gap-1 lg:grid-cols-3 lg:gap-3 sm:grid-cols-1 sm:gap-1 md:grid-cols-2 md:gap-2 xl:grid-cols-3 xl:gap-3">
+      <div className="p-4 w-full grid grid-cols-1 gap-1 lg:grid-cols-3 lg:gap-3 sm:grid-cols-1 sm:gap-1 md:grid-cols-3 md:gap-3 xl:grid-cols-3 xl:gap-3">
         <div className="flex justify-center items-center">
           <Image
             src={"/image/home/logo-karofi.png"}
@@ -252,6 +251,27 @@ const Menu = (props: any) => {
             height={45}
             className="mr-2"
           />
+          <div className="sm:flex hidden justify-end items-center relative shopping-cart w-56 cursor-pointer">
+            <Image
+              src={"/image/home/shopping-cart.png"}
+              alt=""
+              width={45}
+              height={45}
+              className="mr-2"
+            />
+              <div className="shopping-cart--children sm:w-[320px] w-[380px] h-[280px] z-10 bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500  absolute right-0 top-12">
+                <div className="flex justify-center items-center flex-col h-full text-white text-lg font-medium	">
+                  <Image
+                    src={"/image/home/shopping-cart.png"}
+                    alt=""
+                    width={150}
+                    height={150}
+                    className="mr-2"
+                  />
+                  Chưa có sản phẩm
+                </div>
+            </div>
+          </div>
         </div>
         <div className="flex justify-center items-center relative">
           <input
@@ -270,8 +290,8 @@ const Menu = (props: any) => {
             />
           </div>
         </div>
-        <div className="flex justify-center items-center">
-          <div className="flex justify-center items-center relative shopping-cart w-56 cursor-pointer">
+        <div className="flex justify-center items-center sm:hidden">
+          <div className="flex justify-center items-center relative shopping-cart cursor-pointer">
             <Image
               src={"/image/home/shopping-cart.png"}
               alt=""

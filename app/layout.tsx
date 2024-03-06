@@ -32,7 +32,7 @@ export default function RootLayout({
               <div className="relative h-full">
                 <MenuComponentComponent />
                 {children}
-                <div className="fixed social-support">
+                <div className="fixed top-0 right-0">
                   <SocialSupport />
                 </div>
                 <FooterComponent />

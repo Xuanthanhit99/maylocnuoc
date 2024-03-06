@@ -28,6 +28,7 @@ const MenuChat = () => {
 
   return (
     <div>
+    <div className="fixed top-1/4 sm:top-2/4 sm:right-5 right-10">
       <div>
         <div className="border rounded-full p-1 border-gray-950">
             {isShowListSocialMess ? <div>
@@ -88,9 +89,10 @@ const MenuChat = () => {
           />
         </div>
       </div>
-      {isShowFormTT && (
-        <div className="h-full w-full flex justify-center fixed top-1/4 left-0 right-0">
-          <div className="bg-white h-3/6 w-3/6 border border-solid border-gray-300 rounded-lg shadow-2xl flex">
+    </div>
+    {isShowFormTT && (
+        <div className="h-full w-full flex justify-center fixed top-0 items-center sm:top-0 left-0 right-0">
+          <div className="z-10 sm:overflow-scroll bg-white sm:w-full sm:h-full sm:flex-col w-[826px] h-[459px] border border-solid border-gray-300 rounded-lg shadow-2xl flex">
             <div
               className="m-4 cursor-pointer"
               onClick={() => setIsShowFormTT(false)}
@@ -102,7 +104,7 @@ const MenuChat = () => {
                 alt=""
               />
             </div>
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center sm:flex-col">
               <div className="flex justify-center items-center">
                 <Image
                   src={"/image/introduce/introduce-5.jpg"}
@@ -133,6 +135,7 @@ const MenuChat = () => {
               </div>
             </div>
           </div>
+          <div className="absolute top-0 left-0 bg-black opacity-45 w-full h-full"></div>
         </div>
       )}
     </div>
