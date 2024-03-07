@@ -72,7 +72,7 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
   // const paramSlug = "";
   return (
     <div className="flex justify-center bg-[#f3f3f3]">
-      <div className="w-10/12 sm:w-full sm:p-2">
+      <div className="w-10/12 md:11/12 sm:w-full sm:p-2">
         <div className="h-14 flex items-center">
           <Breadcrumb
             items={[
@@ -94,15 +94,17 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
             ]}
           />
         </div>
-        <div className="bg-white p-6 sm:p-2">
-          <div>
-            <div className="mb-3">
+        {/* thông tin sản phẩm đã chọn */}
+        <div className="bg-white p-6 sm:p-2 md:p-3 xl:flex">
+          <div className="xl:w-1/3 w-full xl:mr-6">
+            <div className="mb-3 flex justify-center items-center">
               <img
                 alt="example"
                 src="/image/product/may-loc-nuoc-kangaroo.png"
+                className="w-full"
               />
             </div>
-            <div>
+            <div className="">
               <Slide slidesToScroll={2} slidesToShow={3}>
                 <div
                   style={{
@@ -145,15 +147,16 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
                 </div>
               </Slide>
             </div>
-          </div>
-          <div>
+            </div>
+            <hr className="my-6 xl:hidden"/>
+            <div className="xl:w-2/3 xl:ml-6 flex xl:mt-0 mt-6 w-full ">
             {detailProduct
               ?.filter(
                 (item) => item?.slug?.toLowerCase() === paramSlug?.toLowerCase()
               )
               ?.map((item, key): any => {
                 return (
-                  <div key={key}>
+                  <div key={key} className="xl:w-8/12 w-full mr-3 sm:flex sm:flex-col">
                     <div className="h-14 flex flex-col">
                       <h3 className="text-xl font-semibold text-[#333] flex items-start">
                         {item?.name}
@@ -276,9 +279,9 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
                             return (
                               <li
                                 key={key}
-                                className="flex flex-col justify-center items-center border border-solid px-3 py-4 rounded-lg"
+                                className="flex flex-col justify-center items-start  xl:items-center border border-solid xl:px-3 px-1 py-4 rounded-lg"
                               >
-                                <div className="flex">
+                                <div className="flex flex-col xl:flex-row">
                                   <Checkbox
                                     className="mr-2"
                                     onChange={() => console.log("")}
@@ -310,21 +313,21 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
                     </div>
                     <div className="mt-8">
                       <div className="flex justify-between sm:mb-3">
-                        <div className="sm:mr-2 border border-solid hover:bg-black hover:text-white cursor-pointer border-black w-1/2 !h-auto flex justify-center items-center flex-col p-2 rounded-md">
+                        <div className="sm:mr-2 mr-3 border border-solid hover:bg-black hover:text-white cursor-pointer border-black w-1/2 !h-auto flex justify-center items-center flex-col p-2 rounded-md">
                           <b className="text-base">Mua ngay</b>
                           <span>Giao hàng tận nới</span>
                         </div>
-                        <div className="bg-blue-500 hover:bg-blue-700 cursor-pointer text-white w-1/2 !h-auto flex justify-center items-center flex-col p-2 rounded-md">
+                        <div className="bg-blue-500 ml-3 hover:bg-blue-700 cursor-pointer text-white w-1/2 !h-auto flex justify-center items-center flex-col p-2 rounded-md">
                           <b className="text-base">Thêm Vào giỏ</b>
                           <span>Tiếp tục mua hàng</span>
                         </div>
                       </div>
                       <div className="w-full mt-1">
                         <div className="bg-red-500 hover:bg-red-700 cursor-pointer text-white w-full !h-auto flex justify-center items-center flex-col p-2 rounded-md ">
-                          <b className="text-base">
+                          <b className="text-base text-center">
                             Yêu cầu gọi tư vấn trực tiếp
                           </b>
-                          <span>
+                          <span className="text-center">
                             (Tư vấn viên gọi lại cho quý khách trong vòng 5
                             phút)
                           </span>
@@ -334,10 +337,10 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
                   </div>
                 );
               })}
-            <div>
+            <div className="xl:w-4/12 ml-3 sm:ml-0">
               <div className="border border-solid border-zinc-300 sm:mt-3">
                 <div className="border-b bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500 h-12 flex justify-center items-center text-white">
-                  <b className="">YÊN TÂM MUA SẮM ONLINE</b>
+                  <b className="p-3">YÊN TÂM MUA SẮM ONLINE</b>
                 </div>
                 <ul className="text-sm p-3">
                   <li className="border-b border-solid pb-2 flex justify-start items-center">
@@ -430,31 +433,43 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
             </div>
           </div>
         </div>
+        {/* combo sản phẩm */}
         <div className="mt-4 bg-white">
           <div className="p-3 flex justify-start items-center ">
             <b>COMBO CẦN THIẾT CHO MÁY LỌC NƯỚC NÓNG LẠNH KAROFI KAD-D66</b>
           </div>
           <hr className="mb-4" />
-          <div>
-            <div className="w-full grid grid-cols-1 gap-1 lg:grid-cols-4 lg:gap-4 sm:grid-cols-1 sm:gap-1 md:grid-cols-2 md:gap-2 xl:grid-cols-6 xl:gap-6">
+          <div className="flex justify-start items-center xl:flex-row flex-col">
+            <div className="flex justify-start items-center xl:w-4/5 overflow-x-scroll sm:flex-col sm:w-full">
               {productnews?.productnews
-                ?.filter((item) => item?.key <= 2)
+                ?.filter((item) => item?.key <= 4)
                 ?.map((item: any) => {
                   return (
                     <div
                       className={`${
-                        item.key > 1 && item.key < 6 ? "mr-1" : ""
-                      } flex`}
+                        item.key > 0 && item.key < 6 ? "mr-2" : ""
+                      } flex xl:w-1/4 justify-around items-center flex-col xl:h-80 border border-[#e5e7eb] hover:shadow-2xl sm:w-full sm:p-3 sm:flex-row`}
                       key={item.key}
                     >
+                      <div className="w-full flex justify-center items-center sm:w-1/5">
+                        {/* !mobile */}
                       <Image
                         src={item?.imgage}
                         alt=""
-                        className="mr-2"
-                        width={120}
-                        height={120}
+                        className="sm:hidden"
+                        width={150}
+                        height={150}
                       />
-                      <div className="mt-1">
+                      {/* mobile */}
+                      <Image
+                        src={item?.imgage}
+                        alt=""
+                        className="sm:show"
+                        width={75}
+                        height={75}
+                      />
+                      </div>
+                      <div className="mt-1 sm:w-4/5">
                         <h5 className="text-base font-medium	text-center">
                           {item?.label}
                         </h5>
@@ -468,28 +483,29 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
                     </div>
                   );
                 })}
-                <hr className="my-4"/>
-              <div className="h-full flex justify-center items-center flex-col">
-                <div className="mt-1 flex justify-center items-center">
-                  <h5 className="text-base font-medium	text-center">
+                </div>
+                <hr className="my-4 sm:hidden"/>
+              <div className="h-full flex justify-center items-center flex-col xl:w-1/5 w-full xl:h-80 border border-[#e5e7eb]">
+                <div className="mt-1 flex justify-start items-center flex-col">
+                  <h5 className="text-base font-medium	text-center text-2xl text-center">
                     Tổng tiền
                   </h5>
                   <p className="text-sx font-medium	text-center text-red-500 text-base">
-                    <span className="">
+                    <span className="text-xl">
                       {19999999
                         ?.toString()
                         ?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
                     </span>
                     đ
                   </p>
-                  <p className="font-medium	text-sx text-center text-[#999] line-through">
+                  <p className="font-medium	text-center text-[#999] line-through text-base">
                     {19999999
                       ?.toString()
                       ?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
                   </p>
                 </div>
                   <div className="w-full mt-4 p-3 text-white flex justify-center items-center flex-col bg-black rounded-sm bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500">
-                    <b>Mua 4 sản phẩm</b>
+                    <b className="xl:text-xl text-center">Mua 4 sản phẩm</b>
                     <p>
                       Tiết kiệm{" "}
                       {19999999
@@ -499,12 +515,12 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
                     </p>
                   </div>
               </div>
-            </div>
           </div>
         </div>
+        {/* thông tin chi tiết sản phẩm đã xem */}
         <div className="mt-4 bh-white ">
           <div className="border-b border-solid border-[#dcdcdc]">
-            <h3 className="h-14 bg-blue-500 w-2/12 flex justify-center items-center text-white rounded-t-md">
+            <h3 className="h-14 bg-blue-500 w-2/12 sm:w-full flex justify-center items-center text-white rounded-t-md">
               Thông tin sản phẩm
             </h3>
           </div>
@@ -586,33 +602,7 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
           </div>
           <hr className="mb-4" />
           <div>
-            <div className="w-full grid grid-cols-6 gap-6">
-              {productnews?.productnews?.map((item: any) => {
-                return (
-                  <div
-                    className={`${item.key > 1 && item.key < 6 ? "mr-1" : ""}`}
-                    key={item.key}
-                  >
-                    <Card
-                      hoverable
-                      cover={<img alt="example" src={item?.imgage} />}
-                    >
-                      <div className="mt-1">
-                        <h5 className="text-base font-medium	text-center">
-                          {item?.label}
-                        </h5>
-                        <p className="text-sx font-medium	text-center text-red-500">
-                          <span className="">{item?.price} </span>đ
-                        </p>
-                        <p className="font-medium	text-sx text-center">
-                          Liên hệ
-                        </p>
-                      </div>
-                    </Card>
-                  </div>
-                );
-              })}
-            </div>
+              <ListProduct valueproduct={productnews?.productnews} />
           </div>
         </div>
       </div>

@@ -74,7 +74,7 @@ const CustomInput: FC<Props> = ({
             <img
               className="mx-auto absolute right-[25px] top-[50%] translate-y-[-50%] z-10"
               src="/icon/info-circle.svg"
-              alt="logo vbi"
+              alt="logo"
               width={24}
               height={24}
               onClick={() => {

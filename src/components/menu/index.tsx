@@ -244,6 +244,7 @@ const Menu = (props: any) => {
       </div>
       <div className="p-4 w-full grid grid-cols-1 gap-1 lg:grid-cols-3 lg:gap-3 sm:grid-cols-1 sm:gap-1 md:grid-cols-3 md:gap-3 xl:grid-cols-3 xl:gap-3">
         <div className="flex justify-center items-center">
+        <Link href="/">
           <Image
             src={"/image/home/logo-karofi.png"}
             alt=""
@@ -251,6 +252,7 @@ const Menu = (props: any) => {
             height={45}
             className="mr-2"
           />
+        </Link>
           <div className="sm:flex hidden justify-end items-center relative shopping-cart w-56 cursor-pointer">
             <Image
               src={"/image/home/shopping-cart.png"}
