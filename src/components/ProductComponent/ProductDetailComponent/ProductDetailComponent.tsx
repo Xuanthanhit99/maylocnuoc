@@ -149,7 +149,7 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
             </div>
             </div>
             <hr className="my-6 xl:hidden"/>
-            <div className="xl:w-2/3 xl:ml-6 flex xl:mt-0 mt-6 w-full ">
+            <div className="xl:w-2/3 xl:ml-6 flex xl:mt-0 mt-6 w-full sm:flex-col">
             {detailProduct
               ?.filter(
                 (item) => item?.slug?.toLowerCase() === paramSlug?.toLowerCase()
@@ -439,8 +439,8 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
             <b>COMBO CẦN THIẾT CHO MÁY LỌC NƯỚC NÓNG LẠNH KAROFI KAD-D66</b>
           </div>
           <hr className="mb-4" />
-          <div className="flex justify-start items-center xl:flex-row flex-col">
-            <div className="flex justify-start items-center xl:w-4/5 overflow-x-scroll sm:flex-col sm:w-full">
+          <div className="flex justify-start items-center flex-row sm:flex-col">
+            <div className="flex justify-start items-center w-4/5  sm:flex-col sm:w-full">
               {productnews?.productnews
                 ?.filter((item) => item?.key <= 4)
                 ?.map((item: any) => {
@@ -448,7 +448,7 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
                     <div
                       className={`${
                         item.key > 0 && item.key < 6 ? "mr-2" : ""
-                      } flex xl:w-1/4 justify-around items-center flex-col xl:h-80 border border-[#e5e7eb] hover:shadow-2xl sm:w-full sm:p-3 sm:flex-row`}
+                      } flex xl:w-1/4 justify-around items-center flex-col xl:h-80 sm:h-32	h-72  border border-[#e5e7eb] hover:shadow-2xl sm:w-full sm:p-3 sm:flex-row`}
                       key={item.key}
                     >
                       <div className="w-full flex justify-center items-center sm:w-1/5">
@@ -456,7 +456,7 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
                       <Image
                         src={item?.imgage}
                         alt=""
-                        className="sm:hidden"
+                        className="sm:hidden block"
                         width={150}
                         height={150}
                       />
@@ -464,7 +464,7 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
                       <Image
                         src={item?.imgage}
                         alt=""
-                        className="sm:show"
+                        className="sm:block hidden"
                         width={75}
                         height={75}
                       />
@@ -485,7 +485,7 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
                 })}
                 </div>
                 <hr className="my-4 sm:hidden"/>
-              <div className="h-full flex justify-center items-center flex-col xl:w-1/5 w-full xl:h-80 border border-[#e5e7eb]">
+              <div className="sm:h-full flex justify-center items-center flex-col w-1/5 h-72 sm:w-full xl:h-80 border border-[#e5e7eb]">
                 <div className="mt-1 flex justify-start items-center flex-col">
                   <h5 className="text-base font-medium	text-center text-2xl text-center">
                     Tổng tiền
@@ -506,7 +506,7 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
                 </div>
                   <div className="w-full mt-4 p-3 text-white flex justify-center items-center flex-col bg-black rounded-sm bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500">
                     <b className="xl:text-xl text-center">Mua 4 sản phẩm</b>
-                    <p>
+                    <p className="text-center">
                       Tiết kiệm{" "}
                       {19999999
                         ?.toString()
@@ -520,7 +520,7 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
         {/* thông tin chi tiết sản phẩm đã xem */}
         <div className="mt-4 bh-white ">
           <div className="border-b border-solid border-[#dcdcdc]">
-            <h3 className="h-14 bg-blue-500 w-2/12 sm:w-full flex justify-center items-center text-white rounded-t-md">
+            <h3 className="h-14 bg-blue-500 xl:w-2/12 sm:w-full w-2/5 flex justify-center items-center text-white rounded-t-md">
               Thông tin sản phẩm
             </h3>
           </div>
