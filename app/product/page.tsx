@@ -3,63 +3,63 @@ import CustomSelect from "@/components/FormItemFloatLabel/CustomSelect";
 import ListProduct from "@/components/ListProduct/ListProduct";
 import { Card, Input } from "antd";
 import { useEffect, useState } from "react";
-
-const productnews = [
-  {
-    key: 1,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "3.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    type: "product",
-    evaluate: "1",
-    link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
-  },
-  {
-    key: 2,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "4.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    type: "accessory",
-    evaluate: "2",
-    link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
-  },
-  {
-    key: 3,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "8.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    type: "accessory",
-    evaluate: "3",
-    link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
-  },
-  {
-    key: 4,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "7.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    type: "product",
-    evaluate: "4",
-    link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
-  },
-  {
-    key: 5,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "7.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    type: "product",
-    evaluate: "1",
-    link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
-  },
-  {
-    key: 6,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "7.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    type: "product",
-    evaluate: "1",
-    link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
-  },
-];
+import productnews from "../../utils/product.json"
+// const productnews = [
+//   {
+//     key: 1,
+//     label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
+//     price: "3.999.999",
+//     imgage: "/image/product/may-loc-nuoc-kangaroo.png",
+//     type: "product",
+//     evaluate: "1",
+//     link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
+//   },
+//   {
+//     key: 2,
+//     label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
+//     price: "4.999.999",
+//     imgage: "/image/product/may-loc-nuoc-kangaroo.png",
+//     type: "accessory",
+//     evaluate: "2",
+//     link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
+//   },
+//   {
+//     key: 3,
+//     label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
+//     price: "8.999.999",
+//     imgage: "/image/product/may-loc-nuoc-kangaroo.png",
+//     type: "accessory",
+//     evaluate: "3",
+//     link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
+//   },
+//   {
+//     key: 4,
+//     label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
+//     price: "7.999.999",
+//     imgage: "/image/product/may-loc-nuoc-kangaroo.png",
+//     type: "product",
+//     evaluate: "4",
+//     link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
+//   },
+//   {
+//     key: 5,
+//     label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
+//     price: "7.999.999",
+//     imgage: "/image/product/may-loc-nuoc-kangaroo.png",
+//     type: "product",
+//     evaluate: "1",
+//     link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
+//   },
+//   {
+//     key: 6,
+//     label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
+//     price: "7.999.999",
+//     imgage: "/image/product/may-loc-nuoc-kangaroo.png",
+//     type: "product",
+//     evaluate: "1",
+//     link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
+//   },
+// ];
 const ProductPage = () => {
   // const [itemSearch, setItemSearch] = useState("");
   // const [filterProduct, setFilterProduct] = useState(productnews);
@@ -100,7 +100,7 @@ const ProductPage = () => {
       <div>
         <div className="flex justify-center">
           <div className="flex w-10/12 flex-col my-3">
-            <ListProduct valueproduct={productnews} />
+            <ListProduct valueproduct={productnews?.productnews} />
           </div>
         </div>
       </div>

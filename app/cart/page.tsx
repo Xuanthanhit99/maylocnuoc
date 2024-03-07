@@ -6,6 +6,7 @@ import { Divider, Radio, Table } from "antd";
 import type { TableColumnsType } from "antd";
 import { useState } from "react";
 import Image from "next/image";
+
 const productnews = [
   {
     key: 1,

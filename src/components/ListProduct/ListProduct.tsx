@@ -5,7 +5,7 @@ import React from 'react'
 const ListProduct = ({valueproduct}: any) => {
   return (
       <div className="w-full grid grid-cols-1 gap-1 lg:grid-cols-4 lg:gap-4 sm:grid-cols-1 sm:gap-1 md:grid-cols-2 md:gap-2 xl:grid-cols-6 xl:gap-6">
-        {valueproduct.map((item: any) => {
+        {valueproduct?.map((item: any) => {
           return (
             item.key >= 1 &&
             item.key <= 6 && (

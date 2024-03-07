@@ -15,7 +15,7 @@ const nextConfig = {
         ];
       },
       experimental: {
-        // appDir: true,
+        appDir: false,
         serverComponentsExternalPackages: ["mongoose"],
       },
       images: {
@@ -31,7 +31,7 @@ const nextConfig = {
         }
         return config
       },
-      assetPrefix: './',
+      // assetPrefix: './',
 }
 
 module.exports = nextConfig

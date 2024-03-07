@@ -1,11 +1,12 @@
-// "use client";
+"use client";
 import { Breadcrumb, Button, Card, Checkbox, Col, Row } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { Slide } from "react-slideshow-image";
-import "react-slideshow-image/dist/styles.css";
+// import "react-slideshow-image/dist/styles.css";
 import Image from "next/image";
 import ProductDetailComponent from "@/components/ProductComponent/ProductDetailComponent/ProductDetailComponent";
+import { useSearchParams } from "next/navigation";
 
 // const productnews = [
 //   {
@@ -118,7 +119,8 @@ const ProductDetail = (props: any) => {
   //     quantity: 20,
   //   },
   // ];
-
+  const searchParams = useSearchParams();
+  const userName = searchParams.get("name");
   const paramSlug = props?.params.slug;
 
   return (
