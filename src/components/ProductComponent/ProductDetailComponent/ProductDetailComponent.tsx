@@ -95,8 +95,8 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
           />
         </div>
         {/* thông tin sản phẩm đã chọn */}
-        <div className="bg-white p-6 sm:p-2 md:p-3 xl:flex">
-          <div className="xl:w-1/3 w-full xl:mr-6">
+        <div className="bg-white p-6 sm:p-2 md:p-3 flex sm:flex-col md:flex-col">
+          <div className="w-1/3 sm:w-full md:w-full mr-6 md:mr-0 md:mr-0">
             <div className="mb-3 flex justify-center items-center">
               <img
                 alt="example"
@@ -149,7 +149,7 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
             </div>
             </div>
             <hr className="my-6 xl:hidden"/>
-            <div className="xl:w-2/3 xl:ml-6 flex xl:mt-0 mt-6 w-full sm:flex-col">
+            <div className="w-2/3 ml-6 flex xl:mt-0 sm:ml-0 mt-6 sm:w-full md:w-full sm:flex-col">
             {detailProduct
               ?.filter(
                 (item) => item?.slug?.toLowerCase() === paramSlug?.toLowerCase()
