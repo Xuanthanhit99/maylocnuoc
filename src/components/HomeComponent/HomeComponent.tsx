@@ -13,7 +13,7 @@ const index = ({ productnews }: any) => {
           <div>
             <h3 className="lg:h-[330px] sm:h-[150px] md:h-[150px] xl:h-[330px]">
               <img
-                src="/image/product/may-loc-nuoc-kangaroo.png"
+                src="/image/slider/slider_01.jpg"
                 alt=""
                 className="w-full h-auto"
               />
@@ -22,7 +22,7 @@ const index = ({ productnews }: any) => {
           <div>
             <h3 className="lg:h-[330px] sm:h-[150px] md:h-[150px] xl:h-[330px]">
               <img
-                src="/image/product/may-loc-nuoc-kangaroo.png"
+                src="/image/slider/slider_02.jpg"
                 alt=""
                 className="w-full h-auto"
               />
@@ -31,7 +31,16 @@ const index = ({ productnews }: any) => {
           <div>
             <h3 className="lg:h-[330px] sm:h-[150px] md:h-[150px] xl:h-[330px]">
               <img
-                src="/image/product/may-loc-nuoc-kangaroo.png"
+                src="/image/slider/slider_03.jpg"
+                alt=""
+                className="w-full h-auto"
+              />
+            </h3>
+          </div>
+          <div>
+            <h3 className="lg:h-[330px] sm:h-[150px] md:h-[150px] xl:h-[330px]">
+              <img
+                src="/image/slider/slider_04.png"
                 alt=""
                 className="w-full h-auto"
               />

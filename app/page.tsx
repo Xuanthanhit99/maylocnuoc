@@ -1,97 +1,11 @@
 "use client";
 import { Button, type MenuProps } from "antd";
 import { useEffect, useState } from "react";
-import HomeComponentComponent from "../src/components/home/index";
+import HomeComponentComponent from "../src/components/HomeComponent/HomeComponent";
 import axios from "axios";
 import { error } from "console";
 import { uuid } from "uuidv4";
-
-const productnews = [
-  {
-    key: 1,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "7.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
-  },
-  {
-    key: 2,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "7.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
-  },
-  {
-    key: 3,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "7.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
-  },
-  {
-    key: 4,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "7.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
-  },
-  {
-    key: 5,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "7.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
-  },
-  {
-    key: 6,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "7.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
-  },
-  {
-    key: 7,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "7.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
-  },
-  {
-    key: 8,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "7.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
-  },
-  {
-    key: 9,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "7.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
-  },
-  {
-    key: 10,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "7.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
-  },
-  {
-    key: 11,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "7.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
-  },
-  {
-    key: 12,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "7.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    link: "/product/may-loc-nuoc-nong-lanh-karofi-kad-d66",
-  },
-];
+import productnews from '../utils/product.json'
 
 export default function Home() {
   const [imageValue, setImageValue] = useState<any>();
@@ -143,7 +57,7 @@ export default function Home() {
         accept="image/*"
         onChange={(e) => covertToBase64(e)}
       /> */}
-      <HomeComponentComponent productnews={productnews} />
+      <HomeComponentComponent productnews={productnews?.productnews} />
     </div>
   );
 }

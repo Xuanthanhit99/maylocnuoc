@@ -1,10 +1,34 @@
 import { Card } from 'antd';
 import Link from 'next/link';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const ListProduct = ({valueproduct}: any) => {
+  const [recentlyViewed, setRecentlyViewed] = useState<any>([])
+
+
+  useEffect(() => {
+    const localRecentlyViewed = JSON.parse(localStorage.getItem("Recently-Viewed")!)
+    recentlyViewed.push(localRecentlyViewed)
+    // setRecentlyViewed(recentlyViewed.concat(localRecentlyViewed))
+  },[])
+
+  // console.log("1", recentlyViewed);
+
+  const onClickrecentlyViewed = (value : any) => {
+    if(!JSON.parse(localStorage.getItem("Recently-Viewed")!)) {
+      return localStorage.setItem("Recently-Viewed", JSON.stringify(value));
+    }
+
+    recentlyViewed?.map((item: any) => {
+        if(item?.slug?.toLowerCase() === value?.slug?.toLowerCase()) {
+          localStorage.setItem("Recently-Viewed", JSON.stringify([...recentlyViewed,value]));
+        }
+    })
+    // localStorage.setItem("Recently-Viewed", JSON.stringify(value));
+    // window.open(value?.link,"_self")
+  }
   return (
-      <div className="w-full grid grid-cols-1 gap-1 lg:grid-cols-4 lg:gap-4 sm:grid-cols-1 sm:gap-1 md:grid-cols-2 md:gap-2 xl:grid-cols-6 xl:gap-6">
+      <div className="w-full grid grid-cols-1 gap-1 lg:grid-cols-4 lg:gap-4 sm:grid-cols-2 sm:gap-2 md:grid-cols-2 md:gap-2 xl:grid-cols-6 xl:gap-6">
         {valueproduct?.map((item: any) => {
           return (
             item.key >= 1 &&
@@ -14,6 +38,7 @@ const ListProduct = ({valueproduct}: any) => {
                   item.key > 1 && item.key < 6 ? "mr-1" : ""
                 }`}
                 key={item.key}
+                onClick={()=>onClickrecentlyViewed(item)}
               >
                 <Link href={item?.link}>
                 <Card

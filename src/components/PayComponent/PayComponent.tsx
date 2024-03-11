@@ -6,57 +6,7 @@ import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import Image from "next/image";
-
-const productnews = [
-  {
-    key: 1,
-    label: "MÁY LỌC NƯỚC NÓNG LẠNH KAROFI KAD-D66",
-    price: "9.200.000 VND",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    type: "product",
-    evaluate: "1",
-  },
-  {
-    key: 2,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "4.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    type: "accessory",
-    evaluate: "2",
-  },
-  {
-    key: 3,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "8.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    type: "accessory",
-    evaluate: "3",
-  },
-  {
-    key: 4,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "7.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    type: "product",
-    evaluate: "4",
-  },
-  {
-    key: 5,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "8.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    type: "accessory",
-    evaluate: "5",
-  },
-  {
-    key: 6,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    price: "7.999.999",
-    imgage: "/image/product/may-loc-nuoc-kangaroo.png",
-    type: "product",
-    evaluate: "6",
-  },
-];
+import productnews from "../../../utils/product.json"
 
 const detailProduct = [
   {
@@ -126,6 +76,12 @@ export const dynamicParams = false
 
 const PayComponent = (props: any) => {
   const [collapseHeight, setCollapseHeight] = useState(true)
+  const [recentlyViewed, setRecentlyViewed] = useState<any>([])
+
+  useEffect(() => {
+    const localRecentlyViewed = JSON.parse(localStorage.getItem("Recently-Viewed")!)
+    setRecentlyViewed([...recentlyViewed,localRecentlyViewed])
+  },[])
 
   // const paramSlug = props?.params.slug;
   const paramSlug = "may-loc-nuoc-nong-lanh-karofi-kad-d66"
@@ -149,7 +105,7 @@ const PayComponent = (props: any) => {
                 ),
               },
               {
-                title: props?.params.slug,
+                title: props?.params?.slug,
               },
             ]}
           />
@@ -527,7 +483,7 @@ const PayComponent = (props: any) => {
           <hr className="mb-4" />
           <div>
             <div className="w-full grid grid-cols-5 gap-5">
-              {productnews?.filter(item => item?.key <= 2)?.map((item: any) => {
+              {productnews?.productnews?.filter(item => item?.key <= 2)?.map((item: any) => {
                 return (
                   <div
                     className={`${item.key > 1 && item.key < 6 ? "mr-1" : ""}`}
@@ -627,7 +583,7 @@ const PayComponent = (props: any) => {
           <hr className="mb-4" />
           <div>
             <div className="w-full grid grid-cols-6 gap-6">
-              {productnews?.map((item: any) => {
+              {productnews?.productnews?.map((item: any) => {
                 return (
                   <div
                     className={`${item.key > 1 && item.key < 6 ? "mr-1" : ""}`}
@@ -662,7 +618,7 @@ const PayComponent = (props: any) => {
           <hr className="mb-4" />
           <div>
             <div className="w-full grid grid-cols-6 gap-6">
-              {productnews?.map((item: any) => {
+              {recentlyViewed?.map((item: any) => {
                 return (
                   <div
                     className={`${item.key > 1 && item.key < 6 ? "mr-1" : ""}`}
