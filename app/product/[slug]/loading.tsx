@@ -5,8 +5,8 @@ const Loading = () => {
     <div className='w-full flex justify-center items-center'>
       <Image
         src='/image/loading-2.gif'
-        width={50}
-        height={50}
+        width={350}
+        height={350}
         alt='loader'
         className='object-contain'
       />
