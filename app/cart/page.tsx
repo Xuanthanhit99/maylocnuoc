@@ -199,65 +199,6 @@ const Cart = (props: any) => {
     "checkbox"
   );
 
-  const detailProduct = [
-    {
-      id: 1,
-      slug: "may-loc-nuoc-nong-lanh-karofi-kad-d66",
-      name: "Máy lọc nước nóng lạnh Karofi KAD-D66",
-      marketPrice: 12750000,
-      promotionalMarketPrice1: 9200000,
-      save: -28,
-      promotionalMarketPrice2: 9400000,
-      trademark: "karofi",
-      model: "KAD-D66",
-      guarantee: "36 tháng",
-      Designs: "Có cửa",
-      quantity: 20,
-    },
-    {
-      id: 2,
-      name: "Máy lọc nước nóng lạnh Karofi O-D138",
-      slug: "may-loc-nuoc-karofi-optimus-duo-o-d138",
-      marketPrice: 12750000,
-      promotionalMarketPrice1: 9200000,
-      save: -28,
-      promotionalMarketPrice2: 9400000,
-      trademark: "karofi",
-      model: "KAD-D66",
-      guarantee: "36 tháng",
-      Designs: "Có cửa",
-      quantity: 20,
-    },
-    {
-      id: 3,
-      name: "Máy lọc nước nóng lạnh Karofi KAD-D66",
-      slug: "Máy lọc nước nóng lạnh Karofi KAD-D50",
-      marketPrice: 12750000,
-      promotionalMarketPrice1: 9200000,
-      save: -28,
-      promotionalMarketPrice2: 9400000,
-      trademark: "karofi",
-      model: "KAD-D66",
-      guarantee: "36 tháng",
-      Designs: "Có cửa",
-      quantity: 20,
-    },
-    {
-      id: 4,
-      name: "Máy lọc nước nóng lạnh Karofi KAD-D66",
-      slug: "Máy lọc nước nóng lạnh Karofi KAD-D52",
-      marketPrice: 12750000,
-      promotionalMarketPrice1: 9200000,
-      save: -28,
-      promotionalMarketPrice2: 9400000,
-      trademark: "karofi",
-      model: "KAD-D66",
-      guarantee: "36 tháng",
-      Designs: "Có cửa",
-      quantity: 20,
-    },
-  ];
-
   return (
     <div className="flex justify-center bg-[#f3f3f3]">
       <div className="w-9/12">
