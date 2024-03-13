@@ -9,7 +9,7 @@ type Props = {
   label: string;
   value?: any;
   className?: string;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onChange?: (value: string) => void;
   onClick?: React.MouseEventHandler<HTMLInputElement>;
   onFocus?: React.FocusEventHandler<HTMLInputElement>;
   onPressEnter?: React.KeyboardEventHandler<HTMLInputElement>;
@@ -25,7 +25,7 @@ type Props = {
   children?: React.ReactNode;
 };
 
-const CustomSelect: FC<Props> = ({ label, value, className, ...props }) => {
+const CustomSelect: FC<Props> = ({ label, value, className,onChange, ...props }) => {
   return (
     <FloatLabel
       label={label}
@@ -38,6 +38,7 @@ const CustomSelect: FC<Props> = ({ label, value, className, ...props }) => {
           "border-none bg-transparent outline-none h-full rounded-lg min-h-[56px] max-h-full w-full max-w-full",
           className
         )}
+        onChange={(value) => onChange?.(value)}
         {...props}
       >
         {props.children}

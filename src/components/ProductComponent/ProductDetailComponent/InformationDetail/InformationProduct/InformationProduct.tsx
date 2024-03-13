@@ -4,8 +4,11 @@ import React, { useState } from 'react'
 import { Breadcrumb, Button, Card, Checkbox, Col, Row } from "antd";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { AuthContextDefault } from '../../../../../../app/context/AuthContext';
 
 const InformationProduct = ({valueproduct, paramSlug}: any) => {
+  const { onClickByProduct } = AuthContextDefault()
+
   return (
     <div className="bg-white p-6 sm:p-2 md:p-3 flex sm:flex-col md:flex-col">
     <div className="w-1/3 sm:w-full md:w-full mr-6 md:mr-0 md:flex md:justify-center">
@@ -188,8 +191,8 @@ const InformationProduct = ({valueproduct, paramSlug}: any) => {
               </div>
               <div className="mt-8">
                 <div className="flex justify-between sm:mb-3">
-                  <div className="sm:mr-2 mr-3 border border-solid hover:bg-black hover:text-white cursor-pointer border-black w-1/2 !h-auto flex justify-center items-center flex-col p-2 rounded-md">
-                    <b className="text-base">Mua ngay</b>
+                  <div  className="sm:mr-2 mr-3 border border-solid hover:bg-black hover:text-white cursor-pointer border-black w-1/2 !h-auto flex justify-center items-center flex-col p-2 rounded-md">
+                    <b className="text-base" onClick={() => onClickByProduct(item)}>Mua ngay</b>
                     <span>Giao hàng tận nới</span>
                   </div>
                   <div className="bg-blue-500 ml-3 hover:bg-blue-700 cursor-pointer text-white w-1/2 !h-auto flex justify-center items-center flex-col p-2 rounded-md">

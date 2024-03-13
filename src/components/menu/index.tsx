@@ -6,6 +6,8 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import { useEffect, useState } from "react";
 import CustomInput from "../FormItemFloatLabel/CustomInput";
 import { AuthContextDefault } from "../../../app/context/AuthContext";
+import { Router } from "next/router";
+import { useRouter } from "next/navigation";
 
 type typeUserGoogle = {
   email: string;
@@ -64,6 +66,9 @@ const Menu = (props: any) => {
       url: "/signin",
     },
   ];
+  
+  const router = useRouter();
+
 
   return (
     <>
@@ -301,7 +306,7 @@ const Menu = (props: any) => {
               height={45}
               className="mr-2"
             />
-            <div className="flex flex-col mx-4 ">
+            <div className="flex flex-col mx-4 " onClick={() => {router.push("/cart")}}>
               <span>Giỏ hàng</span>
               <span>Có 0 sản phẩm</span>
 

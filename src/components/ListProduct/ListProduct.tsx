@@ -1,37 +1,10 @@
 import { Card } from 'antd';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
+import { AuthContextDefault } from '../../../app/context/AuthContext';
 
 const ListProduct = ({valueproduct}: any) => {
-  const [recentlyViewed, setRecentlyViewed] = useState<any>([])
-  const [recentlyViewedStt, setRecentlyViewedStt] = useState<number>(1)
-
-  // console.log("1", recentlyViewed);
-
-  const onClickrecentlyViewed = (value : any) => {
-    const localRecentlyViewed = JSON.parse(localStorage.getItem("Recently-Viewed")!)
-    if(recentlyViewed){
-      setRecentlyViewed(localRecentlyViewed)
-    } else {
-      setRecentlyViewed([localRecentlyViewed])
-    }
-    
-    // console.log("1", recentlyViewed)
-    if(recentlyViewed) {
-      console.log("21")
-      recentlyViewed?.map((item: any) => {
-          if(item?.slug?.toLowerCase() !== value?.slug?.toLowerCase()) {
-            console.log("1")
-            localStorage.setItem("Recently-Viewed", JSON.stringify([...recentlyViewed,value]));
-          }
-      })
-    } else {
-      localStorage.setItem("Recently-Viewed", JSON.stringify(value));
-    }
-    setRecentlyViewedStt(+recentlyViewedStt)
-    // localStorage.setItem("Recently-Viewed", JSON.stringify(value));
-    // window.open(value?.link,"_self")
-  }
+  const { onClickrecentlyViewed } = AuthContextDefault()
   return (
       <div className="w-full grid grid-cols-1 gap-1 lg:grid-cols-4 lg:gap-4 sm:grid-cols-2 sm:gap-2 md:grid-cols-2 md:gap-2 xl:grid-cols-6 xl:gap-6">
         {valueproduct?.map((item: any) => {

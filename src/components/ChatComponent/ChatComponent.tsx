@@ -24,8 +24,8 @@ const ChatComponent = () => {
     // connect to socket server
     // @ts-ignore
     const socket = SocketIOClient.connect(ENDPOINT, {
-      path: "/api/socket",
-    });
+      path: "/api/socket", addTrailingSlash: false }
+    );
 
     // log socket connection
     socket.on("connect", () => {

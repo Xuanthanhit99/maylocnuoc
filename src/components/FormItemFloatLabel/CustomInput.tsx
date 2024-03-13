@@ -60,7 +60,7 @@ const CustomInput: FC<Props> = ({
           name={name}
           value={value}
           className={classNames(
-            "border bg-transparent outline-none h-full pt-[30px] pb-0 rounded-lg max-h-full pl-3 ",
+            "min-h-[48px] border bg-transparent outline-none h-full pt-[30px] pb-0 rounded-lg max-h-full pl-3 ",
             className,
             props.disabled ? "text-ink300" : "",
             label == "Tìm kiếm" ? "relative" : ""

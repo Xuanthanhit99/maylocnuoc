@@ -10,6 +10,7 @@ import productnews from "../../../../utils/product.json";
 import InformationProduct from "./InformationDetail/InformationProduct/InformationProduct";
 import ComboProduct from "./InformationDetail/ComboProduct/ComboProduct";
 import DetailReviewProduct from "./InformationDetail/DetailReviewProduct/DetailReviewProduct";
+import { AuthContextDefault } from "../../../../app/context/AuthContext";
 const ProductDetailComponent = ({ paramSlug }: any) => {
   const [collapseHeight, setCollapseHeight] = useState(true);
   const [recentlyViewed, setRecentlyViewed] = useState<any>([]);
@@ -18,7 +19,7 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
     const localRecentlyViewed = JSON.parse(
       localStorage.getItem("Recently-Viewed")!
     );
-    setRecentlyViewed([...recentlyViewed, localRecentlyViewed]);
+    setRecentlyViewed(localRecentlyViewed);
   }, []);
 
   return (

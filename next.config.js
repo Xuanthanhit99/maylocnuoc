@@ -24,11 +24,12 @@ const nextConfig = {
         path: '',
         unoptimized: true 
       },
-      webpack(config) {
+      webpack(config, {isServer}) {
         config.experiments = {
           ...config.experiments,
           topLevelAwait: true,
         }
+        isServer && (config.externals = [...config.externals,  'socket.io-client']);
         return config
       },
       // assetPrefix: './',
