@@ -21,7 +21,7 @@ const ListProduct = ({valueproduct}: any) => {
                 <Link href={item?.link}>
                 <Card
                   hoverable
-                  cover={<img alt="example" src={item?.imgage} />}
+                  cover={<img alt="example" src={item?.image} />}
                 >
                   <div className="mt-1">
                     <h5 className="text-base font-medium	text-center">

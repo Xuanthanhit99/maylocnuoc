@@ -54,7 +54,6 @@ const onClickPostInformation = async () => {
       if(postApi) {
           return postApi
       }
-      console.log("dâd", postApi)
   } catch (error) {
       
   }

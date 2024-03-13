@@ -7,7 +7,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { AuthContextDefault } from '../../../../../../app/context/AuthContext';
 
 const InformationProduct = ({valueproduct, paramSlug}: any) => {
-  const { onClickByProduct } = AuthContextDefault()
+  const { onClickByProduct, onClickAddCartProduct } = AuthContextDefault()
 
   return (
     <div className="bg-white p-6 sm:p-2 md:p-3 flex sm:flex-col md:flex-col">
@@ -195,7 +195,7 @@ const InformationProduct = ({valueproduct, paramSlug}: any) => {
                     <b className="text-base" onClick={() => onClickByProduct(item)}>Mua ngay</b>
                     <span>Giao hàng tận nới</span>
                   </div>
-                  <div className="bg-blue-500 ml-3 hover:bg-blue-700 cursor-pointer text-white w-1/2 !h-auto flex justify-center items-center flex-col p-2 rounded-md">
+                  <div onClick={() => onClickAddCartProduct(item)} className="bg-blue-500 ml-3 hover:bg-blue-700 cursor-pointer text-white w-1/2 !h-auto flex justify-center items-center flex-col p-2 rounded-md">
                     <b className="text-base">Thêm Vào giỏ</b>
                     <span>Tiếp tục mua hàng</span>
                   </div>

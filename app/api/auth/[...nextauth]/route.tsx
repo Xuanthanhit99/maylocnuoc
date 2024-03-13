@@ -4,7 +4,6 @@ import { connectDB } from "../../../../backend/config/db";
 import User from "../../../../models/UserModel";
 import jwt from 'jsonwebtoken'
 
-console.log("first", process.env.GOOGLE_ID );
 const hanlder = NextAuth({
   providers: [
     GoogleProvider({

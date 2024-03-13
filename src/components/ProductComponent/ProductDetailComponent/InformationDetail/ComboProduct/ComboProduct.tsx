@@ -22,7 +22,7 @@ const ComboProduct = ({valueproduct}: any) => {
                   <div className="w-full flex justify-center items-center sm:w-1/5">
                     {/* !mobile */}
                     <Image
-                      src={item?.imgage}
+                      src={item?.image}
                       alt=""
                       className="sm:hidden block"
                       width={150}
@@ -30,7 +30,7 @@ const ComboProduct = ({valueproduct}: any) => {
                     />
                     {/* mobile */}
                     <Image
-                      src={item?.imgage}
+                      src={item?.image}
                       alt=""
                       className="sm:block hidden"
                       width={75}

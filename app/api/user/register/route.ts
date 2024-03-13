@@ -9,7 +9,6 @@ export const POST = async (request: NextRequest) => {
         await connectDB()
         const jsonRequest = await request.json();
         const {username, password, email} = jsonRequest
-        console.log("email", email);
     
         const user = await User.findOne({email});
     
@@ -26,7 +25,6 @@ export const POST = async (request: NextRequest) => {
             email
         })
     
-        console.log("1")
     
         // const savedUser  = await newUser.save()
         await newUser.save()

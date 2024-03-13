@@ -4,21 +4,47 @@ import { HomeOutlined } from "@ant-design/icons";
 import "react-slideshow-image/dist/styles.css";
 import { Divider, Radio, Table } from "antd";
 import type { TableColumnsType } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import productnews from "../../../utils/product.json";
+import { AuthContextDefault } from "../../../app/context/AuthContext";
 
 const CartComponent = (props: any) => {
-  const [isChecked, setIsChecked] = useState(false);
-  const [isCheckedItem, setIsCheckedItem] = useState(0);
+  const { cartProductContext, cartProductContextSum } = AuthContextDefault();
+  const [isChecked, setIsChecked] = useState([
+    {label: "all", value: true}
+  ]);
+  const [cartProductMenu, setCartProductMenu] = useState<any>(null);
+  const [cartProductMenuSum, setCartProductMenuSum] = useState<any>(0);
+  const [sumCart, setSumCart] = useState<any>(0);
+
+  useEffect(() => {
+    setCartProductMenu(cartProductContext); 
+    setSumCart(cartProductContextSum) 
+  }, [cartProductContext, cartProductContextSum]);
+
+  useEffect(() => {
+    const localRecentlyViewed = JSON.parse(
+      localStorage.getItem("Cart-Product")!
+    );
+    const localSumProduct = JSON.parse(
+      localStorage.getItem("Cart-Product-Sum")!
+    );
+    setCartProductMenu(localRecentlyViewed);
+    setSumCart(localSumProduct) 
+
+  }, []);
+
 
   const checkHandler = (value : any) => {
-    setIsChecked(!isChecked);
+    const valueChecked = value
+    setIsChecked([...isChecked,value]);
   };
 
-  const checkHandlerItem = (value : any) => {
-    setIsChecked(!isChecked);
-  };
+  const VND = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+  });
 
   return (
     <div className="flex justify-center bg-[#f3f3f3] items-center w-full flex-col">
@@ -54,7 +80,7 @@ const CartComponent = (props: any) => {
         Giỏ hàng
       </div>
       <div className="flex sm:w-11/12 w-10/12 flex-col h-4/5 overflow-y-scroll">
-        <div className="">
+      {cartProductMenu?.length ? <div className="">
           <ul>
             <li className="flex items-center h-14 w-full" >
               <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} className="w-full">
@@ -65,9 +91,11 @@ const CartComponent = (props: any) => {
                 <input
                   type="checkbox"
                   id="vehicle1"
-                  checked={isChecked}
+                  checked={isChecked?.[0]?.value}
                   value="all"
-                  onChange={() => checkHandler(productnews?.productnews)}
+                  onChange={() => checkHandler({
+                    
+                  })}
                 />
               </Col>
               <Col className="flex justify-center items-center text-center" span={5}>
@@ -82,25 +110,25 @@ const CartComponent = (props: any) => {
               </Row>
             </li>
             <hr />
-            {productnews?.productnews?.map((item: any) => {
+            {cartProductMenu?.map((item: any, index: any) => {
               return (
                 <li key={item?.key} className="w-full">
                   <Row className="flex flex-row items-center h-36 hover:shadow-xl w-full" gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col className="flex justify-center items-center" span={2}>
-                      {item?.key}
+                      {index + 1}
                     </Col>
                     <Col className="flex justify-center items-center" span={2}>
                       <input
                         type="checkbox"
                         id="vehicle1"
-                        checked={isChecked ? true : false}
+                        checked={isChecked?.[0]?.value ? true : isChecked?.[index]?.value}
                         value="all"
-                        onChange={checkHandler}
+                        onChange={() => checkHandler(item)}
                       />
                     </Col>
                     <Col className="flex justify-center items-center" span={5}>
                       <Image
-                        src={item?.imgage}
+                        src={item?.image}
                         width={75}
                         height={75}
                         alt={item?.label}
@@ -110,7 +138,7 @@ const CartComponent = (props: any) => {
                       {item?.label}
                     </Col>
                     <Col className="flex justify-center items-center" span={5}>
-                      {item?.price}
+                      {VND.format(item?.price)}
                     </Col>
                   </Row>
                   <hr />
@@ -118,20 +146,20 @@ const CartComponent = (props: any) => {
               );
             })}
           </ul>
-        </div>
+        </div>: ""}
       </div>
-      <div className="border-b sm:w-11/12 w-10/12 flex justify-center items-center text-center text-2xl text-white font-semibold bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500 h-24">
-      <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} className="flex justify-center items-center text-center text-2xl text-white font-semibold bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500 h-20 w-full">
+       <div className="border-b sm:w-11/12 w-10/12 flex justify-center items-center text-center text-2xl text-white font-semibold bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500 h-24">
+       {cartProductMenu?.length ?<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} className="flex justify-center items-center text-center text-2xl text-white font-semibold bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500 h-20 w-full">
             <Col span={6} className="!p-0 !m-0  !h-20">
                 <div>Số lượng sản phẩm</div>
-                <div>999.999.999</div>
+                <div>{cartProductMenu?.length}</div>
             </Col>
             <Col span={6} className="!p-0 !m-0 !h-20">
               <div>Giá sản phẩm</div>
-              <div>999.999.999</div>
+              <div>{VND.format(sumCart)}</div>
             </Col >
             <Col span={6} className="!p-0 !m-0  !h-20">Thanh toán</Col>
-          </Row>
+          </Row>: ""}
           </div>
       {/* ctkm */}
     </div>

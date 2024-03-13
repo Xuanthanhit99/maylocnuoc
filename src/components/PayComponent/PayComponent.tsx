@@ -33,8 +33,6 @@ const PayComponent = (props: any) => {
   const { mutateAsync: mutateAsync } = useMutation(getProvinceDistrict);
   const { payProduct } = AuthContextDefault()
 
-  console.log("payProduct", payProduct);
-
   useEffect(() => {
     const localRecentlyViewed = JSON.parse(
       localStorage.getItem("Recently-Viewed")!

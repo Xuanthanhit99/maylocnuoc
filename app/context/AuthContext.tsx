@@ -19,7 +19,10 @@ interface TypeAuthContext {
   Register: (user: TypeUser) => Promise<any>;
   onClickrecentlyViewed: (user: TypeProduct) => void;
   onClickByProduct: (product: TypeProduct) => void;
+  onClickAddCartProduct: (product: TypeProduct) => void;
   payProduct?:any;
+  cartProductContext?: any;
+  cartProductContextSum?: number;
 }
 
 export const AuthContext = createContext<TypeAuthContext>({
@@ -29,7 +32,10 @@ export const AuthContext = createContext<TypeAuthContext>({
   Register: async (user: TypeUser) => await Promise,
   onClickrecentlyViewed: async (user: TypeProduct) => Promise<any>,
   onClickByProduct: async (product: TypeProduct) => Promise<any>,
-  payProduct: null
+  onClickAddCartProduct: async (product: TypeProduct) => Promise<any>,
+  payProduct: null,
+  cartProductContext: null,
+  cartProductContextSum: 0,
 });
 
 export const AuthContextProvider = ({
@@ -41,9 +47,9 @@ export const AuthContextProvider = ({
   const [isAuth, setIsAuth] = useState(false);
   const router = useRouter();
   const [recentlyViewed, setRecentlyViewed] = useState<any>([]);
+  const [cartProductContext, setCartProductContext] = useState<any>([]);
+  const [cartProductContextSum, setCartProductContextSum] = useState<any>(0);
   const [payProduct, setPayProduct] = useState<any>([])
-
-  // console.log("1", recentlyViewed);
 
   const onClickrecentlyViewed = (value: any) => {
     const valueLocal = [...recentlyViewed, value];
@@ -52,8 +58,22 @@ export const AuthContextProvider = ({
   };
 
   const onClickByProduct = (product : TypeProduct) => {
-    router.push(`/cart/${product?.slug}`);
+    router.push(`/cart/pay`);
     setPayProduct(product)
+  }
+
+  const onClickAddCartProduct = (product : TypeProduct) => {
+    const valueLocal = [...cartProductContext, product];
+    setCartProductContext(valueLocal);
+    localStorage.setItem("Cart-Product", JSON.stringify(valueLocal));
+      for(var i = 0; i <= valueLocal?.length; i++) {
+        let sum = 0;
+        sum += valueLocal?.[i]?.price;
+        if(!Number.isNaN(sum)) {
+          localStorage.setItem("Cart-Product-Sum", JSON.stringify(sum));
+          setCartProductContextSum(Number.isNaN(sum))
+        }
+    }
   }
 
   const Register = async ({ username, email, password }: TypeUser) => {
@@ -103,6 +123,9 @@ export const AuthContextProvider = ({
         onClickrecentlyViewed,
         onClickByProduct,
         payProduct,
+        onClickAddCartProduct,
+        cartProductContext,
+        cartProductContextSum
       }}
     >
       {children}

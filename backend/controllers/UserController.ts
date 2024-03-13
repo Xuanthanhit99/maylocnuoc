@@ -3,7 +3,6 @@ import UserModel from '../../models/UserModel'
 // import multer from 'multer';
 
 export const createUserApi  = async (req: any, res: any) => {
-     console.log(req);
     try {
         const findUserNameUser = await UserModel.findOne({username: req.body.username})
         const findEmailUser = await UserModel.findOne({email: req.body.email})

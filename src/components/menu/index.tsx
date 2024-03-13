@@ -8,6 +8,8 @@ import CustomInput from "../FormItemFloatLabel/CustomInput";
 import { AuthContextDefault } from "../../../app/context/AuthContext";
 import { Router } from "next/router";
 import { useRouter } from "next/navigation";
+import { TypeProduct } from "../../../utils/TypeProduct";
+import { Badge } from "antd";
 
 type typeUserGoogle = {
   email: string;
@@ -22,8 +24,26 @@ const Menu = (props: any) => {
   const [isMenuMobile, setIsMenuMobile] = useState<any>(false);
   const [isMenuLeft, setIsMenuLeft] = useState<any>(false);
   const [isSign, setIsSign] = useState<boolean>(true);
-  const { user } = AuthContextDefault();
-  
+  const { user, cartProductContext, cartProductContextSum } = AuthContextDefault();
+  const [cartProductMenu, setCartProductMenu] = useState<any>(null);
+  const [sumCart, setSumCart] = useState<any>(0);
+
+  useEffect(() => {
+    setCartProductMenu(cartProductContext);
+    setSumCart(cartProductContextSum)
+  }, [cartProductContext, cartProductContextSum]);
+
+  useEffect(() => {
+    const localRecentlyViewed = JSON.parse(
+      localStorage.getItem("Cart-Product")!
+    );
+    const localSumProduct = JSON.parse(
+      localStorage.getItem("Cart-Product-Sum")!
+    );
+    setCartProductMenu(localRecentlyViewed);
+    setSumCart(localSumProduct)
+  }, []);
+
   useEffect(() => {
     (async () => {
       const res = await getProviders();
@@ -66,9 +86,8 @@ const Menu = (props: any) => {
       url: "/signin",
     },
   ];
-  
-  const router = useRouter();
 
+  const router = useRouter();
 
   return (
     <>
@@ -195,7 +214,11 @@ const Menu = (props: any) => {
                 return (
                   <li
                     key={items?.key}
-                    className={`cursor-pointer flex justify-center items-center ${items?.label === "signin" && isSign ? "signin-user relative": ""}`}
+                    className={`cursor-pointer flex justify-center items-center ${
+                      items?.label === "signin" && isSign
+                        ? "signin-user relative"
+                        : ""
+                    }`}
                   >
                     {items?.label === "signin" &&
                       (isSign ? (
@@ -248,25 +271,57 @@ const Menu = (props: any) => {
         </div>
       </div>
       <div className="p-4 w-full grid grid-cols-1 gap-1 lg:grid-cols-3 lg:gap-3 sm:grid-cols-1 sm:gap-1 md:grid-cols-3 md:gap-3 xl:grid-cols-3 xl:gap-3">
-        <div className="flex justify-center items-center">
-        <Link href="/">
-          <Image
-            src={"/image/home/logo-karofi.png"}
-            alt=""
-            width={240}
-            height={45}
-            className="mr-2"
-          />
-        </Link>
-          <div className="sm:flex hidden justify-end items-center relative shopping-cart w-56 cursor-pointer">
+        <div className="flex justify-center sm:justify-between items-center">
+          <Link href="/">
+            <Image
+              src={"/image/home/logo-karofi.png"}
+              alt=""
+              width={240}
+              height={45}
+              className="mr-2"
+            />
+          </Link>
+          <div className="sm:flex hidden justify-end items-center relative shopping-cart w-14 cursor-pointer">
+          <Badge count={cartProductMenu?.length} showZero>
             <Image
               src={"/image/home/shopping-cart.png"}
               alt=""
               width={45}
               height={45}
-              className="mr-2"
+              className="mr-2 sm:mb-1 "
             />
-              <div className="shopping-cart--children sm:w-[320px] w-[380px] h-[280px] z-10 bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500  absolute right-0 top-12">
+            </Badge>
+            <div className="shopping-cart--children max-h-[280px] sm:w-[320px] p-1 w-[380px] h-[280px] z-10 bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500  absolute right-0 top-12">
+              {cartProductMenu?.length ? (
+                <div className="h-full overflow-y-auto">
+                  <ul>
+                    {cartProductMenu?.map((item: any, index: number) => {
+                      return (
+                        <li
+                          key={index}
+                          className="h-14 mb-2"
+                          onClick={() => {
+                            router.push("/cart/pay");
+                          }}
+                        >
+                          {" "}
+                          <div className=" flex justify-center items-center text-white text-sm font-medium">
+                            <Image
+                              src={item?.image}
+                              alt=""
+                              width={50}
+                              height={50}
+                              className="mr-2"
+                            />
+                            <div>{item?.label}</div>
+                          </div>
+                          <hr className="my-2" />
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              ) : (
                 <div className="flex justify-center items-center flex-col h-full text-white text-lg font-medium	">
                   <Image
                     src={"/image/home/shopping-cart.png"}
@@ -277,6 +332,7 @@ const Menu = (props: any) => {
                   />
                   Chưa có sản phẩm
                 </div>
+              )}
             </div>
           </div>
         </div>
@@ -306,21 +362,57 @@ const Menu = (props: any) => {
               height={45}
               className="mr-2"
             />
-            <div className="flex flex-col mx-4 " onClick={() => {router.push("/cart")}}>
+            <div
+              className="flex flex-col mx-4 "
+              onClick={() => {
+                router.push("/cart");
+              }}
+            >
               <span>Giỏ hàng</span>
-              <span>Có 0 sản phẩm</span>
-
-              <div className="shopping-cart--children w-[380px] h-[280px] z-10 bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500  absolute right-0 top-12">
-                <div className="flex justify-center items-center flex-col h-full text-white text-lg font-medium	">
-                  <Image
-                    src={"/image/home/shopping-cart.png"}
-                    alt=""
-                    width={150}
-                    height={150}
-                    className="mr-2"
-                  />
-                  Chưa có sản phẩm
-                </div>
+              <span>Có {cartProductMenu?.length} sản phẩm</span>
+              {/* shopping-cart--children */}
+              <div className="shopping-cart--children w-[380px] h-[280px] max-h-[280px] p-1 z-10 bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500  absolute right-0 top-12">
+                {cartProductMenu?.length ? (
+                  <div className="h-full overflow-y-auto">
+                    <ul>
+                      {cartProductMenu?.map((item: any, index: number) => {
+                        return (
+                          <li
+                            key={index}
+                            className="h-14 mb-2"
+                            onClick={() => {
+                              router.push("/cart/pay");
+                            }}
+                          >
+                            {" "}
+                            <div className=" flex justify-center items-center text-white text-base font-medium">
+                              <Image
+                                src={item?.image}
+                                alt=""
+                                width={50}
+                                height={50}
+                                className="mr-2"
+                              />
+                              <div>{item?.label}</div>
+                            </div>
+                            <hr className="my-2" />
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                ) : (
+                  <div className="flex justify-center items-center flex-col h-full text-white text-lg font-medium	">
+                    <Image
+                      src={"/image/home/shopping-cart.png"}
+                      alt=""
+                      width={150}
+                      height={150}
+                      className="mr-2"
+                    />
+                    Chưa có sản phẩm
+                  </div>
+                )}
               </div>
             </div>
             <Image
