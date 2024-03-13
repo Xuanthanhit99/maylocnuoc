@@ -38,7 +38,6 @@
     "postcss": "8.4.32",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-elastic-carousel": "^0.11.5",
     "react-query": "^3.39.3",
     "react-responsive-carousel": "^3.2.23",
     "react-slideshow-image": "^4.3.0",
