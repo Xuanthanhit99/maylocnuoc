@@ -8,9 +8,11 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import productnews from "../../../utils/product.json";
 import { AuthContextDefault } from "../../../app/context/AuthContext";
+import { useMutation } from "react-query";
+import { postApiCartByProduct } from "../../../app/context/QueryApi";
 
 const CartComponent = (props: any) => {
-  const { cartProductContext, cartProductContextSum } = AuthContextDefault();
+  const { cartProductContext, cartProductContextSum, onClickByProduct } = AuthContextDefault();
   const [isChecked, setIsChecked] = useState([
     {label: "all", value: true}
   ]);
@@ -45,6 +47,7 @@ const CartComponent = (props: any) => {
     style: 'currency',
     currency: 'VND',
   });
+  
 
   return (
     <div className="flex justify-center bg-[#f3f3f3] items-center w-full flex-col">
@@ -158,7 +161,11 @@ const CartComponent = (props: any) => {
               <div>Giá sản phẩm</div>
               <div>{VND.format(sumCart)}</div>
             </Col >
-            <Col span={6} className="!p-0 !m-0  !h-20">Thanh toán</Col>
+            <Col span={6} className="!p-0 !m-0  !h-20">
+              <div className="w-full h-14 flex justify-center items-center text-center bg-red-500 text-white font-medium rounded-xl my-4" onClick={() => onClickByProduct(cartProductMenu)}>
+                Thanh toán
+              </div>
+              </Col>
           </Row>: ""}
           </div>
       {/* ctkm */}

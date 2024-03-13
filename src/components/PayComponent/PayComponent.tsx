@@ -1,5 +1,5 @@
 // "use client";
-import { Breadcrumb, Button, Card, Checkbox, Col, Row } from "antd";
+import { Breadcrumb, Col, Row, notification  } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { Slide } from "react-slideshow-image";
@@ -15,6 +15,7 @@ import { useMutation, useQuery } from "react-query";
 import {
   getProvince,
   getProvinceDistrict,
+  postApiCartByProduct
 } from "../../../app/context/QueryApi";
 import CustomSelect from "../FormItemFloatLabel/CustomSelect";
 import CustomTextArea from "../FormItemFloatLabel/CustomTextArea";
@@ -31,6 +32,12 @@ const PayComponent = (props: any) => {
   const [valueDistrict, setValueDistrict] = useState<any>(null);
   const [arrayDistrict, setArrayDistrict] = useState<any>([]);
   const { mutateAsync: mutateAsync } = useMutation(getProvinceDistrict);
+  const { mutateAsync: mutateAsyncByProduct } = useMutation(postApiCartByProduct);
+  const [cartProductMenu, setCartProductMenu] = useState<any>(null);
+  const { cartProductContext, cartProductContextSum } = AuthContextDefault();
+  const [api, contextHolder] = notification.useNotification();
+  const key = 'updatable';
+
   const { payProduct } = AuthContextDefault()
 
   useEffect(() => {
@@ -46,6 +53,18 @@ const PayComponent = (props: any) => {
     useQuery(["/sapi/getReportGetMyFavourite"], () => getProvince(), {
       refetchOnWindowFocus: false,
     });
+
+    useEffect(() => {
+      setCartProductMenu(cartProductContext); 
+    }, [cartProductContext, cartProductContextSum]);
+  
+    useEffect(() => {
+      const localRecentlyViewed = JSON.parse(
+        localStorage.getItem("Cart-Product")!
+      );
+      setCartProductMenu(localRecentlyViewed);
+  
+    }, []);
 
   // useEffect(() => {
   const onChangeSelectCity = (value: any) => {
@@ -71,11 +90,35 @@ const PayComponent = (props: any) => {
     );
     setValueDistrict(findDistrict);
   };
+  const openNotification = () => {
+
+  };
+  const postApiCartBy = async () => {
+    return mutateAsyncByProduct(cartProductMenu).then((res: any) => {
+      if(res.success) {
+        api.open({
+          key,
+          message: 'Đặt hàng thành công',
+          description: 'Cảm ơn bạn đã đặt hàng tại cửa hàng chúng tôi.',
+        });
+
+        setTimeout(() => {
+          api.open({
+            key,
+            message: 'Đặt hàng thành công',
+            description: 'Cảm ơn bạn đã đặt hàng tại cửa hàng chúng tôi.',
+          });
+        }, 1000);
+      }
+      return res;
+    });
+  };
 
   // },[districtId])
 
   return (
     <div className="flex justify-center bg-[#f3f3f3]">
+      {contextHolder}
       <div className="w-9/12 sm:w-11/12 md:w-11/12">
         <div className="h-14 flex items-center ">
           <Breadcrumb
@@ -276,7 +319,7 @@ const PayComponent = (props: any) => {
               </Row>
             </div>
           </div>
-          <div className="w-full h-14 flex justify-center items-center text-center bg-red-500 text-white font-medium rounded-xl my-4">
+          <div className="cursor-pointer w-full h-14 flex justify-center items-center text-center bg-red-500 text-white font-medium rounded-xl my-4" onClick={() => postApiCartBy()}>
             Thanh toán
           </div>
         </div>
