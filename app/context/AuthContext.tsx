@@ -60,10 +60,16 @@ export const AuthContextProvider = ({
   };
 
   const onClickByProduct = (product : TypeProduct) => {
-    console.log("product", product);
-    router.push(`/cart/pay`);
-    setPayProduct([...payProduct,product])
+    if(product?.name) {
+      router.push(`/cart/pay`);
+      setPayProduct([...payProduct,product])
+    } else {
+      router.push(`/cart/pay`);
+      setPayProduct(payProduct.concat(product))
+    }
   }
+
+  console.log("payProductAuth", payProduct)
 
   const onClickAddCartProduct = (product : TypeProduct) => {
     const valueLocal = [...cartProductContext, product];

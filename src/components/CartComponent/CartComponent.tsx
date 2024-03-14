@@ -41,17 +41,24 @@ const CartComponent = (props: any) => {
     if(!isChecked?.includes(valueChecked)) {
       setIsChecked([...isChecked, valueChecked]);
       setItemPayProduct([...payItemProduct, value]);
+      const payArrayPriceAuth = [...payItemProduct, value]
+      console.log("payArrayPriceAuth", payArrayPriceAuth);
+      sumArrayPrice(payArrayPriceAuth);
+      sumArrayPriceAuth(payArrayPriceAuth)
     } else {
       setIsChecked(
         isChecked.filter((isCheckedId: any) => {
           return isCheckedId !== valueChecked
         })
       )
-      setIsChecked(
+      setItemPayProduct(
         payItemProduct.filter((payItemProduct: any) => {
           return payItemProduct?._id !== valueChecked
         })
       )
+      sumArrayPrice([])
+      sumArrayPriceAuth([])
+      console.log("1")
     }
   };
 
@@ -70,15 +77,24 @@ const CartComponent = (props: any) => {
   }
 
   const sumArrayPrice = (value: any) => {
+    console.log("sumArrayPrice", value);
     let sum = 0;
-  for(var i = 0; i <= value?.length; i++) {
+    if(value?.length) {
+      for(var i = 0; i <= value?.length; i++) {
         sum += value?.[i]?.price;
         if(!Number.isNaN(sum)) {
           setSumCart(sum);
         }
     }
     return sum
+    }
+    else {
+      setSumCart(0);
+    }
   }
+
+  console.log("sumCart", sumCart);
+
 
   const VND = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
