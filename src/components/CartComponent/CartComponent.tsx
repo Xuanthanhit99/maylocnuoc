@@ -12,7 +12,7 @@ import { useMutation } from "react-query";
 import { postApiCartByProduct } from "../../../app/context/QueryApi";
 
 const CartComponent = (props: any) => {
-  const { cartProductContext, cartProductContextSum, onClickByProduct } = AuthContextDefault();
+  const { cartProductContext, cartProductContextSum, onClickByProduct, sumArrayPriceAuth } = AuthContextDefault();
   const [isChecked, setIsChecked] = useState<any>([]);
   const [cartProductMenu, setCartProductMenu] = useState<any>(null);
   const [cartProductMenuSum, setCartProductMenuSum] = useState<any>(0);
@@ -58,10 +58,12 @@ const CartComponent = (props: any) => {
       setIsChecked(cartProductMenu?.map((item:any) => item?._id))
       setItemPayProduct(cartProductMenu);
       sumArrayPrice(cartProductMenu)
+      sumArrayPriceAuth(cartProductMenu)
     } else {
       setIsChecked([])
       setItemPayProduct([])
       setSumCart(0)
+      sumArrayPriceAuth(0)
     }
   }
 

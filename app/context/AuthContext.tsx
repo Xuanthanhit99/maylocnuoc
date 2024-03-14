@@ -23,6 +23,7 @@ interface TypeAuthContext {
   payProduct?:any;
   cartProductContext?: any;
   cartProductContextSum?: number;
+  sumArrayPriceAuth: (value: any) => void
 }
 
 export const AuthContext = createContext<TypeAuthContext>({
@@ -36,6 +37,7 @@ export const AuthContext = createContext<TypeAuthContext>({
   payProduct: null,
   cartProductContext: null,
   cartProductContextSum: 0,
+  sumArrayPriceAuth: async (value: any) => Promise<any>
 });
 
 export const AuthContextProvider = ({
@@ -72,10 +74,10 @@ export const AuthContextProvider = ({
     })
     setCartProductContext(valueLocalArray);
     localStorage.setItem("Cart-Product", JSON.stringify(valueLocalArray));
-    sumArrayPrice(valueLocalArray)
+    // sumArrayPrice(valueLocalArray)
   }
 
-  const sumArrayPrice = (value: any) => {
+  const sumArrayPriceAuth = (value: any) => {
     let sum = 0;
   for(var i = 0; i <= value?.length; i++) {
         sum += value?.[i]?.price;
@@ -136,7 +138,8 @@ export const AuthContextProvider = ({
         payProduct,
         onClickAddCartProduct,
         cartProductContext,
-        cartProductContextSum
+        cartProductContextSum,
+        sumArrayPriceAuth,
       }}
     >
       {children}
