@@ -4,7 +4,7 @@ import { HomeOutlined } from "@ant-design/icons";
 import "react-slideshow-image/dist/styles.css";
 import { Divider, Radio, Table } from "antd";
 import type { TableColumnsType } from "antd";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import productnews from "../../../utils/product.json";
 import { AuthContextDefault } from "../../../app/context/AuthContext";
@@ -13,41 +13,74 @@ import { postApiCartByProduct } from "../../../app/context/QueryApi";
 
 const CartComponent = (props: any) => {
   const { cartProductContext, cartProductContextSum, onClickByProduct } = AuthContextDefault();
-  const [isChecked, setIsChecked] = useState([
-    {label: "all", value: true}
-  ]);
+  const [isChecked, setIsChecked] = useState<any>([]);
   const [cartProductMenu, setCartProductMenu] = useState<any>(null);
   const [cartProductMenuSum, setCartProductMenuSum] = useState<any>(0);
-  const [sumCart, setSumCart] = useState<any>(0);
+  const [sumCart, setSumCart] = useState<number>(0);
+  const [payItemProduct, setItemPayProduct] = useState<any>([])
 
   useEffect(() => {
     setCartProductMenu(cartProductContext); 
-    setSumCart(cartProductContextSum) 
+    // setSumCart(cartProductContextSum) 
   }, [cartProductContext, cartProductContextSum]);
 
   useEffect(() => {
     const localRecentlyViewed = JSON.parse(
       localStorage.getItem("Cart-Product")!
     );
-    const localSumProduct = JSON.parse(
-      localStorage.getItem("Cart-Product-Sum")!
-    );
     setCartProductMenu(localRecentlyViewed);
-    setSumCart(localSumProduct) 
+    // setSumCart(localSumProduct) 
 
   }, []);
 
 
-  const checkHandler = (value : any) => {
-    const valueChecked = value
-    setIsChecked([...isChecked,value]);
+  const checkHandler = (event : React.ChangeEvent<HTMLInputElement>, value: any) => {
+    const valueChecked = parseInt(event.target.value);
+    if(!isChecked?.includes(valueChecked)) {
+      setIsChecked([...isChecked, valueChecked]);
+      setItemPayProduct([...payItemProduct, value]);
+    } else {
+      setIsChecked(
+        isChecked.filter((isCheckedId: any) => {
+          return isCheckedId !== valueChecked
+        })
+      )
+      setIsChecked(
+        payItemProduct.filter((payItemProduct: any) => {
+          return payItemProduct?._id !== valueChecked
+        })
+      )
+    }
   };
+
+  const checkHandlerAll = () => {
+    if(isChecked?.length < cartProductMenu?.length) {
+      setIsChecked(cartProductMenu?.map((item:any) => item?._id))
+      setItemPayProduct(cartProductMenu);
+      sumArrayPrice(cartProductMenu)
+    } else {
+      setIsChecked([])
+      setItemPayProduct([])
+      setSumCart(0)
+    }
+  }
+
+
+  const sumArrayPrice = (value: any) => {
+    let sum = 0;
+  for(var i = 0; i <= value?.length; i++) {
+        sum += value?.[i]?.price;
+        if(!Number.isNaN(sum)) {
+          setSumCart(sum);
+        }
+    }
+    return sum
+  }
 
   const VND = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
     currency: 'VND',
-  });
-  
+  });  
 
   return (
     <div className="flex justify-center bg-[#f3f3f3] items-center w-full flex-col">
@@ -94,11 +127,8 @@ const CartComponent = (props: any) => {
                 <input
                   type="checkbox"
                   id="vehicle1"
-                  checked={isChecked?.[0]?.value}
-                  value="all"
-                  onChange={() => checkHandler({
-                    
-                  })}
+                  checked={isChecked.length === cartProductMenu?.length}
+                  onChange={checkHandlerAll}
                 />
               </Col>
               <Col className="flex justify-center items-center text-center" span={5}>
@@ -115,7 +145,7 @@ const CartComponent = (props: any) => {
             <hr />
             {cartProductMenu?.map((item: any, index: any) => {
               return (
-                <li key={item?.key} className="w-full">
+                <li key={item?._id} className="w-full">
                   <Row className="flex flex-row items-center h-36 hover:shadow-xl w-full" gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col className="flex justify-center items-center" span={2}>
                       {index + 1}
@@ -124,9 +154,9 @@ const CartComponent = (props: any) => {
                       <input
                         type="checkbox"
                         id="vehicle1"
-                        checked={isChecked?.[0]?.value ? true : isChecked?.[index]?.value}
-                        value="all"
-                        onChange={() => checkHandler(item)}
+                        checked={isChecked.includes(item?._id)}
+                        value={item?._id}
+                        onChange={(e) => checkHandler(e,item)}
                       />
                     </Col>
                     <Col className="flex justify-center items-center" span={5}>
@@ -162,7 +192,7 @@ const CartComponent = (props: any) => {
               <div>{VND.format(sumCart)}</div>
             </Col >
             <Col span={6} className="!p-0 !m-0  !h-20">
-              <div className="w-full h-14 flex justify-center items-center text-center bg-red-500 text-white font-medium rounded-xl my-4" onClick={() => onClickByProduct(cartProductMenu)}>
+              <div className="w-full cursor-pointer hover:bg-white hover:border-black hover:text-black h-14 flex justify-center items-center text-center border border-white text-white font-medium rounded-xl my-4" onClick={() => onClickByProduct(payItemProduct)}>
                 Thanh toán
               </div>
               </Col>

@@ -64,16 +64,27 @@ export const AuthContextProvider = ({
 
   const onClickAddCartProduct = (product : TypeProduct) => {
     const valueLocal = [...cartProductContext, product];
-    setCartProductContext(valueLocal);
-    localStorage.setItem("Cart-Product", JSON.stringify(valueLocal));
-      for(var i = 0; i <= valueLocal?.length; i++) {
-        let sum = 0;
-        sum += valueLocal?.[i]?.price;
+    const valueLocalArray = valueLocal?.map((item: any, index: any) => {
+      return {
+        ...item,
+        _id: index + 1,
+      }
+    })
+    setCartProductContext(valueLocalArray);
+    localStorage.setItem("Cart-Product", JSON.stringify(valueLocalArray));
+    sumArrayPrice(valueLocalArray)
+  }
+
+  const sumArrayPrice = (value: any) => {
+    let sum = 0;
+  for(var i = 0; i <= value?.length; i++) {
+        sum += value?.[i]?.price;
         if(!Number.isNaN(sum)) {
           localStorage.setItem("Cart-Product-Sum", JSON.stringify(sum));
-          setCartProductContextSum(Number.isNaN(sum))
+          setCartProductContextSum(sum);
         }
     }
+    return sum
   }
 
   const Register = async ({ username, email, password }: TypeUser) => {

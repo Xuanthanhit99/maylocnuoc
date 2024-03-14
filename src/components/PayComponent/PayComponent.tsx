@@ -36,16 +36,23 @@ const PayComponent = (props: any) => {
   const [cartProductMenu, setCartProductMenu] = useState<any>(null);
   const { cartProductContext, cartProductContextSum } = AuthContextDefault();
   const [api, contextHolder] = notification.useNotification();
+  const [sumCart, setSumCart] = useState<number>(0);
   const key = 'updatable';
 
   const { payProduct } = AuthContextDefault()
+  console.log("payProduct", payProduct);
 
   useEffect(() => {
     const localRecentlyViewed = JSON.parse(
       localStorage.getItem("Recently-Viewed")!
     );
-    setRecentlyViewed(localRecentlyViewed);
+    const sumCartLocal = JSON.parse(
+      localStorage.getItem("Cart-Product-Sum")!
+    );
+    setSumCart(sumCartLocal);
   }, []);
+
+  
 
   const paramSlug = props?.params?.slug;
 
@@ -114,7 +121,10 @@ const PayComponent = (props: any) => {
     });
   };
 
-  // },[districtId])
+  const VND = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+  });
 
   return (
     <div className="flex justify-center bg-[#f3f3f3]">
@@ -147,14 +157,17 @@ const PayComponent = (props: any) => {
         </div>
         <div className="bg-white p-6 sm:p-2">
           {/*thông tin sản phẩm */}
-          <div className="flex justify-center items-start">
-            <Row
+          <div className="flex justify-center items-start flex-col">
+            {payProduct?.length ? payProduct?.map((item:any) => {
+            return (
+            <div key={item?._id}>
+            <Row 
               gutter={{ xs: 24, sm: 16, md: 32, lg: 32 }}
               className="w-full sm:hidden"
             >
               <Col className="flex justify-center items-center" span={5}>
                 <Image
-                  src={"/image/product/may-loc-nuoc-kangaroo.png"}
+                  src={item?.image}
                   width={150}
                   height={150}
                   alt=""
@@ -164,7 +177,7 @@ const PayComponent = (props: any) => {
                 className="flex justify-center items-center text-xl font-semibold text-center"
                 span={10}
               >
-                <p>Máy lọc nước nóng lạnh Karofi KAD-KG100HGTG1</p>
+                <p>{item?.label}</p>
               </Col>
               <Col
                 className="flex flex-col justify-center items-center text-lg font-semibold"
@@ -180,15 +193,18 @@ const PayComponent = (props: any) => {
                 <div>
                   <p className="text-lg font-semibold">Giá</p>
                   <p className="text-lg font-semibold line-through">
-                    8.200.000Đ
+                  {VND.format(item?.marketPrice)}
                   </p>
-                  <p className="text-3xl font-semibold">6.200.000Đ</p>
+                  <p className="text-3xl font-semibold">{VND.format(item?.price)}</p>
                   <p className="py-2 px-4 bg-red-500 rounded-lg text-white">
                     Giảm giá 30%
                   </p>
                 </div>{" "}
               </Col>
             </Row>
+            <hr className="my-3"/>
+            </div>
+            )}) : "" }
             <div className="w-full hidden sm:flex ">
               <div className="w-1/3 mr-2">
                 <Image
@@ -289,7 +305,7 @@ const PayComponent = (props: any) => {
                   <div className="text-lg font-medium text-red-500">
                     Tổng tiền
                   </div>
-                  <div className="text-base font-mono">38.620.00</div>
+                  <div className="text-base font-mono">{VND.format(sumCart)}</div>
                 </Col>
                 <Col
                   className="flex flex-col justify-center items-center sm:flex-row sm:w-full sm:justify-between sm:max-w-full"
