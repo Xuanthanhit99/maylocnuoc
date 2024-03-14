@@ -60,8 +60,9 @@ export const AuthContextProvider = ({
   };
 
   const onClickByProduct = (product : TypeProduct) => {
+    console.log("product", product);
     router.push(`/cart/pay`);
-    setPayProduct(product)
+    setPayProduct([...payProduct,product])
   }
 
   const onClickAddCartProduct = (product : TypeProduct) => {

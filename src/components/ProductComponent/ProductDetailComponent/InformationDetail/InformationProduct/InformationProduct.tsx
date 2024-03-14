@@ -32,9 +32,9 @@ const InformationProduct = ({valueproduct, paramSlug}: any) => {
         ?.filter(
           (item: any) => item?.slug?.toLowerCase() === paramSlug?.toLowerCase()
         )
-        ?.map((item:any, key: any) => {
+        ?.map((item:any) => {
           return (
-            <div key={key} className="xl:w-8/12 w-full mr-3 sm:flex sm:flex-col">
+            <div key={item?._id} className="xl:w-8/12 w-full mr-3 sm:flex sm:flex-col">
               <div className="h-14 flex flex-col">
                 <h3 className="text-xl font-semibold text-[#333] flex items-start">
                   {item?.name}
@@ -162,7 +162,6 @@ const InformationProduct = ({valueproduct, paramSlug}: any) => {
                           <div className="flex flex-col xl:flex-row">
                             <Checkbox
                               className="mr-2"
-                              onChange={() => console.log("")}
                               checked={
                                 itemModel?.slug?.toLowerCase() ===
                                 paramSlug?.toLowerCase()
@@ -191,8 +190,8 @@ const InformationProduct = ({valueproduct, paramSlug}: any) => {
               </div>
               <div className="mt-8">
                 <div className="flex justify-between sm:mb-3">
-                  <div  className="sm:mr-2 mr-3 border border-solid hover:bg-black hover:text-white cursor-pointer border-black w-1/2 !h-auto flex justify-center items-center flex-col p-2 rounded-md">
-                    <b className="text-base" onClick={() => onClickByProduct(item)}>Mua ngay</b>
+                  <div onClick={() => onClickByProduct(item)} className="sm:mr-2 mr-3 border border-solid hover:bg-black hover:text-white cursor-pointer border-black w-1/2 !h-auto flex justify-center items-center flex-col p-2 rounded-md">
+                    <b className="text-base">Mua ngay</b>
                     <span>Giao hàng tận nới</span>
                   </div>
                   <div onClick={() => onClickAddCartProduct(item)} className="bg-blue-500 ml-3 hover:bg-blue-700 cursor-pointer text-white w-1/2 !h-auto flex justify-center items-center flex-col p-2 rounded-md">

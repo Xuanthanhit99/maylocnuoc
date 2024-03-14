@@ -10,22 +10,10 @@ type Props = {
   name?: string;
   value?: string;
   className?: string;
-  prefix?: React.ReactNode;
-  suffix?: React.ReactNode;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  onClick?: React.MouseEventHandler<HTMLInputElement>;
-  onFocus?: React.FocusEventHandler<HTMLInputElement>;
-  onPressEnter?: React.KeyboardEventHandler<HTMLInputElement>;
-  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
+  onChange?: ((e?: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement> | undefined) => void) | undefined
   placeholder?: string;
   type?: string;
   allowClear?: boolean;
-  disabled?: boolean;
-  min?: number;
-  max?: number;
-  step?: number;
-  autoComplete?: string;
-  invalid?: boolean;
 };
 
 const CustomTextArea: FC<Props> = ({
@@ -33,9 +21,9 @@ const CustomTextArea: FC<Props> = ({
   value,
   name,
   type = "text",
-  autoComplete = "off",
+  // autoComplete = "off",
   className,
-  invalid,
+  // invalid,
   ...props
 }) => {
     const { TextArea } = Input;
@@ -54,7 +42,7 @@ const CustomTextArea: FC<Props> = ({
         } form-item-float-label flex-1 ${props.disabled ? "text-ink300" : ""}`}
       > */}
         <FloatLabel label={label || ""} value={value}>
-        <TextArea rows={4} placeholder="" maxLength={6} />
+        <TextArea rows={4} placeholder="" cols={6} {...props}/>
       </FloatLabel>
     </>
   );

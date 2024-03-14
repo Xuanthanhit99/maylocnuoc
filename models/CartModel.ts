@@ -12,7 +12,7 @@ const CartSchema = new Schema({
         address: {type: String},
         note: {type: String}
     },
-    product: {
+    product: [{
         name: {type: String},
         type: {type: String},
         price: {type: String},
@@ -20,7 +20,7 @@ const CartSchema = new Schema({
         trademark: {type: String},
         promotionalprice: {type: String},
         guarantee: {type: String}
-    },
+    }],
     date: {type: Date}
 })
 

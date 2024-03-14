@@ -27,9 +27,13 @@ const PayComponent = (props: any) => {
   const [collapseHeight, setCollapseHeight] = useState(true);
   const [recentlyViewed, setRecentlyViewed] = useState<any>([]);
   const [quantity, setQuantity] = useState<any>(1);
-  const [districtId, setDistrictId] = useState<any>(null);
   const [valueCity, setValueCity] = useState<any>(null);
   const [valueDistrict, setValueDistrict] = useState<any>(null);
+  const [useValueName, setUseValueName] = useState<string>("");
+  const [useValuePhone, setUseValuePhone] = useState<string>("");
+  const [useValueEmail, setUseValueEmail] = useState<string>("");
+  const [useValueAddress, setUseValueAddress] = useState<string>("");
+  const [useValueNote, setUseValueNote] = useState<string | undefined>("");
   const [arrayDistrict, setArrayDistrict] = useState<any>([]);
   const { mutateAsync: mutateAsync } = useMutation(getProvinceDistrict);
   const { mutateAsync: mutateAsyncByProduct } = useMutation(postApiCartByProduct);
@@ -37,9 +41,11 @@ const PayComponent = (props: any) => {
   const { cartProductContext, cartProductContextSum } = AuthContextDefault();
   const [api, contextHolder] = notification.useNotification();
   const [sumCart, setSumCart] = useState<number>(0);
-  const key = 'updatable';
+  const [informationUser, setInformationUser] = useState<any>([]);
 
+  const key = 'updatable';
   const { payProduct } = AuthContextDefault()
+
   console.log("payProduct", payProduct);
 
   useEffect(() => {
@@ -50,11 +56,7 @@ const PayComponent = (props: any) => {
       localStorage.getItem("Cart-Product-Sum")!
     );
     setSumCart(sumCartLocal);
-  }, []);
-
-  
-
-  const paramSlug = props?.params?.slug;
+  }, []); 
 
   const { data: apiDataFarvoriteData, isLoading: isLoadingFarvorite } =
     useQuery(["/sapi/getReportGetMyFavourite"], () => getProvince(), {
@@ -90,6 +92,7 @@ const PayComponent = (props: any) => {
       getDictrictId();
     }
   };
+  
 
   const onChangeSelectDistrict = (value: any) => {
     const findDistrict = arrayDistrict?.results?.find(
@@ -97,11 +100,13 @@ const PayComponent = (props: any) => {
     );
     setValueDistrict(findDistrict);
   };
-  const openNotification = () => {
-
-  };
   const postApiCartBy = async () => {
-    return mutateAsyncByProduct(cartProductMenu).then((res: any) => {
+      const data = {
+        "informationuser":  {"username": useValueName,"phone": useValuePhone, "email": useValueEmail},
+        "deliveryaddress" : {"city": valueCity?.province_name ,"district": valueDistrict?.district_name, "address": useValueAddress, "note": useValueNote},
+        "product" :  cartProductMenu
+      }
+    return mutateAsyncByProduct(data).then((res: any) => {
       if(res.success) {
         api.open({
           key,
@@ -159,6 +164,7 @@ const PayComponent = (props: any) => {
           {/*thông tin sản phẩm */}
           <div className="flex justify-center items-start flex-col">
             {payProduct?.length ? payProduct?.map((item:any) => {
+              console.log(item)
             return (
             <div key={item?._id}>
             <Row 
@@ -243,15 +249,17 @@ const PayComponent = (props: any) => {
                     label="Họ tên*"
                     name="username"
                     className="mb-2"
+                    onChange={(e) => setUseValueName(e?.target?.value)}
                   />
                   <CustomInput
                     label="Số điện thoại*"
                     name="phone"
                     className="mb-2"
+                    onChange={(e) => setUseValuePhone(e?.target?.value)}
                   />
                 </div>
                 <div>
-                  <CustomInput label="Email" name="email" />
+                  <CustomInput label="Email" name="email" onChange={(e) => setUseValueEmail(e?.target?.value)}/>
                 </div>
               </div>
             </div>
@@ -283,10 +291,11 @@ const PayComponent = (props: any) => {
                   />
                 </div>
                 <div>
-                  <CustomInput label="Địa chỉ" name="address" />
+                  <CustomInput label="Địa chỉ" name="address" onChange={(e) => setUseValueAddress(e?.target?.value)}/>
                   <CustomTextArea
                     label="Ghi chú (không bắt buộc)"
                     name="note"
+                    onChange={(e) => setUseValueNote(e?.target?.value)}
                   />
                 </div>
               </div>

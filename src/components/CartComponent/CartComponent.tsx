@@ -1,5 +1,5 @@
 "use client";
-import { Breadcrumb, Button, Card, Checkbox, Col, Row, Select } from "antd";
+import { Breadcrumb, Button, Card, Checkbox, Col, Row, Select ,notification} from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import "react-slideshow-image/dist/styles.css";
 import { Divider, Radio, Table } from "antd";
@@ -18,6 +18,8 @@ const CartComponent = (props: any) => {
   const [cartProductMenuSum, setCartProductMenuSum] = useState<any>(0);
   const [sumCart, setSumCart] = useState<number>(0);
   const [payItemProduct, setItemPayProduct] = useState<any>([])
+  const [api, contextHolder] = notification.useNotification();
+  const key = 'updatable1';
 
   useEffect(() => {
     setCartProductMenu(cartProductContext); 
@@ -67,7 +69,6 @@ const CartComponent = (props: any) => {
     }
   }
 
-
   const sumArrayPrice = (value: any) => {
     let sum = 0;
   for(var i = 0; i <= value?.length; i++) {
@@ -82,11 +83,28 @@ const CartComponent = (props: any) => {
   const VND = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
     currency: 'VND',
-  });  
+  });
+
+  const onClickNoProduct = () => {
+    api.open({
+      key,
+      message: 'Thanh toán thất bại',
+      description: 'Bạn chưa chọn sản phẩm để thanh toán',
+    });
+
+    setTimeout(() => {
+      api.open({
+        key,
+        message: 'Thanh toán thất bại',
+        description: 'Bạn chưa chọn sản phẩm để thanh toán',
+      });
+    }, 1000);
+  }
 
   return (
     <div className="flex justify-center bg-[#f3f3f3] items-center w-full flex-col">
       {/* Breadcrumb */}
+      {contextHolder}
       <div className="flex w-10/12 flex-col my-3 justify-start">
         <div className="h-14 flex items-center ">
           <Breadcrumb
@@ -194,7 +212,7 @@ const CartComponent = (props: any) => {
               <div>{VND.format(sumCart)}</div>
             </Col >
             <Col span={6} className="!p-0 !m-0  !h-20">
-              <div className="w-full cursor-pointer hover:bg-white hover:border-black hover:text-black h-14 flex justify-center items-center text-center border border-white text-white font-medium rounded-xl my-4" onClick={() => onClickByProduct(payItemProduct)}>
+              <div className="w-full cursor-pointer hover:bg-white hover:border-black hover:text-black h-14 flex justify-center items-center text-center border border-white text-white font-medium rounded-xl my-4" onClick={() =>  !payItemProduct?.length ? onClickNoProduct() : onClickByProduct(payItemProduct)}>
                 Thanh toán
               </div>
               </Col>
@@ -206,3 +224,4 @@ const CartComponent = (props: any) => {
 };
 
 export default CartComponent;
+ 

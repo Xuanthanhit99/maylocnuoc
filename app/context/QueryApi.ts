@@ -15,7 +15,8 @@ export const getProvinceDistrictWard = async (provinceWardId: string) => {
     return response?.data;
 };
 
-export const postApiCartByProduct = async (provinceWardId: string) => {
-    const response = await axios.post(`/api/cart`,{provinceWardId});
+export const postApiCartByProduct = async (data: any) => {
+    console.log("data", data);
+    const response = await axios.post(`/api/cart`,{data});
     return response?.data;
 };
