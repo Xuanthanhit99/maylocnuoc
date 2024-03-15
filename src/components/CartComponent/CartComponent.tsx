@@ -11,6 +11,7 @@ import { AuthContextDefault } from "../../../app/context/AuthContext";
 import { useMutation } from "react-query";
 import { postApiCartByProduct } from "../../../app/context/QueryApi";
 import Link from "next/link";
+import { VND } from "../../../utils/format";
 
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
@@ -56,7 +57,7 @@ const CartComponent = (props: any) => {
       )
       setItemPayProduct(
         payItemProduct.filter((payItemProduct: any) => {
-          return payItemProduct?._id !== valueChecked
+          return payItemProduct?.idvalue !== valueChecked
         })
       )
       sumArrayPrice([])
@@ -66,7 +67,7 @@ const CartComponent = (props: any) => {
 
   const checkHandlerAll = () => {
     if(isChecked?.length < cartProductMenu?.length) {
-      setIsChecked(cartProductMenu?.map((item:any) => item?._id))
+      setIsChecked(cartProductMenu?.map((item:any) => item?.idvalue))
       setItemPayProduct(cartProductMenu);
       sumArrayPrice(cartProductMenu)
       sumArrayPriceAuth(cartProductMenu)
@@ -93,11 +94,6 @@ const CartComponent = (props: any) => {
       setSumCart(0);
     }
   }
-
-  const VND = new Intl.NumberFormat('vi-VN', {
-    style: 'currency',
-    currency: 'VND',
-  });
 
   const onClickNoProduct = (type: NotificationType) => {
     api[type]({
@@ -170,7 +166,7 @@ const CartComponent = (props: any) => {
             <hr />
             {cartProductMenu?.map((item: any, index: any) => {
               return (
-                <li key={item?._id} className="w-full">
+                <li key={item?.idvalue} className="w-full">
                   <Row className="flex flex-row items-center h-36 hover:shadow-xl w-full" gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col className="flex justify-center items-center" span={2}>
                       {index + 1}
@@ -179,8 +175,8 @@ const CartComponent = (props: any) => {
                       <input
                         type="checkbox"
                         id="vehicle1"
-                        checked={isChecked.includes(item?._id)}
-                        value={item?._id}
+                        checked={isChecked.includes(item?.idvalue)}
+                        value={item?.idvalue}
                         onChange={(e) => checkHandler(e,item)}
                       />
                     </Col>
@@ -196,7 +192,7 @@ const CartComponent = (props: any) => {
                       {item?.label}
                     </Col>
                     <Col className="flex justify-center items-center" span={5}>
-                      {VND.format(item?.price)}
+                      {VND(item?.price)}
                     </Col>
                   </Row>
                   <hr />
@@ -218,11 +214,11 @@ const CartComponent = (props: any) => {
        {cartProductMenu?.length ?<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} className="flex justify-center items-center text-center text-2xl text-white font-semibold bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500 h-20 w-full">
             <Col span={6} className="!p-0 !m-0  !h-20">
                 <div>Số lượng sản phẩm</div>
-                <div>{cartProductMenu?.length}</div>
+                <div>{payItemProduct?.length}</div>
             </Col>
             <Col span={6} className="!p-0 !m-0 !h-20">
               <div>Giá sản phẩm</div>
-              <div>{VND.format(sumCart)}</div>
+              <div>{VND(sumCart)}</div>
             </Col >
             <Col span={6} className="!p-0 !m-0  !h-20">
               <div className="w-full cursor-pointer hover:bg-white hover:border-black hover:text-black h-14 flex justify-center items-center text-center border border-white text-white font-medium rounded-xl my-4" onClick={() =>  !payItemProduct?.length ? onClickNoProduct('error') : onClickByProduct(payItemProduct)}>

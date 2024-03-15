@@ -34,7 +34,7 @@ const InformationProduct = ({valueproduct, paramSlug}: any) => {
         )
         ?.map((item:any) => {
           return (
-            <div key={item?._id} className="xl:w-8/12 w-full mr-3 sm:flex sm:flex-col">
+            <div key={item?.idvalue} className="xl:w-8/12 w-full mr-3 sm:flex sm:flex-col">
               <div className="h-14 flex flex-col">
                 <h3 className="text-xl font-semibold text-[#333] flex items-start">
                   {item?.name}

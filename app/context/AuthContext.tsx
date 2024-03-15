@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 import { TypeProduct } from "../../utils/TypeProduct";
+import { notification } from "antd";
 
 type TypeUser = {
   username?: any;
@@ -23,9 +24,11 @@ interface TypeAuthContext {
   payProduct?:any;
   payProductCart?:any;
   cartProductContext?: any;
-  cartProductContextSum?: number;
+  cartProductContextSum: number;
   sumArrayPriceAuth: (value: any) => void
-  onPayProductValue: (product: TypeProduct) => void;
+  onPayProductValue: () => void;
+  onPayProductValueCart: () => void;
+  isLoadingAuth: boolean;
 }
 
 export const AuthContext = createContext<TypeAuthContext>({
@@ -40,7 +43,9 @@ export const AuthContext = createContext<TypeAuthContext>({
   cartProductContext: null,
   cartProductContextSum: 0,
   sumArrayPriceAuth: async (value: any) => Promise<any>,
-  onPayProductValue: async (product: TypeProduct) => Promise<any>,
+  onPayProductValue: () => {},
+  isLoadingAuth: false,
+  onPayProductValueCart: () => {},
 });
 
 export const AuthContextProvider = ({
@@ -56,6 +61,7 @@ export const AuthContextProvider = ({
   const [cartProductContextSum, setCartProductContextSum] = useState<any>(0);
   const [payProduct, setPayProduct] = useState<any>([])
   const [payProductCart, setPayProductCart] = useState<any>([])
+  const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(false)
 
   const onClickrecentlyViewed = (value: any) => {
     const valueLocal = [...recentlyViewed, value];
@@ -67,14 +73,26 @@ export const AuthContextProvider = ({
     if(product?.name) {
       router.push(`/cart/pay`);
       setPayProduct([product])
+      setCartProductContextSum(product?.price)
     } else {
-      router.push(`/cart/pay`);
+      router.push(`/cart/pays`);
       setPayProductCart(payProduct.concat(product))
     }
   }
 
   const onPayProductValue = () => {
     setPayProduct([])
+    router.push("/")
+    setIsLoadingAuth(true);
+  }
+
+  const onPayProductValueCart = () => {
+    setPayProductCart([])
+    router.push("/")
+    setIsLoadingAuth(true);
+    setCartProductContext([])
+    localStorage.removeItem("Recently-Viewed");
+    localStorage.removeItem("Cart-Product-Sum");
   }
 
   const onClickAddCartProduct = (product : TypeProduct) => {
@@ -82,7 +100,7 @@ export const AuthContextProvider = ({
     const valueLocalArray = valueLocal?.map((item: any, index: any) => {
       return {
         ...item,
-        _id: index + 1,
+        idvalue: index + 1,
       }
     })
     setCartProductContext(valueLocalArray);
@@ -154,7 +172,9 @@ export const AuthContextProvider = ({
         cartProductContext,
         cartProductContextSum,
         sumArrayPriceAuth,
-        onPayProductValue
+        onPayProductValue,
+        isLoadingAuth,
+        onPayProductValueCart
       }}
     >
       {children}

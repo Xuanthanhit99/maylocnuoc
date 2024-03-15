@@ -369,7 +369,7 @@ const Menu = (props: any) => {
               }}
             >
               <span>Giỏ hàng</span>
-              <span>Có {cartProductMenu?.length} sản phẩm</span>
+              <span>{cartProductMenu?.length ? `Có ${cartProductMenu?.length}` : "Chưa có"} sản phẩm</span>
               {/* shopping-cart--children */}
               <div className="shopping-cart--children w-[380px] h-[280px] max-h-[280px] p-1 z-10 bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500  absolute right-0 top-12">
                 {cartProductMenu?.length ? (

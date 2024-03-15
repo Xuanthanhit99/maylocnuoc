@@ -1,5 +1,5 @@
 // "use client";
-import { Breadcrumb, Col, Row, notification  } from "antd";
+import { Breadcrumb, Col, Row } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { Slide } from "react-slideshow-image";
@@ -20,6 +20,7 @@ import {
 import CustomSelect from "../FormItemFloatLabel/CustomSelect";
 import CustomTextArea from "../FormItemFloatLabel/CustomTextArea";
 import { AuthContextDefault } from "../../../app/context/AuthContext";
+import { VND } from "../../../utils/format";
 
 export const dynamicParams = false;
 
@@ -38,12 +39,12 @@ const PayComponent = (props: any) => {
   const { mutateAsync: mutateAsync } = useMutation(getProvinceDistrict);
   const { mutateAsync: mutateAsyncByProduct } = useMutation(postApiCartByProduct);
   const [cartProductMenu, setCartProductMenu] = useState<any>(null);
-  const [api, contextHolder] = notification.useNotification();
   const [sumCart, setSumCart] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<any>(false);
+  const paramSlug = props?.params?.pay;
 
   const key = 'updatable';
-  const { payProduct, onPayProductValue, payProductCart } = AuthContextDefault()
+  const { payProduct, onPayProductValue, payProductCart, cartProductContextSum, onPayProductValueCart } = AuthContextDefault()
 
   useEffect(() => {
     if(payProduct?.length) {
@@ -68,19 +69,6 @@ const PayComponent = (props: any) => {
       refetchOnWindowFocus: false,
     });
 
-    // useEffect(() => {
-    //   setCartProductMenu(cartProductContext); 
-    // }, [cartProductContext]);
-  
-    // useEffect(() => {
-    //   const localRecentlyViewed = JSON.parse(
-    //     localStorage.getItem("Cart-Product")!
-    //   );
-    //   setCartProductMenu(localRecentlyViewed);
-  
-    // }, []);
-
-  // useEffect(() => {
   const onChangeSelectCity = (value: any) => {
     const findCity = apiDataFarvoriteData?.results?.find(
       (itemCity: any) => itemCity?.province_id === value
@@ -115,34 +103,14 @@ const PayComponent = (props: any) => {
     return mutateAsyncByProduct(data).then((res: any) => {
       if(res.success) {
         setIsLoading(false)
-        api.open({
-          key,
-          message: 'Đặt hàng thành công',
-          description: 'Cảm ơn bạn đã đặt hàng tại cửa hàng chúng tôi.',
-        });
-
-        setTimeout(() => {
-          api.open({
-            key,
-            message: 'Đặt hàng thành công',
-            description: 'Cảm ơn bạn đã đặt hàng tại cửa hàng chúng tôi.',
-          });
-        }, 1000);
-        localStorage.removeItem("Recently-Viewed");
-        onPayProductValue
+        paramSlug === "pay" ?  onPayProductValue() : onPayProductValueCart()
       }
       return res;
     });
   };
 
-  const VND = new Intl.NumberFormat('vi-VN', {
-    style: 'currency',
-    currency: 'VND',
-  });
-
   return (
     <div className="flex justify-center bg-[#f3f3f3] relative">
-      {contextHolder}
       <div className="w-9/12 sm:w-11/12 md:w-11/12">
         <div className="h-14 flex items-center ">
           <Breadcrumb
@@ -175,7 +143,7 @@ const PayComponent = (props: any) => {
             {cartProductMenu?.length ? cartProductMenu?.map((item:any) => {
               console.log(item)
             return (
-            <div key={item?._id}>
+            <div key={item?.idvalue}>
             <Row 
               gutter={{ xs: 24, sm: 16, md: 32, lg: 32 }}
               className="w-full sm:hidden"
@@ -208,9 +176,9 @@ const PayComponent = (props: any) => {
                 <div>
                   <p className="text-lg font-semibold">Giá</p>
                   <p className="text-lg font-semibold line-through">
-                  {VND.format(item?.marketPrice)}
+                  {VND(item?.marketPrice)}
                   </p>
-                  <p className="text-3xl font-semibold">{VND.format(item?.price)}</p>
+                  <p className="text-3xl font-semibold">{VND(item?.price)}</p>
                   <p className="py-2 px-4 bg-red-500 rounded-lg text-white">
                     Giảm giá 30%
                   </p>
@@ -323,7 +291,7 @@ const PayComponent = (props: any) => {
                   <div className="text-lg font-medium text-red-500">
                     Tổng tiền
                   </div>
-                  <div className="text-base font-mono">{VND.format(sumCart)}</div>
+                  <div className="text-base font-mono">{sumCart == 0 ? VND(sumCart) :VND(cartProductContextSum)}</div>
                 </Col>
                 <Col
                   className="flex flex-col justify-center items-center sm:flex-row sm:w-full sm:justify-between sm:max-w-full"

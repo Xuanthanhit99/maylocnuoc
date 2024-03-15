@@ -1,13 +1,40 @@
 "use client";
 
-import { Card, Carousel, Input } from "antd";
+import { Card, Carousel, Input, notification } from "antd";
 import { GetServerSideProps } from "next";
 import ListProduct from "../ListProduct/ListProduct";
 import Image from "next/image";
+import { AuthContextDefault } from "../../../app/context/AuthContext";
+import { useEffect } from "react";
 
-const index = ({ productnews }: any) => {
+const HomeComponent = ({ productnews }: any) => {
+  const { isLoadingAuth } = AuthContextDefault()
+  const key = 'home';
+  const [api, contextHolder] = notification.useNotification();
+
+  const onOpenLoading = () => {
+    if(isLoadingAuth){api.open({
+      key,
+      message: 'Đặt hàng thành công',
+      description: 'Cảm ơn bạn đã đặt hàng tại cửa hàng chúng tôi.',
+    });
+
+    setTimeout(() => {
+      api.open({
+        key,
+        message: 'Đặt hàng thành công',
+        description: 'Cảm ơn bạn đã đặt hàng tại cửa hàng chúng tôi.',
+      });
+    }, 1000);
+  }
+}
+  useEffect(() => {
+    onOpenLoading()
+  },[isLoadingAuth])
+
   return (
     <div>
+      {contextHolder}
       <div>
         <Carousel autoplay>
           <div>
@@ -157,4 +184,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   };
 };
 
-export default index;
+export default HomeComponent;
