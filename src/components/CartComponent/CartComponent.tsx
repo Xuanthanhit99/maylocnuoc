@@ -10,6 +10,9 @@ import productnews from "../../../utils/product.json";
 import { AuthContextDefault } from "../../../app/context/AuthContext";
 import { useMutation } from "react-query";
 import { postApiCartByProduct } from "../../../app/context/QueryApi";
+import Link from "next/link";
+
+type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 const CartComponent = (props: any) => {
   const { cartProductContext, cartProductContextSum, onClickByProduct, sumArrayPriceAuth } = AuthContextDefault();
@@ -19,7 +22,7 @@ const CartComponent = (props: any) => {
   const [sumCart, setSumCart] = useState<number>(0);
   const [payItemProduct, setItemPayProduct] = useState<any>([])
   const [api, contextHolder] = notification.useNotification();
-  const key = 'updatable1';
+  const key = 'updatableNote';
 
   useEffect(() => {
     setCartProductMenu(cartProductContext); 
@@ -58,7 +61,6 @@ const CartComponent = (props: any) => {
       )
       sumArrayPrice([])
       sumArrayPriceAuth([])
-      console.log("1")
     }
   };
 
@@ -77,7 +79,6 @@ const CartComponent = (props: any) => {
   }
 
   const sumArrayPrice = (value: any) => {
-    console.log("sumArrayPrice", value);
     let sum = 0;
     if(value?.length) {
       for(var i = 0; i <= value?.length; i++) {
@@ -93,29 +94,17 @@ const CartComponent = (props: any) => {
     }
   }
 
-  console.log("sumCart", sumCart);
-
-
   const VND = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
     currency: 'VND',
   });
 
-  const onClickNoProduct = () => {
-    api.open({
-      key,
+  const onClickNoProduct = (type: NotificationType) => {
+    api[type]({
       message: 'Thanh toán thất bại',
       description: 'Bạn chưa chọn sản phẩm để thanh toán',
     });
-
-    setTimeout(() => {
-      api.open({
-        key,
-        message: 'Thanh toán thất bại',
-        description: 'Bạn chưa chọn sản phẩm để thanh toán',
-      });
-    }, 1000);
-  }
+      }
 
   return (
     <div className="flex justify-center bg-[#f3f3f3] items-center w-full flex-col">
@@ -215,7 +204,15 @@ const CartComponent = (props: any) => {
               );
             })}
           </ul>
-        </div>: ""}
+        </div>: <div className="w-full flex-col flex justify-center items-center h-full">
+        <Image
+                        src={"/image/home/no-cart-1.png"}
+                        width={350}
+                        height={350}
+                        alt={"no-cart"}
+                      />
+          <Link href={"/"} className="bg-red-500 w-24 h-12 rounded-xl justify-center flex items-center text-center text-lg text-white font-medium">Home</Link>
+          </div>}
       </div>
        <div className="border-b sm:w-11/12 w-10/12 flex justify-center items-center text-center text-2xl text-white font-semibold bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500 h-24">
        {cartProductMenu?.length ?<Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} className="flex justify-center items-center text-center text-2xl text-white font-semibold bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500 h-20 w-full">
@@ -228,7 +225,7 @@ const CartComponent = (props: any) => {
               <div>{VND.format(sumCart)}</div>
             </Col >
             <Col span={6} className="!p-0 !m-0  !h-20">
-              <div className="w-full cursor-pointer hover:bg-white hover:border-black hover:text-black h-14 flex justify-center items-center text-center border border-white text-white font-medium rounded-xl my-4" onClick={() =>  !payItemProduct?.length ? onClickNoProduct() : onClickByProduct(payItemProduct)}>
+              <div className="w-full cursor-pointer hover:bg-white hover:border-black hover:text-black h-14 flex justify-center items-center text-center border border-white text-white font-medium rounded-xl my-4" onClick={() =>  !payItemProduct?.length ? onClickNoProduct('error') : onClickByProduct(payItemProduct)}>
                 Thanh toán
               </div>
               </Col>

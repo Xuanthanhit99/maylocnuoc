@@ -24,6 +24,7 @@ interface TypeAuthContext {
   cartProductContext?: any;
   cartProductContextSum?: number;
   sumArrayPriceAuth: (value: any) => void
+  onPayProductValue: (product: TypeProduct) => void;
 }
 
 export const AuthContext = createContext<TypeAuthContext>({
@@ -37,7 +38,8 @@ export const AuthContext = createContext<TypeAuthContext>({
   payProduct: null,
   cartProductContext: null,
   cartProductContextSum: 0,
-  sumArrayPriceAuth: async (value: any) => Promise<any>
+  sumArrayPriceAuth: async (value: any) => Promise<any>,
+  onPayProductValue: async (product: TypeProduct) => Promise<any>,
 });
 
 export const AuthContextProvider = ({
@@ -67,6 +69,10 @@ export const AuthContextProvider = ({
       router.push(`/cart/pay`);
       setPayProduct(payProduct.concat(product))
     }
+  }
+
+  const onPayProductValue = () => {
+    setPayProduct([])
   }
 
   console.log("payProductAuth", payProduct)
@@ -147,6 +153,7 @@ export const AuthContextProvider = ({
         cartProductContext,
         cartProductContextSum,
         sumArrayPriceAuth,
+        onPayProductValue
       }}
     >
       {children}

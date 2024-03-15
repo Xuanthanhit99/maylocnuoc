@@ -37,16 +37,13 @@ const PayComponent = (props: any) => {
   const [arrayDistrict, setArrayDistrict] = useState<any>([]);
   const { mutateAsync: mutateAsync } = useMutation(getProvinceDistrict);
   const { mutateAsync: mutateAsyncByProduct } = useMutation(postApiCartByProduct);
-  const [cartProductMenu, setCartProductMenu] = useState<any>(null);
-  const { cartProductContext, cartProductContextSum } = AuthContextDefault();
+  // const [cartProductMenu, setCartProductMenu] = useState<any>(null);
   const [api, contextHolder] = notification.useNotification();
   const [sumCart, setSumCart] = useState<number>(0);
-  const [informationUser, setInformationUser] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState<any>(false);
 
   const key = 'updatable';
-  const { payProduct } = AuthContextDefault()
-
-  console.log("payProduct", payProduct);
+  const { payProduct, onPayProductValue } = AuthContextDefault()
 
   useEffect(() => {
     const localRecentlyViewed = JSON.parse(
@@ -63,17 +60,17 @@ const PayComponent = (props: any) => {
       refetchOnWindowFocus: false,
     });
 
-    useEffect(() => {
-      setCartProductMenu(cartProductContext); 
-    }, [cartProductContext, cartProductContextSum]);
+    // useEffect(() => {
+    //   setCartProductMenu(cartProductContext); 
+    // }, [cartProductContext]);
   
-    useEffect(() => {
-      const localRecentlyViewed = JSON.parse(
-        localStorage.getItem("Cart-Product")!
-      );
-      setCartProductMenu(localRecentlyViewed);
+    // useEffect(() => {
+    //   const localRecentlyViewed = JSON.parse(
+    //     localStorage.getItem("Cart-Product")!
+    //   );
+    //   setCartProductMenu(localRecentlyViewed);
   
-    }, []);
+    // }, []);
 
   // useEffect(() => {
   const onChangeSelectCity = (value: any) => {
@@ -101,13 +98,15 @@ const PayComponent = (props: any) => {
     setValueDistrict(findDistrict);
   };
   const postApiCartBy = async () => {
+    setIsLoading(true)
       const data = {
         "informationuser":  {"username": useValueName,"phone": useValuePhone, "email": useValueEmail},
         "deliveryaddress" : {"city": valueCity?.province_name ,"district": valueDistrict?.district_name, "address": useValueAddress, "note": useValueNote},
-        "product" :  cartProductMenu
+        "product" :  payProduct
       }
     return mutateAsyncByProduct(data).then((res: any) => {
       if(res.success) {
+        setIsLoading(false)
         api.open({
           key,
           message: 'Đặt hàng thành công',
@@ -121,6 +120,8 @@ const PayComponent = (props: any) => {
             description: 'Cảm ơn bạn đã đặt hàng tại cửa hàng chúng tôi.',
           });
         }, 1000);
+        localStorage.removeItem("Recently-Viewed");
+        onPayProductValue
       }
       return res;
     });
@@ -132,7 +133,7 @@ const PayComponent = (props: any) => {
   });
 
   return (
-    <div className="flex justify-center bg-[#f3f3f3]">
+    <div className="flex justify-center bg-[#f3f3f3] relative">
       {contextHolder}
       <div className="w-9/12 sm:w-11/12 md:w-11/12">
         <div className="h-14 flex items-center ">
@@ -367,6 +368,16 @@ const PayComponent = (props: any) => {
           </div>
         </div>
       </div>
+      {isLoading && <div className='w-full flex justify-center items-center fixed top-0 left-0 h-full'>
+      <Image
+        src='/image/loading-2.gif'
+        width={350}
+        height={350}
+        alt='loader'
+        className='object-contain z-10'
+      />
+      <div className="bg-slate-500 opacity-25 absolute top-0 left-0 w-full h-full"></div>
+    </div>}
     </div>
   );
 };
