@@ -21,6 +21,7 @@ interface TypeAuthContext {
   onClickByProduct: (product: TypeProduct) => void;
   onClickAddCartProduct: (product: TypeProduct) => void;
   payProduct?:any;
+  payProductCart?:any;
   cartProductContext?: any;
   cartProductContextSum?: number;
   sumArrayPriceAuth: (value: any) => void
@@ -54,6 +55,7 @@ export const AuthContextProvider = ({
   const [cartProductContext, setCartProductContext] = useState<any>([]);
   const [cartProductContextSum, setCartProductContextSum] = useState<any>(0);
   const [payProduct, setPayProduct] = useState<any>([])
+  const [payProductCart, setPayProductCart] = useState<any>([])
 
   const onClickrecentlyViewed = (value: any) => {
     const valueLocal = [...recentlyViewed, value];
@@ -64,18 +66,16 @@ export const AuthContextProvider = ({
   const onClickByProduct = (product : TypeProduct) => {
     if(product?.name) {
       router.push(`/cart/pay`);
-      setPayProduct([...payProduct,product])
+      setPayProduct([product])
     } else {
       router.push(`/cart/pay`);
-      setPayProduct(payProduct.concat(product))
+      setPayProductCart(payProduct.concat(product))
     }
   }
 
   const onPayProductValue = () => {
     setPayProduct([])
   }
-
-  console.log("payProductAuth", payProduct)
 
   const onClickAddCartProduct = (product : TypeProduct) => {
     const valueLocal = [...cartProductContext, product];
@@ -149,6 +149,7 @@ export const AuthContextProvider = ({
         onClickrecentlyViewed,
         onClickByProduct,
         payProduct,
+        payProductCart,
         onClickAddCartProduct,
         cartProductContext,
         cartProductContextSum,

@@ -37,13 +37,21 @@ const PayComponent = (props: any) => {
   const [arrayDistrict, setArrayDistrict] = useState<any>([]);
   const { mutateAsync: mutateAsync } = useMutation(getProvinceDistrict);
   const { mutateAsync: mutateAsyncByProduct } = useMutation(postApiCartByProduct);
-  // const [cartProductMenu, setCartProductMenu] = useState<any>(null);
+  const [cartProductMenu, setCartProductMenu] = useState<any>(null);
   const [api, contextHolder] = notification.useNotification();
   const [sumCart, setSumCart] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<any>(false);
 
   const key = 'updatable';
-  const { payProduct, onPayProductValue } = AuthContextDefault()
+  const { payProduct, onPayProductValue, payProductCart } = AuthContextDefault()
+
+  useEffect(() => {
+    if(payProduct?.length) {
+      setCartProductMenu(payProduct)
+    } else {
+      setCartProductMenu(payProductCart)
+    }
+  },[payProduct,payProductCart])
 
   useEffect(() => {
     const localRecentlyViewed = JSON.parse(
@@ -102,7 +110,7 @@ const PayComponent = (props: any) => {
       const data = {
         "informationuser":  {"username": useValueName,"phone": useValuePhone, "email": useValueEmail},
         "deliveryaddress" : {"city": valueCity?.province_name ,"district": valueDistrict?.district_name, "address": useValueAddress, "note": useValueNote},
-        "product" :  payProduct
+        "product" :  cartProductMenu
       }
     return mutateAsyncByProduct(data).then((res: any) => {
       if(res.success) {
@@ -164,7 +172,7 @@ const PayComponent = (props: any) => {
         <div className="bg-white p-6 sm:p-2">
           {/*thông tin sản phẩm */}
           <div className="flex justify-center items-start flex-col">
-            {payProduct?.length ? payProduct?.map((item:any) => {
+            {cartProductMenu?.length ? cartProductMenu?.map((item:any) => {
               console.log(item)
             return (
             <div key={item?._id}>
