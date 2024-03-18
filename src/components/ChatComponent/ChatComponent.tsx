@@ -1,6 +1,8 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
 import SocketIOClient, { io } from "socket.io-client";
+import Pusher from "pusher-js"
+import { v4 as uuidv4 } from 'uuid';
 
 interface IMsg {
     user: string;
@@ -11,47 +13,42 @@ interface IMsg {
   const user = "User_" + String(new Date().getTime()).substr(-3);
 
 const ChatComponent = () => {
-    const [connected, setConnected] = useState<boolean>(false);
+    const [connected, setConnected] = useState<boolean>(true);
+    const [textMessage, setTextMessage] = useState<any>([]);
+    const [valueComment, setValueComment] = useState<any>([]);
     const inputRef = useRef(null);
-
   // init chat and message
   const [chat, setChat] = useState<IMsg[]>([]);
   const [msg, setMsg] = useState<string>("");
-    const ENDPOINT= "localhost:3000"
-  useEffect((): any => {
-    // const socket = io("localhost:3000", { secure: false });
+  var pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_APP_KEY as string, {
+    cluster: 'ap1'
+  });
 
-    // connect to socket server
-    // @ts-ignore
-    const socket = SocketIOClient.connect(ENDPOINT, {
-      path: "/api/socket", addTrailingSlash: false }
-    );
-
-    // log socket connection
-    socket.on("connect", () => {
-      console.log("SOCKET CONNECTED!", socket.id);
-      setConnected(true);
+  var channel = pusher.subscribe('chat');
+    channel.bind('hello', function(data: any) {
+      const parsedComments = JSON.parse(data.message)
+      setTextMessage((prev:any) => [...prev, parsedComments])
     });
-
-    // update chat on new message dispatched
-    socket.on("message", (message: IMsg) => {
-      setChat((chat) => [...chat, message]);
-    });
-
-    // socket disconnet onUnmount if exists
-    if (socket) return () => socket.disconnect();
-  }, [ENDPOINT]);
 
   const sendMessage = async () => {
     if (msg) {
       // build message obj
-      const message: IMsg = {
-        user,
-        msg,
-      };
+      // const message: IMsg = {
+      //   user,
+      //   msg,
+      // };
+
+      const message = {
+        name: msg,
+        phone: "030131311",
+        image: "",
+        textcomment: "",
+        nameId: uuidv4(),
+        replypeople: []
+      }
 
       // dispatch message to other users
-      const resp = await fetch("/api/chat", {
+      const resp = await fetch("/api/pusher", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -60,7 +57,53 @@ const ChatComponent = () => {
       });
 
       // reset field if OK
-      if (resp.ok) setMsg("");
+      setValueComment(resp)
+      console.log("resp", resp);
+    }
+
+    // focus after click
+    // @ts-ignore
+    inputRef?.current?.focus();
+  };
+
+  const sendMessageReply = async () => {
+    if (msg) {
+      // build message obj
+      // const message: IMsg = {
+      //   user,
+      //   msg,
+      // };
+
+      const message = {
+        name: msg,
+        phone: "030131311",
+        image: "",
+        textcomment: "",
+        nameId: uuidv4(),
+        replypeople: [
+          {
+            nameId: uuidv4(),
+            name: msg,
+            phone: "03013132",
+            image: "",
+            textcomment: "",
+            replypeople: []
+          }
+        ]
+      }
+
+      // dispatch message to other users
+      const resp = await fetch("/api/pusher", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(message),
+      });
+
+      // reset field if OK
+
+      console.log("resp", resp);
     }
 
     // focus after click
@@ -119,6 +162,13 @@ const ChatComponent = () => {
                 disabled={!connected}
             >
                 SEND
+            </button>
+            <button
+                className="bg-[#9580ff] border-2 rounded shadow text-sm text-white h-full px-2 hover:bg-white hover:text-[#9580ff] hover:border-[#9580ff]"
+                onClick={() => sendMessageReply()}
+                disabled={!connected}
+            >
+                trả lời
             </button>
         </div>
         </div>
