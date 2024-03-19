@@ -14,8 +14,22 @@ const CommentModelSchema = new Schema({
         type: String,
         default: ""
     },
+    isPurchase: {
+        type: Boolean,
+        default: false
+    },
     textcomment: {
         type: String
+    },
+    evaluate: {
+        type: Number
+    },
+    nameproduct: {
+        type: String
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
     },
     replypeople : {
         type: Array,
@@ -23,5 +37,5 @@ const CommentModelSchema = new Schema({
     }
 })
 
-const Comment= models.Comment || model("comment", CommentModelSchema);
+const Comment= models.CommentProd || model("comment-prod", CommentModelSchema);
 export default Comment

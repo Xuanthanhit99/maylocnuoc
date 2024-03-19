@@ -1,11 +1,28 @@
-import { Image } from "antd";
-import React, { FC } from "react";
+import { Button, Image, Upload, UploadProps, message } from "antd";
+import React, { FC, useState } from "react";
+import { UploadOutlined } from '@ant-design/icons';
+import { uuid } from "uuidv4";
+import axios from "axios";
+
 type Props = {
-  item: string;
+  label: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
 };
-const CustomUpload: FC<Props> = ({ item }) => {
-  // const [fileList, setFileList] = useState<string>(item);
-  return <Image src={item} />;
+
+const CustomUpload: FC<Props> = ({ label, onChange }) => {
+
+  return  (
+    <div className="flex flex-col my-2">
+  <label htmlFor="avatar">Choose a profile picture:</label>
+  <input
+  type="file"
+  id="avatar"
+  name="avatar"
+  accept="image/*"
+  placeholder=""
+  className="my-1"
+  onChange={(e) => onChange(e)}
+/></div>)
 };
 
 export default CustomUpload;
