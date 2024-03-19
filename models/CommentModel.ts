@@ -37,5 +37,5 @@ const CommentModelSchema = new Schema({
     }
 })
 
-const Comment= models.CommentProd || model("comment-prod", CommentModelSchema);
+const Comment= models.Comment || model("Comment", CommentModelSchema);
 export default Comment

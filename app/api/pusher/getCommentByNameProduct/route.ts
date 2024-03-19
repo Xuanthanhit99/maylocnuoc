@@ -6,7 +6,8 @@ export const POST =async (request: NextRequest) => {
     try {
         await connectDB()
         const reqBody = await request.json();
-        const {nameproduct} = reqBody
+        const {nameproduct} = await reqBody
+        console.log("nameproduct", nameproduct);
         const getApiComment = await Comment.find({nameproduct})
         return NextResponse.json({data: getApiComment,success: true,status: 201 });
 

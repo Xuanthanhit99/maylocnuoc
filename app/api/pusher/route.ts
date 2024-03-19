@@ -40,14 +40,14 @@ export const POST = async (request: NextRequest) => {
       isPurchase,
     });
 
-    await newComent.save();
-
     await pusher.trigger("chat", "hello", {
       message: `${JSON.stringify(reqBody)}`,
     });
+
+    await newComent.save();
+
     return NextResponse.json({
       data: {
-        data: {
           name,
           image,
           phone,
@@ -57,7 +57,6 @@ export const POST = async (request: NextRequest) => {
           evaluate,
           nameproduct,
           isAdmin,
-        },
       },
       success: true,
       status: 201,

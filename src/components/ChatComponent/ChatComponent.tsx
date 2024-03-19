@@ -5,7 +5,7 @@ import Pusher from "pusher-js";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import CustomUpload from "../FormItemFloatLabel/CustomUpload";
-import { Checkbox, Rate } from "antd";
+import { Avatar, Checkbox, Rate } from "antd";
 import CustomInput from "../FormItemFloatLabel/CustomInput";
 
 interface IMsg {
@@ -27,6 +27,7 @@ const ChatComponent = () => {
   const [useValueName, setUseValueName] = useState<string>("");
   const [useValuePhone, setUseValuePhone] = useState<string>("");
   const [isPurchase, setIsPurchase] = useState<boolean>(false);
+  const [isReply, setIsReply] = useState<any>([]);
 
   const inputRef = useRef(null);
   // init chat and message
@@ -56,119 +57,181 @@ const ChatComponent = () => {
   };
 
   const sendMessage = async () => {
-      const message = {
-        name: useValueName,
-        phone: useValuePhone,
-        image: valueCommentImage || "",
-        textcomment: msg,
-        isPurchase: isPurchase,
-        nameId: uuidv4(),
-        isAdmin: false,
-        nameproduct: "",
-        evaluate: rateValue,
-        replypeople: [],
-      };
+    const message = {
+      name: useValueName,
+      phone: useValuePhone,
+      image: valueCommentImage || "",
+      textcomment: msg,
+      isPurchase: isPurchase,
+      nameId: uuidv4(),
+      isAdmin: false,
+      nameproduct: "may-loc-nuoc-nong-lanh-karofi-kad-KG100HGTG6",
+      evaluate: rateValue,
+      replypeople: [],
+    };
 
-      // dispatch message to other users
-      const resp = await fetch("/api/pusher", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify(message),
-      });
-      const repons =await resp.json()
-      setValueComment(resp);
+    // dispatch message to other users
+    const resp = await fetch("/api/pusher", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify(message),
+    });
+    const repons = await resp.json();
+    if (repons?.success) {
+      const arrayApi = await [...valueComment, repons?.data];
+      setValueComment(arrayApi);
+    }
+    console.log("repons", repons);
     // focus after click
     // @ts-ignore
     inputRef?.current?.focus();
   };
 
   useEffect(() => {
-      sendMessageReply()
-  }, [])
+    const sendMessageReply = async () => {
+      const nameproduct = "may-loc-nuoc-nong-lanh-karofi-kad-KG100HGTG6";
+      const apiGet = await axios.post(
+        "/api/pusher/getCommentByNameProduct",
+        {nameproduct: nameproduct}
+      );
+      console.log("nameproduct", nameproduct);
+      setValueComment([...apiGet?.data?.data]);
+    };
 
-  const sendMessageReply = async () => {
-    const nameproduct = "";
-    const apiGet = await axios.post("/api/pusher/getCommentByNameProduct",
-      nameproduct,
-    );
+    sendMessageReply()
+  }, []);
 
-    setCommentProduct(apiGet);
-    console.log("idproduct", apiGet);
-  };
+  const checkOpenReply = (index:any) => {
+    const isReplyFind = isReply?.find((item: any) => item?.value === index);
+    const filterReply = isReply?.filter((item: any) => item?.value === index)
+    console.log("filterReply", filterReply)
+    if(isReplyFind) {
+      const filterReply = isReply?.splice(index,index);
+      console.log("1", filterReply);
+      setIsReply(filterReply)
+    } else {
+      console.log("2")
+      setIsReply([...isReply,{isShowReply: !isReply?.isShowReply,value:index}])
+    }
+  }
 
   return (
     <div className="flex justify-center bg-[#f3f3f3] relative">
-    <div className="w-9/12 sm:w-11/12 md:w-11/12">
-      <div className="font-semibold font-serif text-xl text-black ">
-        Hỏi và đáp ({commentProduct?.length} Bình luận)
-      </div>
-      <div className="pr-2 flex-1">
+      <div className="w-9/12 sm:w-11/12 md:w-11/12">
         <div>
-          <textarea
-            ref={inputRef}
-            rows={5}
-            cols={5}
-            value={msg}
-            placeholder={connected ? "Type a message..." : "Connecting..."}
-            className="w-full h-full rounded border-[#9580ff] border-2 px-1 hover:border-[#8aff80] focus:border-[#80ffea] focus:outline-none"
-            disabled={!connected}
-            onChange={(e: any) => {
-              setMsg(e.target.value);
-            }}
-            onKeyPress={(e: any) => {
-              if (e.key === "Enter") {
-                sendMessage();
-              }
-            }}
-          />
-          <CustomUpload label={"upload image"} onChange={covertToBase64} />
-          <div>
-            <div className="my-3">
-              <div className="mb-1">Đánh giá</div>{" "}
-              <Rate tooltips={desc} onChange={setRateValue} value={rateValue} />{" "}
-            </div>
-            <div className="flex w-full">
-              <div className="w-1/2 mr-4">
-              <CustomInput
-                label="Họ tên*"
-                name="username"
-                className="mb-2"
-                onChange={(e) => setUseValueName(e?.target?.value)}
+          <div className="font-semibold font-serif text-xl text-black ">
+            Hỏi và đáp ({commentProduct?.length} Bình luận)
+          </div>
+          <div className="pr-2 flex-1">
+            <div>
+              <textarea
+                ref={inputRef}
+                rows={5}
+                cols={5}
+                value={msg}
+                placeholder={connected ? "Type a message..." : "Connecting..."}
+                className="w-full h-full rounded border-[#9580ff] border-2 px-1 hover:border-[#8aff80] focus:border-[#80ffea] focus:outline-none"
+                disabled={!connected}
+                onChange={(e: any) => {
+                  setMsg(e.target.value);
+                }}
+                onKeyPress={(e: any) => {
+                  if (e.key === "Enter") {
+                    sendMessage();
+                  }
+                }}
               />
+              <CustomUpload label={"upload image"} onChange={covertToBase64} />
+              <div>
+                <div className="my-3">
+                  <div className="mb-1">Đánh giá</div>{" "}
+                  <Rate
+                    tooltips={desc}
+                    onChange={setRateValue}
+                    value={rateValue}
+                  />{" "}
+                </div>
+                <div className="flex w-full">
+                  <div className="w-1/2 mr-4">
+                    <CustomInput
+                      label="Họ tên*"
+                      name="username"
+                      className="mb-2"
+                      onChange={(e) => setUseValueName(e?.target?.value)}
+                    />
+                  </div>
+                  <div className="w-1/2 ml-4">
+                    <CustomInput
+                      label="Số điện thoại*"
+                      name="phone"
+                      className="mb-2"
+                      onChange={(e) => setUseValuePhone(e?.target?.value)}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="w-1/2 ml-4">
-              <CustomInput
-                label="Số điện thoại*"
-                name="phone"
-                className="mb-2"
-                onChange={(e) => setUseValuePhone(e?.target?.value)}
-              />
+              <div>
+                <Checkbox onChange={(e) => setIsPurchase(e.target.value)}>
+                  Đã mua hàng tại cửa hàng
+                </Checkbox>
               </div>
             </div>
           </div>
-          <div><Checkbox onChange={(e) => setIsPurchase(e.target.value)}>Đã mua hàng tại cửa hàng</Checkbox></div>
-        </div>
-      </div>
-      <div className="flex flex-col justify-center items-stretch pl-2 w-2/12">
-        <button
-          className="bg-[#9580ff] border-2 rounded shadow text-sm text-white h-full px-2 hover:bg-white hover:text-[#9580ff] hover:border-[#9580ff]"
-          onClick={() => sendMessage()}
-        >
-          Gửi bình luận
-        </button>
-        {/* <button
+          <div className="flex flex-col justify-center items-stretch pl-2 w-2/12">
+            <button
+              className="bg-[#9580ff] border-2 rounded shadow text-sm text-white h-full px-2 hover:bg-white hover:text-[#9580ff] hover:border-[#9580ff]"
+              onClick={() => sendMessage()}
+            >
+              Gửi bình luận
+            </button>
+            {/* <button
           className="bg-[#9580ff] border-2 rounded shadow text-sm text-white h-full px-2 hover:bg-white hover:text-[#9580ff] hover:border-[#9580ff]"
           onClick={() => sendMessageReply()}
           disabled={!connected}
         >
           trả lời
         </button> */}
+          </div>
+        </div>
+        <div>
+          {valueComment ? valueComment?.map((item: any, index: any) => {
+            return (
+              <div key={index}>
+              <div>
+              <Avatar style={{verticalAlign: 'middle' }} className="bg-red-500" size="large">
+                {item?.name?.slice(0,1)?.toUpperCase() }
+              </Avatar>
+              {item?.name}
+              <div>
+                <span onClick={() =>checkOpenReply(index)}>Trả lời</span>
+                {isReply?.[index]?.isShowReply && <textarea
+                ref={inputRef}
+                rows={5}
+                cols={5}
+                value={msg}
+                placeholder={connected ? "Type a message..." : "Connecting..."}
+                className="w-full h-full rounded border-[#9580ff] border-2 px-1 hover:border-[#8aff80] focus:border-[#80ffea] focus:outline-none"
+                disabled={!connected}
+                onChange={(e: any) => {
+                  setMsg(e.target.value);
+                }}
+                onKeyPress={(e: any) => {
+                  if (e.key === "Enter") {
+                    sendMessage();
+                  }
+                }}
+              />}
+              </div>
+              </div>
+              </div>
+            )
+          }) : "Chưa có bình luận nào"}
+        </div>
       </div>
-    </div>
     </div>
   );
 };
