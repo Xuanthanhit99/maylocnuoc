@@ -17,6 +17,9 @@ export const metadata = {
   title: "Máy lọc nước hà nam",
   description: "Máy lọc nước hà nam",
   image: "/image/product/may-loc-nuoc-kangaroo.png",
+  icons: {
+    icon: "/image/product/may-loc-nuoc-kangaroo.png"
+  }
 };
 
 export default function RootLayout({

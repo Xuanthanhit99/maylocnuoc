@@ -32,9 +32,9 @@ const InformationProduct = ({valueproduct, paramSlug}: any) => {
         ?.filter(
           (item: any) => item?.slug?.toLowerCase() === paramSlug?.toLowerCase()
         )
-        ?.map((item:any) => {
+        ?.map((item:any, index: any) => {
           return (
-            <div key={item?.idvalue} className="xl:w-8/12 w-full mr-3 sm:flex sm:flex-col">
+            <div key={index} className="xl:w-8/12 w-full mr-3 sm:flex sm:flex-col">
               <div className="h-14 flex flex-col">
                 <h3 className="text-xl font-semibold text-[#333] flex items-start">
                   {item?.name}

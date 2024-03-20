@@ -11,6 +11,7 @@ import InformationProduct from "./InformationDetail/InformationProduct/Informati
 import ComboProduct from "./InformationDetail/ComboProduct/ComboProduct";
 import DetailReviewProduct from "./InformationDetail/DetailReviewProduct/DetailReviewProduct";
 import { AuthContextDefault } from "../../../../app/context/AuthContext";
+import ChatComponent from "@/components/ChatComponent/ChatComponent";
 const ProductDetailComponent = ({ paramSlug }: any) => {
   const [collapseHeight, setCollapseHeight] = useState(true);
   const [recentlyViewed, setRecentlyViewed] = useState<any>([]);
@@ -51,6 +52,8 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
           valueproduct={productnews?.productnews}
           paramSlug={paramSlug}
         />
+        {/* comment */}
+        <ChatComponent slugParam={paramSlug}/>
         {/* combo sản phẩm */}
         <ComboProduct valueproduct={productnews?.productnews} />
         {/* thông tin chi tiết sản phẩm đã xem */}
