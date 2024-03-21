@@ -6,12 +6,33 @@ export const POST =async (request: NextRequest) => {
     try {
         await connectDB()
         const reqBody = await request.json();
-        const {nameproduct} = await reqBody
+        const {
+            name,
+            image,
+            phone,
+            textcomment,
+            replypeople,
+            nameId,
+            evaluate,
+            nameproduct,
+            isAdmin,
+            isPurchase,
+          } = reqBody;
+        
         console.log("nameproduct", nameproduct);
-        const getApiComment = await Comment.findByIdAndUpdate({nameproduct})
-        return NextResponse.json({data: getApiComment,success: true,status: 201 });
+        await Comment.findOneAndUpdate(nameId, {name,
+            image,
+            phone,
+            textcomment,
+            replypeople,
+            nameId,
+            evaluate,
+            nameproduct,
+            isAdmin,
+            isPurchase,}, {new: true})
+        return NextResponse.json({success: true,status: 201 });
 
     } catch (error) {
-        return NextResponse.json({success: false,status: 500 });
+        return NextResponse.json({message: error, success: false,status: 500 });
     }
 }

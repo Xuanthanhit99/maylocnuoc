@@ -1,5 +1,5 @@
 // "use client";
-import { Breadcrumb, Button, Card, Checkbox, Col, Row } from "antd";
+import { Breadcrumb, Button, Card, Checkbox, Col, Row, notification } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { Slide } from "react-slideshow-image";
@@ -15,6 +15,8 @@ import ChatComponent from "@/components/ChatComponent/ChatComponent";
 const ProductDetailComponent = ({ paramSlug }: any) => {
   const [collapseHeight, setCollapseHeight] = useState(true);
   const [recentlyViewed, setRecentlyViewed] = useState<any>([]);
+  const [api, contextHolder] = notification.useNotification();
+  const key = 'home';
 
   useEffect(() => {
     const localRecentlyViewed = JSON.parse(
@@ -23,8 +25,26 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
     setRecentlyViewed(localRecentlyViewed);
   }, []);
 
+  const onOpenNoti = () => {
+    {api.open({
+      key,
+      message: 'Bình luận thành công',
+      description: 'Cảm ơn bạn đã đánh giá, đánh giá của bạn sẽ được kiểm duyệt trước khi hiện lên',
+    });
+
+    setTimeout(() => {
+      api.open({
+        key,
+        message: 'Bình luận thành công',
+        description: 'Cảm ơn bạn đã đánh giá, đánh giá của bạn sẽ được kiểm duyệt trước khi hiện lên',
+      });
+    }, 1000);
+  }
+}
+
   return (
     <div className="flex justify-center bg-[#f3f3f3]">
+      {contextHolder}
       <div className="w-10/12 md:11/12 sm:w-full sm:p-2">
         <div className="h-14 flex items-center">
           <Breadcrumb
@@ -53,7 +73,7 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
           paramSlug={paramSlug}
         />
         {/* comment */}
-        <ChatComponent slugParam={paramSlug}/>
+        <ChatComponent slugParam={paramSlug} onOpenNoti={onOpenNoti}/>
         {/* combo sản phẩm */}
         <ComboProduct valueproduct={productnews?.productnews} />
         {/* thông tin chi tiết sản phẩm đã xem */}

@@ -16,7 +16,7 @@ interface IMsg {
 // create random user
 const user = "User_" + String(new Date().getTime()).substr(-3);
 
-const ChatComponent = ({slugParam}: any) => {
+const ChatComponent = ({slugParam, onOpenNoti}: any) => {
   const [textMessage, setTextMessage] = useState<any>([]);
   const [valueComment, setValueComment] = useState<any>([]);
   const [valueCommentImage, setValueCommentImage] = useState<any>("");
@@ -80,14 +80,16 @@ const ChatComponent = ({slugParam}: any) => {
       body: JSON.stringify(message),
     });
     const repons = await resp.json();
-    if (repons?.success) {
-      const arrayApi = await [...valueComment, repons?.data];
-      setValueComment(arrayApi);
-      setUseValueName("");
-      setRateValueComment(0);
-      setUseValuePhone("");
-      setMsg("");
-    }
+    onOpenNoti()
+    setIsReply(false)
+    // if (repons?.success) {
+    //   const arrayApi = await [...valueComment, repons?.data];
+    //   setValueComment(arrayApi);
+    //   setUseValueName("");
+    //   setRateValueComment(0);
+    //   setUseValuePhone("");
+    //   setMsg("");
+    // }
     // focus after click
     // @ts-ignore
     inputRef?.current?.focus();
@@ -138,18 +140,21 @@ const ChatComponent = ({slugParam}: any) => {
       body: JSON.stringify(message),
     });
     const repons = await resp.json();
-    if (repons?.success) {
-      console.log("repons", repons);
-      setUseValueName("");
-      setRateValueComment(0);
-      setUseValuePhone("");
-      setMsg("");
-    }
+    onOpenNoti()
+    setIsReply(false)
+
+    // if (repons?.success) {
+    //   console.log("repons", repons);
+    //   setUseValueName("");
+    //   setRateValueComment(0);
+    //   setUseValuePhone("");
+    //   setMsg("");
+    // }
   };
 
   return (
     <div className="flex justify-center bg-[#f3f3f3] relative">
-      <div className="w-9/12 sm:w-11/12 md:w-11/12">
+      <div className="w-full">
         {/*Gửi bình luận */}
         <div>
           <div className="font-semibold h-14 flex items-center font-serif text-xl text-black ">
