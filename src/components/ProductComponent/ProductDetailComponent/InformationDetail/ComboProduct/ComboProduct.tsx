@@ -64,12 +64,11 @@ const ComboProduct = ({valueproduct, paramSlug}: any) => {
             </h5>
             <p className="text-sx font-medium text-center text-red-500 text-base">
               <span className="text-xl">
-                {19999999?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                {25999996?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
               </span>
             </p>
             <p className="font-medium	text-center text-[#999] line-through text-base">
-              {valueproduct?.filter((item: any) => item?.key <= 4)
-            ?.map((item: any, index: number) => {return + item?.[index]?.price})?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+              {25999996?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
             </p>
           </div>
           <div className="w-full mt-4 p-3 text-white flex justify-center items-center flex-col bg-black rounded-sm bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500">
