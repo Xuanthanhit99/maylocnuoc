@@ -1,11 +1,17 @@
+'use client'
+
 import React from "react";
 import Image from "next/image";
+import { VND } from "../../../../../../utils/format";
 
-const ComboProduct = ({valueproduct}: any) => {
+const ComboProduct = ({valueproduct, paramSlug}: any) => {
   return (
     <div className="mt-4 bg-white">
       <div className="p-3 flex justify-start items-center ">
-        <b>COMBO CẦN THIẾT CHO MÁY LỌC NƯỚC NÓNG LẠNH KAROFI KAD-D66</b>
+        <b>COMBO CẦN THIẾT CHO {valueproduct?.filter(
+      (item: any) =>
+        item?.slug?.toLowerCase() === paramSlug?.toLowerCase()
+    )?.[0]?.name?.toUpperCase()}</b>
       </div>
       <hr className="mb-4" />
       <div className="flex justify-start items-center flex-row sm:flex-col">
@@ -42,7 +48,7 @@ const ComboProduct = ({valueproduct}: any) => {
                       {item?.label}
                     </h5>
                     <p className="text-sx font-medium	text-center text-red-500">
-                      <span className="">{item?.price} </span>đ
+                      <span className="">{VND(item?.price)} </span>
                     </p>
                     <p className="font-medium	text-sx text-center">Liên hệ</p>
                   </div>
@@ -60,10 +66,10 @@ const ComboProduct = ({valueproduct}: any) => {
               <span className="text-xl">
                 {19999999?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
               </span>
-              đ
             </p>
             <p className="font-medium	text-center text-[#999] line-through text-base">
-              {19999999?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+              {valueproduct?.filter((item: any) => item?.key <= 4)
+            ?.map((item: any, index: number) => {return + item?.[index]?.price})?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
             </p>
           </div>
           <div className="w-full mt-4 p-3 text-white flex justify-center items-center flex-col bg-black rounded-sm bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500">

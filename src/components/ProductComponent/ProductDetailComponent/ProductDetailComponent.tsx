@@ -74,7 +74,7 @@ const ProductDetailComponent = ({ paramSlug, valueproduct }: any) => {
         {/* comment */}
         <ChatComponent slugParam={paramSlug} onOpenNoti={onOpenNoti}/>
         {/* combo sản phẩm */}
-        <ComboProduct valueproduct={valueproduct} />
+        <ComboProduct valueproduct={valueproduct} paramSlug={paramSlug}/>
         {/* thông tin chi tiết sản phẩm đã xem */}
         <DetailReviewProduct collapseHeight={collapseHeight} onClickCollapseHeight={() => setCollapseHeight(!collapseHeight)}/>
         <div className="mt-4 bg-white">

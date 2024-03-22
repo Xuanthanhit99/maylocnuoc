@@ -22,6 +22,7 @@ const ProductModelSchema = new Schema({
   model: {type: String},
   designs: {type: String},
   quantity: {type: String},
+  option: {type: Array, default: []},
 });
 // export default MongoClient.model('ProductModel', ProductModelSchema)
 const Product =
