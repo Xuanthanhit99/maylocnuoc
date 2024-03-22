@@ -5,59 +5,22 @@ import HomeComponentComponent from "../src/components/HomeComponent/HomeComponen
 import axios from "axios";
 import { error } from "console";
 import { uuid } from "uuidv4";
-import productnews from '../utils/product.json'
+import { useQuery } from "react-query";
+import { getApiProduct } from "./context/QueryApi";
 
 export default function Home() {
-  const [imageValue, setImageValue] = useState<any>();
-
+  const [dataProduct, setDataProduct] = useState([])
   useEffect(() => {
-    const fetchData = async () => {
-      const getData = await axios.get("/api/getApiProduct")
-    };
-    fetchData();
-  }, [imageValue]);
+    const getApi = async () => {
+      const getApiNew = await getApiProduct()
+      setDataProduct(getApiNew?.data)
+    }
+    getApi()
+  },[]);
 
-  const covertToBase64 = (e: any) => {
-    var reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = () => {
-      // setImageValue(reader.result);
-
-      const fetchPostApi = async () => {
-        const data = await axios.post(
-          "/api/postApiProduct",
-          JSON.stringify({
-            base64: reader.result,
-            id: uuid(),
-          }),
-          {
-            headers: {
-              Accept: "application/json",
-              "Access-Control-Allow-Origin": "*",
-              "Content-Type": `application/json`,
-            },
-          }
-        );
-
-        setImageValue(data)
-      };
-      fetchPostApi();
-    };
-
-    reader.onerror = (error) => {
-      console.log("error", error);
-    };
-  };
   return (
     <div>
-      {/* <input
-        type="file"
-        id="avatar"
-        name="avatar"
-        accept="image/*"
-        onChange={(e) => covertToBase64(e)}
-      /> */}
-      <HomeComponentComponent productnews={productnews?.productnews} />
+      <HomeComponentComponent productnews={dataProduct} />
     </div>
   );
 }

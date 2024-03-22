@@ -1,10 +1,19 @@
 "use client";
 import CustomSelect from "@/components/FormItemFloatLabel/CustomSelect";
 import ListProduct from "@/components/ListProduct/ListProduct";
-import productnews from "../../utils/product.json"
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { getApiProduct } from "../context/QueryApi";
 
 const ProductPage = () => {
-
+  const [dataProduct, setDataProduct] = useState([])
+  useEffect(() => {
+    const getApi = async () => {
+      const getApiNew = await getApiProduct()
+      setDataProduct(getApiNew?.data)
+    }
+    getApi()
+  },[]);
   return (
     <div>
       <div className="flex justify-center flex-col items-center bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500">
@@ -31,7 +40,7 @@ const ProductPage = () => {
       <div>
         <div className="flex justify-center">
           <div className="flex w-10/12 flex-col my-3">
-            <ListProduct valueproduct={productnews?.productnews} />
+            <ListProduct valueproduct={dataProduct} />
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 export const getProvince = async () => {
     const response = await axios.get("https://vapi.vnappmob.com/api/province");
@@ -16,7 +16,11 @@ export const getProvinceDistrictWard = async (provinceWardId: string) => {
 };
 
 export const postApiCartByProduct = async (data: any) => {
-    console.log("data", data);
     const response = await axios.post(`/api/cart`,{data});
+    return response?.data;
+};
+
+export const getApiProduct = async () => {
+    const response:AxiosResponse = await axios.get("/api/product");
     return response?.data;
 };

@@ -6,7 +6,6 @@ import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import Image from "next/image";
-import productnews from "../../../utils/product.json";
 import ComboProduct from "../ProductComponent/ProductDetailComponent/InformationDetail/ComboProduct/ComboProduct";
 import DetailReviewProduct from "../ProductComponent/ProductDetailComponent/InformationDetail/DetailReviewProduct/DetailReviewProduct";
 import ListProduct from "../ListProduct/ListProduct";
@@ -24,7 +23,7 @@ import { VND } from "../../../utils/format";
 
 export const dynamicParams = false;
 
-const PayComponent = (props: any) => {
+const PayComponent = ({paramSlug,valueproduct}: any) => {
   const [collapseHeight, setCollapseHeight] = useState(true);
   const [recentlyViewed, setRecentlyViewed] = useState<any>([]);
   const [quantity, setQuantity] = useState<any>(1);
@@ -41,8 +40,7 @@ const PayComponent = (props: any) => {
   const [cartProductMenu, setCartProductMenu] = useState<any>(null);
   const [sumCart, setSumCart] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<any>(false);
-  const paramSlug = props?.params?.pay;
-
+  // const paramSlug = "pay"
   const key = 'updatable';
   const { payProduct, onPayProductValue, payProductCart, cartProductContextSum, onPayProductValueCart } = AuthContextDefault()
 
@@ -111,7 +109,7 @@ const PayComponent = (props: any) => {
 
   return (
     <div className="flex justify-center bg-[#f3f3f3] relative">
-      <div className="w-9/12 sm:w-11/12 md:w-11/12">
+      <div className="xl:w-9/12 w-11/12 md:w-11/12">
         <div className="h-14 flex items-center ">
           <Breadcrumb
             items={[
@@ -141,7 +139,6 @@ const PayComponent = (props: any) => {
           {/*thông tin sản phẩm */}
           <div className="flex justify-center items-start flex-col">
             {cartProductMenu?.length ? cartProductMenu?.map((item:any) => {
-              console.log(item)
             return (
             <div key={item?.idvalue}>
             <Row 
@@ -216,7 +213,7 @@ const PayComponent = (props: any) => {
           <hr className="my-3" />
           {/* Thông tin người mua */}
           <div className="flex justify-center item-center sm:flex-col">
-            <div className="xl:w-1/2 xl:mr-6 md:w-1/2 md:mr-4">
+            <div className="w-1/2 xl:mr-6 md:mr-4 ms:w-full lg:mr-6">
               <h3 className="text-red-500 text-xl font-semibold">
                 Thông tin khách hàng
               </h3>
@@ -240,7 +237,7 @@ const PayComponent = (props: any) => {
                 </div>
               </div>
             </div>
-            <div className="xl:w-1/2 xl:ml-6 md:w-1/2 md:ml-4">
+            <div className="w-1/2 xl:ml-6 md:ml-4  sm:w-full lg:ml-6">
               <h3 className="text-red-500 text-xl font-semibold">
                 Địa chỉ nhận hàng
               </h3>
@@ -331,7 +328,7 @@ const PayComponent = (props: any) => {
           </div>
           <hr className="mb-4" />
           <div>
-            <ListProduct valueproduct={productnews?.productnews} />
+            <ListProduct valueproduct={valueproduct} />
           </div>
         </div>
         <div className="mt-4 bg-white">

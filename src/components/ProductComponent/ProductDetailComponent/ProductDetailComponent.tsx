@@ -6,13 +6,12 @@ import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import Image from "next/image";
 import ListProduct from "@/components/ListProduct/ListProduct";
-import productnews from "../../../../utils/product.json";
 import InformationProduct from "./InformationDetail/InformationProduct/InformationProduct";
 import ComboProduct from "./InformationDetail/ComboProduct/ComboProduct";
 import DetailReviewProduct from "./InformationDetail/DetailReviewProduct/DetailReviewProduct";
 import { AuthContextDefault } from "../../../../app/context/AuthContext";
 import ChatComponent from "@/components/ChatComponent/ChatComponent";
-const ProductDetailComponent = ({ paramSlug }: any) => {
+const ProductDetailComponent = ({ paramSlug, valueproduct }: any) => {
   const [collapseHeight, setCollapseHeight] = useState(true);
   const [recentlyViewed, setRecentlyViewed] = useState<any>([]);
   const [api, contextHolder] = notification.useNotification();
@@ -69,13 +68,13 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
         </div>
         {/* thông tin sản phẩm đã chọn */}
         <InformationProduct
-          valueproduct={productnews?.productnews}
+          valueproduct={valueproduct}
           paramSlug={paramSlug}
         />
         {/* comment */}
         <ChatComponent slugParam={paramSlug} onOpenNoti={onOpenNoti}/>
         {/* combo sản phẩm */}
-        <ComboProduct valueproduct={productnews?.productnews} />
+        <ComboProduct valueproduct={valueproduct} />
         {/* thông tin chi tiết sản phẩm đã xem */}
         <DetailReviewProduct collapseHeight={collapseHeight} onClickCollapseHeight={() => setCollapseHeight(!collapseHeight)}/>
         <div className="mt-4 bg-white">
@@ -84,7 +83,7 @@ const ProductDetailComponent = ({ paramSlug }: any) => {
           </div>
           <hr className="mb-4" />
           <div>
-            <ListProduct valueproduct={productnews?.productnews} />
+            <ListProduct valueproduct={valueproduct} />
           </div>
         </div>
         <div className="mt-4 bg-white">

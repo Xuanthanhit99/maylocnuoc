@@ -1,15 +1,10 @@
 "use client";
-import { Breadcrumb, Button, Card, Checkbox, Col, Row, Select ,notification} from "antd";
+import { Breadcrumb, Col, Row ,notification} from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import "react-slideshow-image/dist/styles.css";
-import { Divider, Radio, Table } from "antd";
-import type { TableColumnsType } from "antd";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import productnews from "../../../utils/product.json";
 import { AuthContextDefault } from "../../../app/context/AuthContext";
-import { useMutation } from "react-query";
-import { postApiCartByProduct } from "../../../app/context/QueryApi";
 import Link from "next/link";
 import { VND } from "../../../utils/format";
 
@@ -19,15 +14,12 @@ const CartComponent = (props: any) => {
   const { cartProductContext, cartProductContextSum, onClickByProduct, sumArrayPriceAuth } = AuthContextDefault();
   const [isChecked, setIsChecked] = useState<any>([]);
   const [cartProductMenu, setCartProductMenu] = useState<any>(null);
-  const [cartProductMenuSum, setCartProductMenuSum] = useState<any>(0);
   const [sumCart, setSumCart] = useState<number>(0);
   const [payItemProduct, setItemPayProduct] = useState<any>([])
   const [api, contextHolder] = notification.useNotification();
-  const key = 'updatableNote';
 
   useEffect(() => {
     setCartProductMenu(cartProductContext); 
-    // setSumCart(cartProductContextSum) 
   }, [cartProductContext, cartProductContextSum]);
 
   useEffect(() => {
@@ -35,8 +27,6 @@ const CartComponent = (props: any) => {
       localStorage.getItem("Cart-Product")!
     );
     setCartProductMenu(localRecentlyViewed);
-    // setSumCart(localSumProduct) 
-
   }, []);
 
 

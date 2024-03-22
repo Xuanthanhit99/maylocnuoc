@@ -141,7 +141,7 @@ const HomeComponent = ({ productnews }: any) => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center">
+        {productnews && <div className="flex justify-center">
           <div className="flex flex-col sm:w-full w-10/12 justify-center mt-3 border border-[#00a2e9] rounded-md">
             <div className="lg:text-xl sm:text-sm text-center md:text-lg xl:text-xl w-full h-14 bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500 text-white flex justify-center  items-center font-medium ">
                 Sản phẩm máy lọc nước được khách hàng quan tâm tại cửa hàng
@@ -150,10 +150,10 @@ const HomeComponent = ({ productnews }: any) => {
             <ListProduct valueproduct={productnews}/>
             </div>
             </div>
-        </div>
+        </div>}
       </div>
       <hr className="my-4" />
-      <div className="flex flex-col items-center justify-center">
+      {productnews && <div className="flex flex-col items-center justify-center">
         <div className="flex w-10/12 flex-col">
           <div className="w-full h-14  text-white flex justify-start border-b border-[#00a2e9]  items-center lg:text-xl sm:text-sm text-center md:text-lg xl:text-xl font-medium bg-[url('/image/home/bg-title-product.png')] bg-no-repeat bg-contain">
             <span className="pl-16 pb-3">Lõi lọc nước và linh kiện</span>
@@ -162,9 +162,9 @@ const HomeComponent = ({ productnews }: any) => {
           <ListProduct valueproduct={productnews} />
           </div>
         </div>
-      </div>
+      </div>}
       <hr className="my-4" />
-      <div className="flex flex-col items-center justify-center">
+      {productnews && <div className="flex flex-col items-center justify-center">
         <div className="flex w-10/12 flex-col">
           <div className="w-full h-14 text-white flex justify-start border-b border-[#00a2e9]  items-center lg:text-xl sm:text-sm text-center md:text-lg xl:text-xl font-medium bg-[url('/image/home/bg-title-product.png')] bg-no-repeat bg-contain">
             <span className="pl-16 pb-3">Lõi lọc nước và linh kiện</span>
@@ -173,7 +173,7 @@ const HomeComponent = ({ productnews }: any) => {
           <ListProduct valueproduct={productnews} />
           </div>
         </div>
-      </div>
+      </div>}
     </div>
   );
 };
