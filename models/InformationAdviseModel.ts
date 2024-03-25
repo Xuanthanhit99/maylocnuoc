@@ -1,20 +1,22 @@
-import MongoClient, { ConnectOptions } from 'mongoose'
+import MongoClient, { ConnectOptions, model, models } from 'mongoose'
 const Schema = MongoClient.Schema
 
 // Tao model
 const InformationAdviseModel = new Schema({
   name: {
     type: String,
-    required: true
   },
   phone: {
     type: String,
-    required: true
   },
-  questions: {
+  textQuestion: {
     type: String,
   }
 })
-export default MongoClient.model('InformationAdviseModel', InformationAdviseModel)
+
+const InformationAdvise = models.InformationAdviseModel || model("InformationAdviseModel", InformationAdviseModel);
+
+export default InformationAdvise
+
 
 // module.exports = MongoClient.model('ProductModel', ProductModelSchema)

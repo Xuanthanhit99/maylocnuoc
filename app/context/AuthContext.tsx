@@ -29,6 +29,10 @@ interface TypeAuthContext {
   onPayProductValue: () => void;
   onPayProductValueCart: () => void;
   isLoadingAuth: boolean;
+  onClickShowFormTT: () => void;
+  isShowFormTT: boolean;
+  onClickPostInformation: ({name, phone, textQuestion} : any) => void;
+  isResultFormTT: boolean;
 }
 
 export const AuthContext = createContext<TypeAuthContext>({
@@ -46,6 +50,10 @@ export const AuthContext = createContext<TypeAuthContext>({
   onPayProductValue: () => {},
   isLoadingAuth: false,
   onPayProductValueCart: () => {},
+  onClickShowFormTT: () => {},
+  isShowFormTT: false,
+  onClickPostInformation: ({name, phone, textQuestion} : any) => {},
+  isResultFormTT: false,
 });
 
 export const AuthContextProvider = ({
@@ -62,6 +70,27 @@ export const AuthContextProvider = ({
   const [payProduct, setPayProduct] = useState<any>([])
   const [payProductCart, setPayProductCart] = useState<any>([])
   const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(false)
+  const [isShowFormTT, setIsShowFormTT] = useState<boolean>(false);
+  const [isResultFormTT, setIsResultFormTT] = useState<boolean>(false);
+
+  const onClickShowFormTT = () => {
+    setIsShowFormTT(!isShowFormTT);
+  }
+
+    const onClickPostInformation = async ({name, phone, textQuestion}: any) => {
+        try {
+            const postApi = await axios.post("/api/postApiInformationAdvise", {
+                name,
+                phone,
+                textQuestion
+            })
+            if(postApi?.data?.status === 201) {
+              setIsShowFormTT(false)
+              setIsResultFormTT(true)
+            }
+        } catch (error) {
+        }
+    }
 
   const onClickrecentlyViewed = (value: any) => {
     const valueLocal = [...recentlyViewed, value];
@@ -174,7 +203,11 @@ export const AuthContextProvider = ({
         sumArrayPriceAuth,
         onPayProductValue,
         isLoadingAuth,
-        onPayProductValueCart
+        onPayProductValueCart,
+        onClickShowFormTT,
+        isShowFormTT,
+        onClickPostInformation,
+        isResultFormTT,
       }}
     >
       {children}

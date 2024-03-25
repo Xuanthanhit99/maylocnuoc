@@ -5,68 +5,17 @@ import CardItem from "../card/index";
 import CustomInput from "../FormItemFloatLabel/CustomInput";
 import CustomTextArea from "../FormItemFloatLabel/CustomTextArea";
 import axios from "axios";
+import ListProduct from "../ListProduct/ListProduct";
+import { AuthContextDefault } from "../../../app/context/AuthContext";
 
-const listnews = [
-  {
-    key: 1,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    image: "/image/product/may-loc-nuoc-kangaroo.png",
-    time: "16:52 01/02/2024",
-    url: "/news/may-loc-nuoc-karofi1",
-  },
-  {
-    key: 2,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    image: "/image/product/may-loc-nuoc-kangaroo.png",
-    time: "16:52 01/02/2024",
-    url: "/news/may-loc-nuoc-karofi2",
-  },
-  {
-    key: 3,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    image: "/image/product/may-loc-nuoc-kangaroo.png",
-    time: "16:52 01/02/2024",
-    url: "/news/may-loc-nuoc-karofi3",
-  },
-  {
-    key: 4,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    image: "/image/product/may-loc-nuoc-kangaroo.png",
-    time: "16:52 01/02/2024",
-    url: "/news/may-loc-nuoc-karofi4",
-  },
-  {
-    key: 5,
-    label: "Máy lọc nước Hydrogen Kangaroo KG100HG",
-    image: "/image/product/may-loc-nuoc-kangaroo.png",
-    time: "16:52 01/02/2024",
-    url: "/news/may-loc-nuoc-karofi5",
-  },
-];
-
-const onClickPostInformation = async () => {
-  try {
-      const postApi = await axios.post("/api/postApiInformationAdvise", {
-          name: "testname",
-          phone: "036683747",
-          questions: "test-textarea"
-      })
-      if(postApi) {
-          return postApi
-      }
-  } catch (error) {
-      
-  }
-}
-
-const DetailNew = () => {
-  const [isShowFormTT, setIsShowFormTT] = useState<boolean>(false);
-
+const DetailNew = ({paramSlug, valueProduct}: any) => {
+  const { onClickShowFormTT } = AuthContextDefault()
+  
   const onClickLink = (param:string) => {
     if(param === "buy") {
       window.open("/product", "_blank")
     } else {
-      setIsShowFormTT(true)
+      onClickShowFormTT()
     }
   }
   return (
@@ -128,76 +77,10 @@ const DetailNew = () => {
           </div>
           <div >
             <h3 className="my-4 text-xl	font-medium	text-gray-700">Bài viết liên quan</h3>
-            <div className="w-full grid grid-cols-5 gap-5">
-                {listnews.map((item: any) => {
-                  return (
-                    <div
-                      className={`${
-                        item.key > 1 && item.key < 6 ? "mr-1" : ""
-                      }`}
-                      key={item.key}
-                    >
-                      <CardItem
-                        label={item?.label}
-                        image={item?.image}
-                        time={item?.time}
-                        url={item?.url}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
+            <ListProduct valueproduct={valueProduct}/>
           </div>
         </div>
       </div>
-      {isShowFormTT && (
-        <div className="h-full w-full flex justify-center fixed top-1/4 left-0 right-0">
-          <div className="bg-white z-50 h-3/6 w-3/6 border border-solid border-gray-300 rounded-lg shadow-2xl flex">
-            <div
-              className="m-4 cursor-pointer"
-              onClick={() => setIsShowFormTT(false)}
-            >
-              <Image
-                src={"/image/icon-support/x.png"}
-                width={23}
-                height={23}
-                alt=""
-              />
-            </div>
-            <div className="flex justify-center items-center">
-              <div className="flex justify-center items-center">
-                <Image
-                  src={"/image/introduce/introduce-5.jpg"}
-                  width={512}
-                  height={435}
-                  alt=""
-                />
-              </div>
-              <div className="flex flex-col items-center mx-3">
-                <h3 className="text-lg font-bold text-center mb-3">
-                  Vui lòng để lại thông tin liên hệ
-                  <br /> Máy lóc nước Hà nam sẽ tư vấn ngay cho bạn
-                </h3>
-                <div className="w-full">
-                  <CustomInput name="" label="Họ và Tên" />
-                </div>
-                <div className="w-full">
-                  <CustomInput name="" label="Số điện thoại" />
-                </div>
-                <div className="w-full">
-                  <CustomTextArea label="Câu hỏi thường gặp" />
-                </div>
-                <div>
-                  <Button type="primary" size={"large"} className="bg-red-600" onClick={() => onClickPostInformation()}>
-                    Gửi thông tin
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div onClick={() => setIsShowFormTT(false)} className="bg-gray-600 opacity-25 fixed top-0 left-0 right-0 bottom-0"/>
-        </div>
-      )}
     </div>
   );
 };

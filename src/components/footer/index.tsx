@@ -1,7 +1,5 @@
 "use client";
 
-import { GetServerSideProps } from 'next';
-
 const index = () => {
     return (
         <div className="flex justify-center bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500">
@@ -119,16 +117,6 @@ const index = () => {
         </div>
       </div>
     );
-}
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-
-
-    return {
-        props:{
-
-        }
-    }
 }
 
 export default index
