@@ -107,7 +107,6 @@ const ChatComponent = ({slugParam, onOpenNoti}: any) => {
   }, [slugParam]);
 
   const onClickReplyComment = async (value: any) => {
-    console.log("onClickReplyComment", value);
     const message = {
       name: value?.name,
       phone: value?.phone,
@@ -142,14 +141,6 @@ const ChatComponent = ({slugParam, onOpenNoti}: any) => {
     const repons = await resp.json();
     onOpenNoti()
     setIsReply(false)
-
-    // if (repons?.success) {
-    //   console.log("repons", repons);
-    //   setUseValueName("");
-    //   setRateValueComment(0);
-    //   setUseValuePhone("");
-    //   setMsg("");
-    // }
   };
 
   return (

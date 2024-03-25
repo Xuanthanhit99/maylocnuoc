@@ -19,7 +19,6 @@ export const POST =async (request: NextRequest) => {
             isPurchase,
           } = reqBody;
         
-        console.log("nameproduct", nameproduct);
         await Comment.findOneAndUpdate(nameId, {name,
             image,
             phone,

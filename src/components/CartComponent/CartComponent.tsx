@@ -36,7 +36,6 @@ const CartComponent = (props: any) => {
       setIsChecked([...isChecked, valueChecked]);
       setItemPayProduct([...payItemProduct, value]);
       const payArrayPriceAuth = [...payItemProduct, value]
-      console.log("payArrayPriceAuth", payArrayPriceAuth);
       sumArrayPrice(payArrayPriceAuth);
       sumArrayPriceAuth(payArrayPriceAuth)
     } else {

@@ -10,7 +10,6 @@ export const connectDB = async () => {
   mongoose.set("strictQuery", true);
 
   if(isConnected) {
-    console.log('MongoDB is already connected');
     return
   }
   try {
@@ -24,7 +23,6 @@ export const connectDB = async () => {
 
     isConnected = true;
 
-    console.log('Da ket noi co so du lieu')
   } catch (error: any) {
     console.log(error.message)
     process.exit(1)

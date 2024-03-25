@@ -112,3 +112,19 @@ body {
 .signin-user:hover .signin-user--children {
   display: block;
 }
+
+.forcus-result:focus .forcus-result--show{
+  display: block;
+}
+
+.forcus-result:focus-visible .forcus-result--show{
+  display: block;
+}
+
+.forcus-result:focus-within .forcus-result--show{
+  display: block;
+}
+
+input:focus{
+  outline: none;
+}

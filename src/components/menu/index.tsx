@@ -9,7 +9,10 @@ import { AuthContextDefault } from "../../../app/context/AuthContext";
 import { Router } from "next/router";
 import { useRouter } from "next/navigation";
 import { TypeProduct } from "../../../utils/TypeProduct";
-import { Badge } from "antd";
+import { Badge, Result } from "antd";
+import axios from "axios";
+import { toNonAccentVietnamese } from "../../../utils/format";
+import { getApiProduct } from "../../../app/context/QueryApi";
 
 type typeUserGoogle = {
   email: string;
@@ -20,17 +23,17 @@ type typeUserGoogle = {
 const Menu = (props: any) => {
   const { data: session } = useSession<any>();
   const [providers, setProviders] = useState<any>(null);
-  const [toggleDropdown, setToggleDropdown] = useState<any>(false);
   const [isMenuMobile, setIsMenuMobile] = useState<any>(false);
   const [isMenuLeft, setIsMenuLeft] = useState<any>(false);
   const [isSign, setIsSign] = useState<boolean>(true);
-  const { user, cartProductContext, cartProductContextSum } = AuthContextDefault();
+  const { user, cartProductContext, cartProductContextSum } =
+    AuthContextDefault();
   const [cartProductMenu, setCartProductMenu] = useState<any>(null);
-  const [sumCart, setSumCart] = useState<any>(0);
-
+  const [textSearch, setTextSearch] = useState("");
+  const [resultSearch, setResultSearch] = useState<any>([]);
+  const [dataProduct, setDataProduct] = useState<any>([]);
   useEffect(() => {
     setCartProductMenu(cartProductContext);
-    setSumCart(cartProductContextSum)
   }, [cartProductContext, cartProductContextSum]);
 
   useEffect(() => {
@@ -41,7 +44,6 @@ const Menu = (props: any) => {
       localStorage.getItem("Cart-Product-Sum")!
     );
     setCartProductMenu(localRecentlyViewed);
-    setSumCart(localSumProduct)
   }, []);
 
   useEffect(() => {
@@ -88,6 +90,24 @@ const Menu = (props: any) => {
   ];
 
   const router = useRouter();
+
+  useEffect(() => {
+    const getApi = async () => {
+      const getApiNew = await getApiProduct();
+      setDataProduct(getApiNew?.data);
+    };
+    getApi();
+  }, [textSearch]);
+
+  useEffect(() => {
+    const filterApiNew = dataProduct?.filter((item: any) =>
+      toNonAccentVietnamese(item?.name)
+        ?.toUpperCase()
+        ?.includes(toNonAccentVietnamese(textSearch).toUpperCase())
+    );
+
+    textSearch && setResultSearch([...filterApiNew]);
+  }, [textSearch, dataProduct]);
 
   return (
     <>
@@ -282,14 +302,14 @@ const Menu = (props: any) => {
             />
           </Link>
           <div className="sm:flex hidden justify-end items-center relative shopping-cart w-14 cursor-pointer">
-          <Badge count={cartProductMenu?.length} showZero>
-            <Image
-              src={"/image/home/shopping-cart.png"}
-              alt=""
-              width={45}
-              height={45}
-              className="mr-2 sm:mb-1 "
-            />
+            <Badge count={cartProductMenu?.length} showZero>
+              <Image
+                src={"/image/home/shopping-cart.png"}
+                alt=""
+                width={45}
+                height={45}
+                className="mr-2 sm:mb-1 "
+              />
             </Badge>
             <div className="shopping-cart--children max-h-[280px] sm:w-[320px] p-1 w-[380px] h-[280px] z-10 bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500  absolute right-0 top-12">
               {cartProductMenu?.length ? (
@@ -336,10 +356,11 @@ const Menu = (props: any) => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center items-center relative">
+        <div className="flex justify-center items-center relative forcus-result">
           <input
             type="text"
             placeholder="Bạn cần tìm sản phẩm nào"
+            onChange={(e) => setTextSearch(e?.target?.value)}
             name="search-product--home"
             className="w-full border h-10 rounded-lg p-2"
           />
@@ -351,6 +372,33 @@ const Menu = (props: any) => {
               height={25}
               className="mr-2"
             />
+          </div>
+          <div className="overflow-y-scroll absolute right-0 cursor-pointer w-full top-12 max-h-[200px] forcus-result--show hidden z-[999] bg-white rounded-b-lg border-[#e5e7eb] border">
+            <div>
+              {resultSearch?.length > 0 ? (
+                resultSearch?.map((item: any, index: number) => {
+                  return (
+                    <div
+                      key={index}
+                      className="cursor-pointer h-14 flex items-center text-start p-2 font-sans text-sm border-b"
+                    >
+                      <Link href={item?.link}>{item?.name}</Link>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="flex items-center flex-col justify-center text-center p-2 h-[200px] font-sans text-sm border-b">
+                  <Image
+                    src={"/image/home/shopping-cart.png"}
+                    alt=""
+                    width={75}
+                    height={75}
+                    className="mb-6"
+                  />
+                  Không có sản phẩm bạn tìm kiếm
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <div className="flex justify-center items-center sm:hidden">
@@ -369,7 +417,12 @@ const Menu = (props: any) => {
               }}
             >
               <span>Giỏ hàng</span>
-              <span>{cartProductMenu?.length ? `Có ${cartProductMenu?.length}` : "Chưa có"} sản phẩm</span>
+              <span>
+                {cartProductMenu?.length
+                  ? `Có ${cartProductMenu?.length}`
+                  : "Chưa có"}{" "}
+                sản phẩm
+              </span>
               {/* shopping-cart--children */}
               <div className="shopping-cart--children w-[380px] h-[280px] max-h-[280px] p-1 z-10 bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500  absolute right-0 top-12">
                 {cartProductMenu?.length ? (
