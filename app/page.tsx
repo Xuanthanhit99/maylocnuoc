@@ -7,20 +7,14 @@ import { error } from "console";
 import { uuid } from "uuidv4";
 import { useQuery } from "react-query";
 import { getApiProduct } from "./context/QueryApi";
+import { AuthContextDefault } from "./context/AuthContext";
 
 export default function Home() {
-  const [dataProduct, setDataProduct] = useState([])
-  useEffect(() => {
-    const getApi = async () => {
-      const getApiNew = await getApiProduct()
-      setDataProduct(getApiNew?.data)
-    }
-    getApi()
-  },[]);
+  const {isLoadingProduct, dataProduct} = AuthContextDefault()
 
   return (
     <div>
-      <HomeComponentComponent productnews={dataProduct} />
+      <HomeComponentComponent productnews={dataProduct} isLoadingProduct={isLoadingProduct}/>
     </div>
   );
 }

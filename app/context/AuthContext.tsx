@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 import { TypeProduct } from "../../utils/TypeProduct";
 import { notification } from "antd";
+import { getApiProduct } from "./QueryApi";
 
 type TypeUser = {
   username?: any;
@@ -33,6 +34,8 @@ interface TypeAuthContext {
   isShowFormTT: boolean;
   onClickPostInformation: ({name, phone, textQuestion} : any) => void;
   isResultFormTT: boolean;
+  dataProduct: any;
+  isLoadingProduct: boolean;
 }
 
 export const AuthContext = createContext<TypeAuthContext>({
@@ -54,6 +57,8 @@ export const AuthContext = createContext<TypeAuthContext>({
   isShowFormTT: false,
   onClickPostInformation: ({name, phone, textQuestion} : any) => {},
   isResultFormTT: false,
+  dataProduct: [],
+  isLoadingProduct: false
 });
 
 export const AuthContextProvider = ({
@@ -72,6 +77,21 @@ export const AuthContextProvider = ({
   const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(false)
   const [isShowFormTT, setIsShowFormTT] = useState<boolean>(false);
   const [isResultFormTT, setIsResultFormTT] = useState<boolean>(false);
+  const [isLoadingProduct, setIsLoadingProduct] = useState<boolean>(false)
+  const [dataProduct, setDataProduct] = useState([])
+
+  useEffect(() => {
+    const getApi = async () => {
+      setIsLoadingProduct(true)
+      const getApiNew = await getApiProduct()
+      console.log("getApiNew", getApiNew);
+      if(getApiNew?.success){
+        setDataProduct(getApiNew?.data)
+        setIsLoadingProduct(false)
+      }
+    }
+    getApi()
+  },[]);
 
   const onClickShowFormTT = () => {
     setIsShowFormTT(!isShowFormTT);
@@ -208,6 +228,8 @@ export const AuthContextProvider = ({
         isShowFormTT,
         onClickPostInformation,
         isResultFormTT,
+        isLoadingProduct,
+        dataProduct
       }}
     >
       {children}

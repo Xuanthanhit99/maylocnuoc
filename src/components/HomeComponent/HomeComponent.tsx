@@ -7,30 +7,31 @@ import Image from "next/image";
 import { AuthContextDefault } from "../../../app/context/AuthContext";
 import { useEffect } from "react";
 
-const HomeComponent = ({ productnews }: any) => {
-  const { isLoadingAuth } = AuthContextDefault()
-  const key = 'home';
+const HomeComponent = ({ productnews, isLoadingProduct }: any) => {
+  const { isLoadingAuth } = AuthContextDefault();
+  const key = "home";
   const [api, contextHolder] = notification.useNotification();
 
   const onOpenLoading = () => {
-    if(isLoadingAuth){api.open({
-      key,
-      message: 'Đặt hàng thành công',
-      description: 'Cảm ơn bạn đã đặt hàng tại cửa hàng chúng tôi.',
-    });
-
-    setTimeout(() => {
+    if (isLoadingAuth) {
       api.open({
         key,
-        message: 'Đặt hàng thành công',
-        description: 'Cảm ơn bạn đã đặt hàng tại cửa hàng chúng tôi.',
+        message: "Đặt hàng thành công",
+        description: "Cảm ơn bạn đã đặt hàng tại cửa hàng chúng tôi.",
       });
-    }, 1000);
-  }
-}
+
+      setTimeout(() => {
+        api.open({
+          key,
+          message: "Đặt hàng thành công",
+          description: "Cảm ơn bạn đã đặt hàng tại cửa hàng chúng tôi.",
+        });
+      }, 1000);
+    }
+  };
   useEffect(() => {
-    onOpenLoading()
-  },[isLoadingAuth])
+    onOpenLoading();
+  }, [isLoadingAuth]);
 
   return (
     <div>
@@ -92,7 +93,9 @@ const HomeComponent = ({ productnews }: any) => {
                   />
                 </div>
                 <div className="pl-4">
-                  <div className="text-lg	text-pink-500 font-medium	">Sản phẩm chính hãng</div>
+                  <div className="text-lg	text-pink-500 font-medium	">
+                    Sản phẩm chính hãng
+                  </div>
                   <div className="text-base">100% từ tập đoàn karofi</div>
                 </div>
               </div>
@@ -106,7 +109,9 @@ const HomeComponent = ({ productnews }: any) => {
                   />
                 </div>
                 <div className="pl-4">
-                  <div className="text-lg	text-pink-500 font-medium	">Sản phẩm mới nhất</div>
+                  <div className="text-lg	text-pink-500 font-medium	">
+                    Sản phẩm mới nhất
+                  </div>
                   <div className="text-base">Được cập nhập thường xuyên</div>
                 </div>
               </div>
@@ -120,7 +125,9 @@ const HomeComponent = ({ productnews }: any) => {
                   />
                 </div>
                 <div className="pl-4">
-                  <div className="text-lg	text-pink-500 font-medium	">Dịch vụ tiện lợi</div>
+                  <div className="text-lg	text-pink-500 font-medium	">
+                    Dịch vụ tiện lợi
+                  </div>
                   <div className="text-base">Tại nhà và 24/7</div>
                 </div>
               </div>
@@ -134,46 +141,90 @@ const HomeComponent = ({ productnews }: any) => {
                   />
                 </div>
                 <div className="pl-4">
-                  <div className="text-lg	text-pink-500 font-medium	">Đặt hàng, thanh toán</div>
+                  <div className="text-lg	text-pink-500 font-medium	">
+                    Đặt hàng, thanh toán
+                  </div>
                   <div className="text-base">Linh hoạt và bảo mật</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        {productnews && <div className="flex justify-center">
-          <div className="flex flex-col sm:w-full w-10/12 justify-center mt-3 border border-[#00a2e9] rounded-md">
-            <div className="lg:text-xl sm:text-sm text-center md:text-lg xl:text-xl w-full h-14 bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500 text-white flex justify-center  items-center font-medium ">
+        {productnews && (
+          <div className="flex justify-center">
+            <div className="flex flex-col sm:w-full w-10/12 justify-center mt-3 border border-[#00a2e9] rounded-md">
+              <div className="lg:text-xl sm:text-sm text-center md:text-lg xl:text-xl w-full h-14 bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500 text-white flex justify-center  items-center font-medium ">
                 Sản phẩm máy lọc nước được khách hàng quan tâm tại cửa hàng
+              </div>
+              <div className="p-3">
+                {isLoadingProduct ? (
+                  <div className="flex justify-center items-center">
+                    <Image
+                      src="/image/loading-2.gif"
+                      width={350}
+                      height={350}
+                      alt="loader"
+                      className="object-contain"
+                    />
+                  </div>
+                ) : (
+                  <ListProduct valueproduct={productnews} />
+                )}
+              </div>
             </div>
-            <div className="p-3">
-            <ListProduct valueproduct={productnews}/>
-            </div>
-            </div>
-        </div>}
+          </div>
+        )}
       </div>
       <hr className="my-4" />
-      {productnews && <div className="flex flex-col items-center justify-center">
-        <div className="flex w-10/12 flex-col">
-          <div className="w-full h-14  text-white flex justify-start border-b border-[#00a2e9]  items-center lg:text-xl sm:text-sm text-center md:text-lg xl:text-xl font-medium bg-[url('/image/home/bg-title-product.png')] bg-no-repeat bg-contain">
-            <span className="pl-16 pb-3">Lõi lọc nước và linh kiện</span>
-          </div>
-          <div className="my-3">
-          <ListProduct valueproduct={productnews} />
+      {productnews && (
+        <div className="flex flex-col items-center justify-center">
+          <div className="flex w-10/12 flex-col">
+            <div className="w-full h-14  text-white flex justify-start border-b border-[#00a2e9]  items-center lg:text-xl sm:text-sm text-center md:text-lg xl:text-xl font-medium bg-[url('/image/home/bg-title-product.png')] bg-no-repeat bg-contain">
+              <span className="pl-16 pb-3">Lõi lọc nước và linh kiện</span>
+            </div>
+            <div className="my-3">
+            {isLoadingProduct ? (
+                  <div className="flex justify-center items-center">
+                    <Image
+                      src="/image/loading-2.gif"
+                      width={350}
+                      height={350}
+                      alt="loader"
+                      className="object-contain"
+                    />
+                  </div>
+                ) : (
+                  <ListProduct valueproduct={productnews} />
+                )}
+            </div>
           </div>
         </div>
-      </div>}
+      )}
       <hr className="my-4" />
-      {productnews && <div className="flex flex-col items-center justify-center">
-        <div className="flex w-10/12 flex-col">
-          <div className="w-full h-14 text-white flex justify-start border-b border-[#00a2e9]  items-center lg:text-xl sm:text-sm text-center md:text-lg xl:text-xl font-medium bg-[url('/image/home/bg-title-product.png')] bg-no-repeat bg-contain">
-            <span className="pl-16 pb-3">Lõi lọc nước và linh kiện</span>
-          </div>
-          <div className="my-3">
-          <ListProduct valueproduct={productnews} />
+      {productnews && (
+        <div className="flex flex-col items-center justify-center">
+          <div className="flex w-10/12 flex-col">
+            <div className="w-full h-14 text-white flex justify-start border-b border-[#00a2e9]  items-center lg:text-xl sm:text-sm text-center md:text-lg xl:text-xl font-medium bg-[url('/image/home/bg-title-product.png')] bg-no-repeat bg-contain">
+              <span className="pl-16 pb-3">Lõi lọc nước và linh kiện</span>
+            </div>
+            <div className="my-3">
+            {isLoadingProduct ? (
+                  <div className="flex justify-center items-center">
+                    <Image
+                      src="/image/loading-2.gif"
+                      width={350}
+                      height={350}
+                      alt="loader"
+                      className="object-contain"
+                    />
+                  </div>
+                ) : (
+                  <ListProduct valueproduct={productnews} />
+                )}
+            </div>
           </div>
         </div>
-      </div>}
+      )}
     </div>
   );
 };

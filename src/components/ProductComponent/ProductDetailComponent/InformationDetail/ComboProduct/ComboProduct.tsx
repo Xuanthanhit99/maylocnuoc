@@ -1,22 +1,52 @@
-'use client'
+"use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { VND } from "../../../../../../utils/format";
 
-const ComboProduct = ({valueproduct, paramSlug}: any) => {
+const ComboProduct = ({ valueproduct, paramSlug }: any) => {
+  const [sumMoneyProduct, setSumMoneyProduct] = useState<number>(0);
+  const [sumMoneySaveProduct, setSumMoneySaveProduct] = useState<number>(0);
+
+  useEffect(() => {
+    const sumArrayPrice = () => {
+      const sumArray = valueproduct.reduce((total: any, item:any) => {
+        if (item.price > valueproduct?.length) {
+            return total + Number(item.price);
+        }
+        return total;
+    }, 0)
+    setSumMoneyProduct(sumArray)
+
+    const sumSaveArray = valueproduct.reduce((total: any, item:any) => {
+      if (item.marketPrice > valueproduct?.length) {
+          return total + Number(item.marketPrice);
+      }
+      return total;
+  }, 0)
+  setSumMoneySaveProduct(sumSaveArray)
+}
+    sumArrayPrice();
+  }, [valueproduct]);
+
   return (
     <div className="mt-4 bg-white">
       <div className="p-3 flex justify-start items-center ">
-        <b>COMBO CẦN THIẾT CHO {valueproduct?.filter(
-      (item: any) =>
-        item?.slug?.toLowerCase() === paramSlug?.toLowerCase()
-    )?.[0]?.name?.toUpperCase()}</b>
+        <b>
+          COMBO CẦN THIẾT CHO{" "}
+          {valueproduct
+            ?.filter(
+              (item: any) =>
+                item?.slug?.toLowerCase() === paramSlug?.toLowerCase()
+            )?.[0]
+            ?.name?.toUpperCase()}
+        </b>
       </div>
       <hr className="mb-4" />
       <div className="flex justify-start items-center flex-row sm:flex-col">
         <div className="flex justify-start items-center w-4/5  sm:flex-col sm:w-full">
-          {valueproduct?.filter((item: any) => item?.key <= 4)
+          {valueproduct
+            ?.filter((item: any) => item?.key <= 4)
             ?.map((item: any) => {
               return (
                 <div
@@ -64,18 +94,20 @@ const ComboProduct = ({valueproduct, paramSlug}: any) => {
             </h5>
             <p className="text-sx font-medium text-center text-red-500 text-base">
               <span className="text-xl">
-                {25999996?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                {VND(sumMoneyProduct)
+                  ?.toString()
+                  ?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
               </span>
             </p>
             <p className="font-medium	text-center text-[#999] line-through text-base">
-              {25999996?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+              {VND(sumMoneySaveProduct)?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
             </p>
           </div>
           <div className="w-full mt-4 p-3 text-white flex justify-center items-center flex-col bg-black rounded-sm bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500">
             <b className="xl:text-xl text-center">Mua 4 sản phẩm</b>
             <p className="text-center">
               Tiết kiệm{" "}
-              {19999999?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} đ
+              {VND(sumMoneySaveProduct - sumMoneyProduct)?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </p>
           </div>
         </div>
