@@ -36,6 +36,7 @@ const CartComponent = (props: any) => {
       setIsChecked([...isChecked, valueChecked]);
       setItemPayProduct([...payItemProduct, value]);
       const payArrayPriceAuth = [...payItemProduct, value]
+      console.log("payArrayPriceAuth", payArrayPriceAuth);
       sumArrayPrice(payArrayPriceAuth);
       sumArrayPriceAuth(payArrayPriceAuth)
     } else {
@@ -70,11 +71,13 @@ const CartComponent = (props: any) => {
 
   const sumArrayPrice = (value: any) => {
     let sum = 0;
-    if(value?.length) {
-      for(var i = 0; i <= value?.length; i++) {
+    if(value?.length > 0) {
+      for(var i = 0; i < value?.length; i++) {
         sum += value?.[i]?.price;
         if(!Number.isNaN(sum)) {
-          setSumCart(sum);
+          if(sum) {
+            setSumCart(sum);
+          }
         }
     }
     return sum
@@ -90,6 +93,8 @@ const CartComponent = (props: any) => {
       description: 'Bạn chưa chọn sản phẩm để thanh toán',
     });
       }
+
+      console.log(VND(sumCart));
 
   return (
     <div className="flex justify-center bg-[#f3f3f3] items-center w-full flex-col">

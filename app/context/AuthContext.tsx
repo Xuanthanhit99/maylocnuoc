@@ -139,7 +139,7 @@ export const AuthContextProvider = ({
 
   const sumArrayPriceAuth = (value: any) => {
     let sum = 0;
-  for(var i = 0; i <= value?.length; i++) {
+  for(var i = 0; i < value?.length; i++) {
         sum += value?.[i]?.price;
         if(!Number.isNaN(sum)) {
           localStorage.setItem("Cart-Product-Sum", JSON.stringify(sum));
