@@ -15,13 +15,13 @@ const ProductPage = () => {
   return (
     <div>
       <div className="flex justify-center flex-col items-center bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500">
-        <div className="p-5 font-medium text-4xl my-4 text-white h-14 text-center flex justify-center items-center">
+        <div className="p-5 font-medium text-4xl my-4 text-white h-14 text-center flex justify-center items-center sm:text-lg">
           Tất cả các sản phẩm tại cửa hàng
         </div>
         <div className="flex w-10/12 flex-col">
-          <div className="w-full grid grid-cols-4 gap-4">
+          <div className="w-full grid grid-cols-4 gap-4 sm:grid-cols-1 sm:gap-1 md:grid-cols-2 md:grid-2 lg:grid-cols-2 lg:grid-2">
             <div>
-              <h3 className="text-white text-xl">Máy lọc nước:</h3>
+              <h3 className="text-white text-xl sm:text-base">Máy lọc nước:</h3>
               <CustomSelect
                 label=""
                 onChange={(value) => setNameProduct(value)}
@@ -29,7 +29,7 @@ const ProductPage = () => {
               />
             </div>
             <div>
-              <h3 className="text-white text-xl">Phụ kiện máy lọc nước</h3>
+              <h3 className="text-white text-xl sm:text-base">Phụ kiện máy lọc nước</h3>
               <CustomSelect
                 label=""
                 onChange={(value) => setAccessoryProduct(value)}
@@ -37,7 +37,7 @@ const ProductPage = () => {
               />
             </div>
             <div>
-              <h3 className="text-white text-xl">Loại lõi lọc</h3>
+              <h3 className="text-white text-xl sm:text-base">Loại lõi lọc</h3>
               <CustomSelect
                 label=""
                 onChange={(value) => setTypeProduct(value)}
