@@ -36,7 +36,6 @@ const CartComponent = (props: any) => {
       setIsChecked([...isChecked, valueChecked]);
       setItemPayProduct([...payItemProduct, value]);
       const payArrayPriceAuth = [...payItemProduct, value]
-      console.log("payArrayPriceAuth", payArrayPriceAuth);
       sumArrayPrice(payArrayPriceAuth);
       sumArrayPriceAuth(payArrayPriceAuth)
     } else {
@@ -93,8 +92,6 @@ const CartComponent = (props: any) => {
       description: 'Bạn chưa chọn sản phẩm để thanh toán',
     });
       }
-
-      console.log(VND(sumCart));
 
   return (
     <div className="flex justify-center bg-[#f3f3f3] items-center w-full flex-col">

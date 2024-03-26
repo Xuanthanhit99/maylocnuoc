@@ -84,7 +84,6 @@ export const AuthContextProvider = ({
     const getApi = async () => {
       setIsLoadingProduct(true)
       const getApiNew = await getApiProduct()
-      console.log("getApiNew", getApiNew);
       if(getApiNew?.success){
         setDataProduct(getApiNew?.data)
         setIsLoadingProduct(false)

@@ -9,11 +9,11 @@ type Props = {
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const CustomUpload: FC<Props> = ({ label, onChange }) => {
+const CustomUpload: FC<Props> = ({ label,onChange }) => {
 
   return  (
     <div className="flex flex-col my-2">
-  <label htmlFor="avatar">Choose a profile picture:</label>
+  <label htmlFor="avatar">{label}</label>
   <input
   type="file"
   id="avatar"

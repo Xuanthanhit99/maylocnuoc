@@ -19,14 +19,6 @@ export const POST = async (request: NextRequest) => {
       isPurchase,
     } = reqBody;
 
-    const pusher = await new Pusher({
-      appId: process.env.PUSHER_APP_ID as string,
-      key: process.env.NEXT_PUBLIC_PUSHER_APP_KEY as string,
-      secret: process.env.PUSHER_APP_SECRET as string,
-      cluster: process.env.PUSHER_APP_CLUSTER as string,
-      useTLS: true,
-    });
-
     const newComent = await new Comment({
       name,
       image,
@@ -40,11 +32,19 @@ export const POST = async (request: NextRequest) => {
       isPurchase,
     });
 
-    await pusher.trigger("chat", "hello", {
-      message: `${JSON.stringify(reqBody)}`,
-    });
-
     await newComent.save();
+
+    //     const pusher = await new Pusher({
+    //   appId: process.env.PUSHER_APP_ID as string,
+    //   key: process.env.NEXT_PUBLIC_PUSHER_APP_KEY as string,
+    //   secret: process.env.PUSHER_APP_SECRET as string,
+    //   cluster: process.env.PUSHER_APP_CLUSTER as string,
+    //   useTLS: true,
+    // });
+
+    // await pusher.trigger("chat", "hello", {
+    //   message: `${JSON.stringify(reqBody)}`,
+    // });
 
     return NextResponse.json({
       data: {
@@ -62,6 +62,6 @@ export const POST = async (request: NextRequest) => {
       status: 201,
     });
   } catch (error) {
-    return NextResponse.json({success: false,status: 500 });
+    return NextResponse.json({error,success: false,status: 500 });
 }
 };

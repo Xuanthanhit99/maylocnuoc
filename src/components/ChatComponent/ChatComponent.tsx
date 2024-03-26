@@ -16,7 +16,7 @@ interface IMsg {
 // create random user
 const user = "User_" + String(new Date().getTime()).substr(-3);
 
-const ChatComponent = ({slugParam, onOpenNoti}: any) => {
+const ChatComponent = ({ slugParam, onOpenNoti }: any) => {
   const [textMessage, setTextMessage] = useState<any>([]);
   const [valueComment, setValueComment] = useState<any>([]);
   const [valueCommentImage, setValueCommentImage] = useState<any>("");
@@ -70,40 +70,31 @@ const ChatComponent = ({slugParam, onOpenNoti}: any) => {
     };
 
     // dispatch message to other users
-    const resp = await fetch("/api/pusher", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify(message),
-    });
-    const repons = await resp.json();
-    onOpenNoti()
-    setIsReply(false)
-    // if (repons?.success) {
-    //   const arrayApi = await [...valueComment, repons?.data];
-    //   setValueComment(arrayApi);
-    //   setUseValueName("");
-    //   setRateValueComment(0);
-    //   setUseValuePhone("");
-    //   setMsg("");
-    // }
+    const resp = await axios.post("/api/pusher", message);
+    onOpenNoti();
+    setIsReply(false);
+    if (resp?.data?.success) {
+      const arrayApi = await [...valueComment, resp?.data?.data];
+      setValueComment(arrayApi);
+      setUseValueName("");
+      setRateValueComment(0);
+      setUseValuePhone("");
+      setMsg("");
+    }
     // focus after click
     // @ts-ignore
     inputRef?.current?.focus();
   };
 
-  useEffect(() => {
-    const sendMessageReply = async () => {
-      const apiGet = await axios.post("/api/pusher/getCommentByNameProduct", {
-        nameproduct: slugParam,
-      });
-      setValueComment([...apiGet?.data?.data]);
-    };
+  const sendMessageReply = async (slugParam: any) => {
+    const apiGet = await axios.post("/api/pusher/getCommentByNameProduct", {
+      nameproduct: slugParam,
+    });
+    setValueComment([...apiGet?.data?.data]);
+  };
 
-    sendMessageReply();
+  useEffect(() => {
+    sendMessageReply(slugParam);
   }, [slugParam]);
 
   const onClickReplyComment = async (value: any) => {
@@ -139,8 +130,11 @@ const ChatComponent = ({slugParam, onOpenNoti}: any) => {
       body: JSON.stringify(message),
     });
     const repons = await resp.json();
-    onOpenNoti()
-    setIsReply(false)
+    if (repons.success) {
+      sendMessageReply(slugParam);
+      onOpenNoti();
+      setIsReply(false);
+    }
   };
 
   return (
@@ -186,6 +180,7 @@ const ChatComponent = ({slugParam, onOpenNoti}: any) => {
                       name="username"
                       className="mb-2"
                       onChange={(e) => setUseValueName(e?.target?.value)}
+                      value={useValueName}
                     />
                   </div>
                   <div className="w-1/2 ml-4">
@@ -194,6 +189,7 @@ const ChatComponent = ({slugParam, onOpenNoti}: any) => {
                       name="phone"
                       className="mb-2"
                       onChange={(e) => setUseValuePhone(e?.target?.value)}
+                      value={useValuePhone}
                     />
                   </div>
                 </div>
@@ -303,19 +299,22 @@ const ChatComponent = ({slugParam, onOpenNoti}: any) => {
                 )
                 ?.map((item: any, index: any) => {
                   return (
-                    <div key={index}>
+                    <div key={index} className="bg-white p-3 rounded-lg">
                       <div>
                         <Avatar
                           style={{ verticalAlign: "middle" }}
-                          className="bg-red-500"
+                          className="bg-black text-white"
                           size="large"
                         >
                           {item?.name?.slice(0, 1)?.toUpperCase()}
                         </Avatar>
-                        <span className="text-sm font-mono text-black ml-3">
+                        <span className="text-xl font-medium text-black ml-3">
                           {item?.name}
                         </span>
                         <div className="my-2">
+                        <span className="text-lg font-mono text-black">
+                          {item?.textcomment}
+                        </span>
                           <div
                             onClick={() => {
                               setIsReply(index);
@@ -326,8 +325,9 @@ const ChatComponent = ({slugParam, onOpenNoti}: any) => {
                             }}
                             className="cursor-pointer text-sm font-medium py-2"
                           >
-                            Trả lời
+                            Trả lời | 
                           </div>
+                          <hr />
                           {isReply === index && (
                             <div>
                               <textarea
@@ -347,11 +347,11 @@ const ChatComponent = ({slugParam, onOpenNoti}: any) => {
                                 }}
                               />
                               <div className="mb-1">Đánh giá</div>{" "}
-                  <Rate
-                    tooltips={desc}
-                    onChange={setRateValue}
-                    value={rateValue}
-                  />{" "}
+                              <Rate
+                                tooltips={desc}
+                                onChange={setRateValue}
+                                value={rateValue}
+                              />{" "}
                               <div className="flex w-full">
                                 <div className="w-1/2 mr-4">
                                   <CustomInput
@@ -390,6 +390,31 @@ const ChatComponent = ({slugParam, onOpenNoti}: any) => {
                               </div>
                             </div>
                           )}
+                          <div className="flex flex-col">
+                                {item?.replypeople?.map((itemReply: any, index: any) => {
+                                  return (
+                                    <div key={index} className="my-2 bg-[#f5f5f5] rounded-xl">
+                                      <div>
+                                      <Avatar
+                                        style={{ verticalAlign: "middle" }}
+                                        className="bg-black text-white"
+                                        size="large"
+                                      >
+                                        {itemReply?.nameComment?.slice(0, 1)?.toUpperCase()}
+                                      </Avatar>
+                                      <span className="text-xl font-medium text-black ml-3">
+                                        {itemReply?.nameComment}
+                                      </span>
+                                      </div>
+                                      <div>
+                                      <div className="text-sm font-mono text-black ml-3 pt-2">
+                                        {itemReply?.nameComment}
+                                      </div>
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
                         </div>
                       </div>
                       <div></div>
