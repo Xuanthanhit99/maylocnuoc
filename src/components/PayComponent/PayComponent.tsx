@@ -96,7 +96,8 @@ const PayComponent = ({paramSlug,valueproduct}: any) => {
       const data = {
         "informationuser":  {"username": useValueName,"phone": useValuePhone, "email": useValueEmail},
         "deliveryaddress" : {"city": valueCity?.province_name ,"district": valueDistrict?.district_name, "address": useValueAddress, "note": useValueNote},
-        "product" :  cartProductMenu
+        "product" :  cartProductMenu,
+        "trangthai": true,
       }
     return mutateAsyncByProduct(data).then((res: any) => {
       if(res.success) {

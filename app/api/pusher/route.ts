@@ -17,7 +17,10 @@ export const POST = async (request: NextRequest) => {
       nameproduct,
       isAdmin,
       isPurchase,
+      createdAt,
     } = reqBody;
+
+    console.log("createdAt", createdAt);
 
     const newComent = await new Comment({
       name,
@@ -57,6 +60,7 @@ export const POST = async (request: NextRequest) => {
           evaluate,
           nameproduct,
           isAdmin,
+          createdAt,
       },
       success: true,
       status: 201,

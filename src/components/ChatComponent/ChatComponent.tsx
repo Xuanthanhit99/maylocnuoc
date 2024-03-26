@@ -5,8 +5,9 @@ import Pusher from "pusher-js";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import CustomUpload from "../FormItemFloatLabel/CustomUpload";
-import { Avatar, Checkbox, Rate } from "antd";
+import { Avatar, Button, Checkbox, Modal, Rate } from "antd";
 import CustomInput from "../FormItemFloatLabel/CustomInput";
+import moment from "moment";
 
 interface IMsg {
   user: string;
@@ -14,10 +15,7 @@ interface IMsg {
 }
 
 // create random user
-const user = "User_" + String(new Date().getTime()).substr(-3);
-
 const ChatComponent = ({ slugParam, onOpenNoti }: any) => {
-  const [textMessage, setTextMessage] = useState<any>([]);
   const [valueComment, setValueComment] = useState<any>([]);
   const [valueCommentImage, setValueCommentImage] = useState<any>("");
   const desc = ["terrible", "bad", "normal", "good", "wonderful"];
@@ -25,22 +23,13 @@ const ChatComponent = ({ slugParam, onOpenNoti }: any) => {
   const [useValueName, setUseValueName] = useState<string>("");
   const [useValuePhone, setUseValuePhone] = useState<string>("");
   const [isPurchase, setIsPurchase] = useState<boolean>(false);
-  const [isReply, setIsReply] = useState<boolean>(false);
+  const [isReply, setIsReply] = useState<any>();
   const [rateValueComment, setRateValueComment] = useState<number>(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const inputRef = useRef(null);
   // init chat and message
-  const [chat, setChat] = useState<IMsg[]>([]);
   const [msg, setMsg] = useState<string>("");
-  var pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_APP_KEY as string, {
-    cluster: "ap1",
-  });
-
-  var channel = pusher.subscribe("chat");
-  channel.bind("hello", function (data: any) {
-    const parsedComments = JSON.parse(data.message);
-    setTextMessage((prev: any) => [...prev, parsedComments]);
-  });
 
   const covertToBase64 = (e: any) => {
     var reader = new FileReader();
@@ -66,13 +55,13 @@ const ChatComponent = ({ slugParam, onOpenNoti }: any) => {
       isAdmin: false,
       nameproduct: slugParam,
       evaluate: rateValue,
+      createdAt: Date.now(),
       replypeople: [],
     };
 
     // dispatch message to other users
     const resp = await axios.post("/api/pusher", message);
     onOpenNoti();
-    setIsReply(false);
     if (resp?.data?.success) {
       const arrayApi = await [...valueComment, resp?.data?.data];
       setValueComment(arrayApi);
@@ -115,6 +104,7 @@ const ChatComponent = ({ slugParam, onOpenNoti }: any) => {
           phoneComment: useValuePhone,
           evaluateComment: rateValue,
           textComment: msg,
+          createdAt: Date.now()
         },
       ],
     };
@@ -132,11 +122,34 @@ const ChatComponent = ({ slugParam, onOpenNoti }: any) => {
     const repons = await resp.json();
     if (repons.success) {
       sendMessageReply(slugParam);
-      onOpenNoti();
-      setIsReply(false);
+      setIsModalOpen(false);
     }
   };
 
+  const showModal = (item:any, index: number) => {
+    setIsModalOpen(true);
+    setUseValueName("");
+    setRateValueComment(0);
+    setUseValuePhone("");
+    setMsg("");
+    setRateValue(5)
+    setIsReply(item);
+  };
+
+  const onClickReply = () => {
+    onClickReplyComment(isReply);
+    setIsModalOpen(false);
+    setUseValueName("");
+    setUseValuePhone("");
+    setRateValue(5)
+    setRateValueComment(0);
+  }
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  console.log("valueComment", valueComment);
   return (
     <div className="flex justify-center bg-[#f3f3f3] relative">
       <div className="w-full">
@@ -171,6 +184,7 @@ const ChatComponent = ({ slugParam, onOpenNoti }: any) => {
                     tooltips={desc}
                     onChange={setRateValue}
                     value={rateValue}
+                    allowClear={false}
                   />{" "}
                 </div>
                 <div className="flex w-full">
@@ -289,7 +303,7 @@ const ChatComponent = ({ slugParam, onOpenNoti }: any) => {
         </div>
         {/* list bình luận */}
         <hr className="my-3 " />
-        <div>
+        <div className="max-h-[1000px] overflow-y-scroll">
           {valueComment
             ? valueComment
                 ?.filter((item: any) =>
@@ -312,109 +326,56 @@ const ChatComponent = ({ slugParam, onOpenNoti }: any) => {
                           {item?.name}
                         </span>
                         <div className="my-2">
-                        <span className="text-lg font-mono text-black">
-                          {item?.textcomment}
-                        </span>
+                          <span className="text-lg font-mono text-black">
+                            {item?.textcomment}
+                          </span>
                           <div
                             onClick={() => {
-                              setIsReply(index);
-                              setUseValueName("");
-                              setRateValueComment(0);
-                              setUseValuePhone("");
-                              setMsg("");
+                              showModal(item, index)
                             }}
                             className="cursor-pointer text-sm font-medium py-2"
                           >
-                            Trả lời | 
+                            Trả lời | <span>{moment(item?.createdAt).format("hh:mm:ss a - DD/MM/YYYY")}</span>
                           </div>
                           <hr />
-                          {isReply === index && (
-                            <div>
-                              <textarea
-                                ref={inputRef}
-                                rows={5}
-                                cols={5}
-                                value={msg}
-                                placeholder={"Connecting..."}
-                                className="w-full h-full rounded border-[#9580ff] border-2 px-1 hover:border-[#8aff80] focus:border-[#80ffea] focus:outline-none"
-                                onChange={(e: any) => {
-                                  setMsg(e.target.value);
-                                }}
-                                onKeyPress={(e: any) => {
-                                  if (e.key === "Enter") {
-                                    sendMessage();
-                                  }
-                                }}
-                              />
-                              <div className="mb-1">Đánh giá</div>{" "}
-                              <Rate
-                                tooltips={desc}
-                                onChange={setRateValue}
-                                value={rateValue}
-                              />{" "}
-                              <div className="flex w-full">
-                                <div className="w-1/2 mr-4">
-                                  <CustomInput
-                                    label="Họ tên*"
-                                    name="username"
-                                    className="mb-2"
-                                    onChange={(e) =>
-                                      setUseValueName(e?.target?.value)
-                                    }
-                                  />
-                                </div>
-                                <div className="w-1/2 ml-4">
-                                  <CustomInput
-                                    label="Số điện thoại*"
-                                    name="phone"
-                                    className="mb-2"
-                                    onChange={(e) =>
-                                      setUseValuePhone(e?.target?.value)
-                                    }
-                                  />
-                                </div>
-                              </div>
-                              <div className="flex">
-                                <div
-                                  className="mr-3 flex justify-center items-center rounded-lg text-white font-sans hover:text-red-500 hover:bg-white border-2 border-red-500 cursor-pointer text-sm h-9 w-24 bg-red-500"
-                                  onClick={() => setIsReply(false)}
-                                >
-                                  Hủy
-                                </div>
-                                <div
-                                  className="ml-3 flex justify-center items-center rounded-lg text-white font-sans hover:text-red-500 hover:bg-white border-2 border-red-500 cursor-pointer text-sm h-9 w-24 bg-red-500"
-                                  onClick={() => onClickReplyComment(item)}
-                                >
-                                  Trả lời
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                          <div className="flex flex-col">
-                                {item?.replypeople?.map((itemReply: any, index: any) => {
-                                  return (
-                                    <div key={index} className="my-2 bg-[#f5f5f5] rounded-xl">
-                                      <div>
+                          <div className="flex flex-col ml-4">
+                            {item?.replypeople?.map(
+                              (itemReply: any, key: any) => {
+                                return (
+                                  <div
+                                    key={key}
+                                    className="my-2 bg-[#f5f5f5] rounded-xl p-3"
+                                  >
+                                    <div>
                                       <Avatar
                                         style={{ verticalAlign: "middle" }}
                                         className="bg-black text-white"
                                         size="large"
                                       >
-                                        {itemReply?.nameComment?.slice(0, 1)?.toUpperCase()}
+                                        {itemReply?.nameComment
+                                          ?.slice(0, 1)
+                                          ?.toUpperCase()}
                                       </Avatar>
                                       <span className="text-xl font-medium text-black ml-3">
                                         {itemReply?.nameComment}
                                       </span>
-                                      </div>
-                                      <div>
+                                    </div>
+                                    <div>
                                       <div className="text-sm font-mono text-black ml-3 pt-2">
                                         {itemReply?.nameComment}
                                       </div>
-                                      </div>
                                     </div>
-                                  );
-                                })}
-                              </div>
+                                    <div
+                                      onClick={() => {showModal(item,key)}}
+                                      className="cursor-pointer text-sm font-medium py-2"
+                                    >
+                                      Trả lời | <span>{moment(itemReply?.createdAt).format("hh:mm:ss a - DD/MM/YYYY")}</span>
+                                    </div>
+                                  </div>
+                                );
+                              }
+                            )}
+                          </div>
                         </div>
                       </div>
                       <div></div>
@@ -425,6 +386,60 @@ const ChatComponent = ({ slugParam, onOpenNoti }: any) => {
             : "Chưa có bình luận nào"}
         </div>
       </div>
+      <Modal
+        title="Basic Modal"
+        open={isModalOpen}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="back" onClick={() => onClickReply()}>
+            Hoàn tất
+          </Button>,
+          <Button key="back" onClick={handleCancel}>
+            Đóng
+          </Button>,
+        ]}
+      >
+          <div>
+            <textarea
+              ref={inputRef}
+              rows={5}
+              cols={5}
+              value={msg}
+              placeholder={"Connecting..."}
+              className="w-full h-full rounded border-[#9580ff] border-2 px-1 hover:border-[#8aff80] focus:border-[#80ffea] focus:outline-none"
+              onChange={(e: any) => {
+                setMsg(e.target.value);
+              }}
+              onKeyPress={(e: any) => {
+                if (e.key === "Enter") {
+                  sendMessage();
+                }
+              }}
+            />
+            <div className="mb-1">Đánh giá</div>{" "}
+            <Rate tooltips={desc} onChange={setRateValue} value={rateValue} allowClear={false}/>{" "}
+            <div className="flex w-full">
+              <div className="w-1/2 mr-4">
+                <CustomInput
+                  label="Họ tên*"
+                  name="username"
+                  className="mb-2"
+                  onChange={(e) => setUseValueName(e?.target?.value)}
+                  value={useValueName}
+                />
+              </div>
+              <div className="w-1/2 ml-4">
+                <CustomInput
+                  label="Số điện thoại*"
+                  name="phone"
+                  className="mb-2"
+                  onChange={(e) => setUseValuePhone(e?.target?.value)}
+                  value={useValuePhone}
+                />
+              </div>
+            </div>
+          </div>
+      </Modal>
     </div>
   );
 };

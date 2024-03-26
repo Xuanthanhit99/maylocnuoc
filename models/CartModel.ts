@@ -21,6 +21,10 @@ const CartSchema = new Schema({
         promotionalprice: {type: String},
         guarantee: {type: String}
     }],
+    trangthai: {
+        type: Boolean,
+        default: false
+    },
     date: {type: Date}
 })
 

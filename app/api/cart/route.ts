@@ -6,11 +6,12 @@ export const POST = async (request: NextRequest) => {
     try {
         await connectDB()
         const reqBody = await request.json()
-        const {product, informationuser, deliveryaddress} = reqBody.data
+        const {product, informationuser, deliveryaddress,trangthai} = reqBody.data
         const buyProduct = await new Cart({
             informationuser,
             deliveryaddress,
             product,
+            trangthai
         })
 
         await buyProduct.save()
