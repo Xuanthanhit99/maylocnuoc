@@ -7,7 +7,7 @@ import PayComponent from "@/components/PayComponent/PayComponent";
 import { useEffect, useState } from "react";
 import { getApiProduct } from "../../context/QueryApi";
 import { useParams, useSearchParams } from "next/navigation";
-
+import {PayPalButtons, PayPalScriptProvider} from '@paypal/react-paypal-js'
 const ProductDetail = (props: any) => {
   const params = useParams()
   const [dataProduct, setDataProduct] = useState([])
@@ -19,7 +19,9 @@ const ProductDetail = (props: any) => {
     getApi()
   },[]);
   return (
-    <PayComponent valueproduct={dataProduct} paramSlug={params.pay}/>
+    <div>
+          <PayComponent valueproduct={dataProduct} paramSlug={params.pay}/>
+    </div>
   );
 };
 
