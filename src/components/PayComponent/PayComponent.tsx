@@ -381,7 +381,7 @@ const PayComponent = ({ paramSlug, valueproduct }: any) => {
             <PayPalScriptProvider
               options={{
                 clientId:
-                  "AbvZKzghtNJZ0aW6VLjMhv1gA7HPlXGc3KxRqn1DrigM0m1578V4fTGc9QjIM0n5B5tAKxg_PG7WHC6o",
+                  "Acr9_-_eqeI1qGy51-jLQ2sJpB28EepYAlnCjFIjxmC1uy_-IDLkxl1k07ARadT-J6A9oO13zCicFjtQ",
               }}
             >
               <PayPalButton
