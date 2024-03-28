@@ -83,6 +83,11 @@ const Menu = (props: any) => {
       url: "/news",
     },
     {
+      label: "Tra cứu đơn hàng",
+      key: "tracuudonhang",
+      url: "/tracuudonhang",
+    },
+    {
       label: "signin",
       key: "signin",
       url: "/signin",

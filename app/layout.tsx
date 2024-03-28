@@ -1,8 +1,8 @@
 import "./globals.css";
 // import { Inter } from 'next/font/google'
-import MenuComponentComponent from "../src/components/menu/index";
-import FooterComponent from "../src/components/footer/index";
-import SocialSupport from "../src/components/menu-chat/index";
+import MenuComponentComponent from "../src/components/MenuComponent/MenuComponent";
+import FooterComponent from "../src/components/Footer/Footer";
+import SocialSupport from "../src/components/MenuChatComponent/MenuChatComponent";
 import CustomInput from "@/components/FormItemFloatLabel/CustomInput";
 import CustomTextArea from "@/components/FormItemFloatLabel/CustomTextArea";
 import { Button } from "antd";

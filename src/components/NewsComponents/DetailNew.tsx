@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import Image from "next/image";
 import React, { useState } from "react";
-import CardItem from "../card/index";
+import CardItem from "../Card/Card";
 import CustomInput from "../FormItemFloatLabel/CustomInput";
 import CustomTextArea from "../FormItemFloatLabel/CustomTextArea";
 import axios from "axios";

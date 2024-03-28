@@ -3,18 +3,13 @@ import ProductDetailComponent from "@/components/ProductComponent/ProductDetailC
 import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getApiProduct } from "../../context/QueryApi";
+import { AuthContextDefault } from "../../context/AuthContext";
 
 const ProductDetail = (props: any) => {
   const params = useParams()
   const paramSlug = params.slug;
-  const [dataProduct, setDataProduct] = useState([])
-  useEffect(() => {
-    const getApi = async () => {
-      const getApiNew = await getApiProduct()
-      setDataProduct(getApiNew?.data)
-    }
-    getApi()
-  },[]);
+  const { isLoadingProduct, dataProduct } = AuthContextDefault();
+
   return (
     <ProductDetailComponent paramSlug={paramSlug} valueproduct={dataProduct} />
   );

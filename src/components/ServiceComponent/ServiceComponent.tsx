@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Tabs, TabsProps } from "antd";
 import { useRouter } from "next/navigation";
-import CardItem from "../card/index";
+import CardItem from "../Card/Card";
 import Link from "next/link";
 
 const ServiceComponent = (props: any) => {

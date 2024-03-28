@@ -130,13 +130,13 @@ export const AuthContextProvider = ({
 
   const onPayProductValue = () => {
     setPayProduct([])
-    router.push("/")
+    // router.push("/")
     setIsLoadingAuth(true);
   }
 
   const onPayProductValueCart = () => {
     setPayProductCart([])
-    router.push("/")
+    // router.push("/")
     setIsLoadingAuth(true);
     setCartProductContext([])
     localStorage.removeItem("Recently-Viewed");
