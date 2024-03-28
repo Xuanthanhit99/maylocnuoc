@@ -1,6 +1,6 @@
 "use client";
 
-const index = () => {
+const Footer = () => {
     return (
         <div className="flex justify-center bg-gradient-to-r from-indigo-500 via-sky-500 via-30% to-emerald-500">
         <div className="w-10/12 sm:w-full flex justify-center items-center p-9 md:p-0 md:py-9 md:11/12">
@@ -119,4 +119,4 @@ const index = () => {
     );
 }
 
-export default index
+export default Footer

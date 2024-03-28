@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Tabs, TabsProps } from "antd";
 import { useRouter } from "next/navigation";
-import CardItem from "../Card/Card";
+import CardItem from "../Card/CardItem";
 import Link from "next/link";
 import CustomInput from "../FormItemFloatLabel/CustomInput";
 import axios from "axios";

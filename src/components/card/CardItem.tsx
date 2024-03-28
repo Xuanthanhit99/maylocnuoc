@@ -10,7 +10,7 @@ type cartType = {
     url?: string
 }
 
-const index = ({label, image, time, url}:cartType) => {
+const CardItem = ({label, image, time, url}:cartType) => {
     return (
         <Card
         hoverable
@@ -21,4 +21,4 @@ const index = ({label, image, time, url}:cartType) => {
     );
 }
 
-export default index
+export default CardItem
