@@ -6,7 +6,9 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { TypeProduct } from "../../../utils/TypeProduct";
 import Image from "next/image";
-import CardItem from "../Card/CardItem";
+import CardItem from "../CardItem/CardItem";
+import ListProduct from "../ListProduct/ListProduct";
+// import CardItem from "../CardItem/CardItem";
 
 const itemsmenu = [
   {
@@ -72,20 +74,7 @@ const NewsComponents = ({ valueProduct }: any) => {
         <div className="flex justify-center w-full">
           <div className="flex w-9/12 flex-col my-6">
             <div>
-              <div className="w-full grid grid-cols-1 gap-1 lg:grid-cols-4 lg:gap-4 sm:grid-cols-1 sm:gap-1 md:grid-cols-2 md:gap-2 xl:grid-cols-6 xl:gap-6">
-                {valueProduct?.map((item: any) => {
-                  return (
-                    <div className="mr-1 sm:mb-6" key={item.key}>
-                      <CardItem
-                        label={item?.label}
-                        image={item?.image}
-                        time={item?.time}
-                        url={item?.url}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
+              <ListProduct valueProduct={valueProduct}/>
             </div>
           </div>
         </div>
