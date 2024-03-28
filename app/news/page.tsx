@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import HomeNews from "../../src/components/NewsComponents/index"
+import HomeNews from "../../src/components/NewsComponents/News"
 import { getApiProduct } from "../context/QueryApi";
 const NewsPage = () => {
   const [dataProduct, setDataProduct] = useState([])
