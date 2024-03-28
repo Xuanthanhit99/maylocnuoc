@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import HomeNews from "../../src/components/NewsComponents/News"
+import NewsComponents from "../../src/components/NewsComponents/NewsComponents"
 import { getApiProduct } from "../context/QueryApi";
 const NewsPage = () => {
   const [dataProduct, setDataProduct] = useState([])
@@ -17,7 +17,7 @@ const NewsPage = () => {
   return (
     <div>
       <div className="flex justify-center">
-            <HomeNews paramSlug={""} valueProduct={dataProduct}/>
+            <NewsComponents paramSlug={""} valueProduct={dataProduct}/>
       </div>
     </div>
   );
