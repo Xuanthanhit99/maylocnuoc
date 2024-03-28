@@ -191,7 +191,7 @@ const MenuChat = () => {
               </div>
             </div>
           </div>
-          <div className="absolute top-0 left-0 bg-black opacity-45 w-full h-full"></div>
+          <div className="absolute top-0 left-0 bg-black opacity-45 w-full h-full" onClick={() => onClickShowFormTT()}></div>
         </div>
       )}
     </div>
