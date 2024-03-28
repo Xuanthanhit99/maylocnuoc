@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import HomeNews from "./DetailNew";
 import { Tabs, TabsProps } from "antd";
 import { useRouter } from "next/navigation";
-import CardItem from "../Card/CardItem";
 import Link from "next/link";
 import { TypeProduct } from "../../../utils/TypeProduct";
 import Image from "next/image";
+import CardItem from "../Card/CardItem";
 
 const itemsmenu = [
   {
@@ -26,7 +26,7 @@ const itemsmenu = [
   },
 ];
 
-const News = ({ valueProduct, paramSlug }: any) => {
+const NewsComponents = ({ valueProduct, paramSlug }: any) => {
 
   return (
     <div className="w-full h-auto">
@@ -94,4 +94,4 @@ const News = ({ valueProduct, paramSlug }: any) => {
   );
 };
 
-export default News;
+export default NewsComponents;
