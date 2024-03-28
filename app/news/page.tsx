@@ -3,16 +3,10 @@
 import { useEffect, useState } from "react";
 import NewsComponents from "../../src/components/NewsComponents/NewsComponents"
 import { getApiProduct } from "../context/QueryApi";
+import { AuthContextDefault } from "../context/AuthContext";
 const NewsPage = () => {
-  const [dataProduct, setDataProduct] = useState([])
+  const { isLoadingProduct, dataProduct } = AuthContextDefault();
 
-  useEffect(() => {
-    const getApi = async () => {
-      const getApiNew = await getApiProduct()
-      setDataProduct(getApiNew?.data)
-    }
-    getApi()
-  },[]);
 
   return (
     <div>

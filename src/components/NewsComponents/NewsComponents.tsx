@@ -26,7 +26,7 @@ const itemsmenu = [
   },
 ];
 
-const NewsComponents = ({ valueProduct, paramSlug }: any) => {
+const NewsComponents = ({ valueProduct }: any) => {
 
   return (
     <div className="w-full h-auto">
