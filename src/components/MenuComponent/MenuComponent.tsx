@@ -88,7 +88,7 @@ const Menu = (props: any) => {
       url: "/tracuudonhang",
     },
     {
-      label: "signin",
+      label: "Sign In",
       key: "signin",
       url: "/signin",
     },
@@ -113,6 +113,11 @@ const Menu = (props: any) => {
 
     textSearch && setResultSearch([...filterApiNew]);
   }, [textSearch, dataProduct]);
+
+  const onClickLink = (href: string) => {
+    window.open(href,"_self");
+    setIsMenuLeft(false);
+  }
 
   return (
     <>
@@ -148,28 +153,21 @@ const Menu = (props: any) => {
                       onClick={() => setIsMenuLeft(false)}
                     />
                   </li>
-                  <li className="p-3 border-b cursor-pointer hover:bg-slate-400 hover:text-slate-900">
-                    <Link href={"/"}>Trang chủ</Link>
-                  </li>
-                  <li className="p-3 border-b cursor-pointer hover:bg-slate-400 hover:text-slate-900">
-                    <Link href={"/"}>Về chúng tôi</Link>
-                  </li>
-                  <li className="p-3 border-b cursor-pointer hover:bg-slate-400 hover:text-slate-900">
-                    <Link href={"/product"}>Sản phẩm</Link>
-                  </li>
-                  <li className="p-3 border-b cursor-pointer hover:bg-slate-400 hover:text-slate-900">
-                    <Link href={"/product"}>Tin tức</Link>
-                  </li>
-                  <li className="p-3 border-b cursor-pointer hover:bg-slate-400 hover:text-slate-900">
-                    <Link href={"/product"}>Dịch vụ</Link>
-                  </li>
-                  {isSign ? (
+                  {itemsMenu?.map((item, index )=> {
+                    return (
+                      <li onClick={() => onClickLink(item?.url)} key={index} className="p-3 border-b cursor-pointer hover:bg-slate-400 hover:text-slate-900">
+                      {/* <Link href={item?.url}>{item?.label}</Link> */}
+                      {item?.label}
+                    </li>
+                    )
+                  })}
+                  {/* {isSign ? (
                     ""
                   ) : (
                     <li className="p-3 rounded-b-lg cursor-pointer hover:bg-slate-400 hover:text-slate-900">
                       <Link href={"/signin"}>sign In</Link>
                     </li>
-                  )}
+                  )} */}
                 </ul>
               </div>
             </div>

@@ -8,7 +8,7 @@ const FooterComponent = () => {
             <div className="text-white">
               <h3 className="text-xl font-medium mb-4">Cửa hàng dũng duyên</h3>
               <ul>
-                <li className="flex mb-2 text-white">
+                <li className="flex mb-2 text-white cursor-pointer">
                   <img
                     src="/image/home/place.svg"
                     alt=""
@@ -18,7 +18,7 @@ const FooterComponent = () => {
                     Thôn thứ nhất - Xã an lão - Huyện bình lục - Tỉnh hà nam
                   </p>
                 </li>
-                <li className="flex text-white mb-2">
+                <li className="flex text-white mb-2 cursor-pointer">
                   <img
                     src="/image/home/telephone.svg"
                     alt=""
@@ -26,7 +26,7 @@ const FooterComponent = () => {
                   />
                   <p>0982.594.358</p>
                 </li>
-                <li className="flex text-white mb-2">
+                <li className="flex text-white mb-2 cursor-pointer">
                   <img
                     src="/image/home/telephone.svg"
                     alt=""
@@ -39,11 +39,11 @@ const FooterComponent = () => {
             <div className="text-white">
               <h3 className="text-xl font-medium mb-4">Về chúng tôi</h3>
               <ul>
-                <li className="mb-2">Giới thiệu về cửa hàng</li>
-                <li className="mb-2">Chính sách bảo hành</li>
-                <li className="mb-2">Chính sách giao hàng, vận chuyển</li>
-                <li className="mb-2">Chính sách thanh toán</li>
-                <li className="mb-2">Chính sách bảo mật thông tin</li>
+                <li className="mb-2 cursor-pointer">Giới thiệu về cửa hàng</li>
+                <li className="mb-2 cursor-pointer">Chính sách bảo hành</li>
+                <li className="mb-2 cursor-pointer">Chính sách giao hàng, vận chuyển</li>
+                <li className="mb-2 cursor-pointer">Chính sách thanh toán</li>
+                <li className="mb-2 cursor-pointer">Chính sách bảo mật thông tin</li>
               </ul>
             </div>
             <div className="text-white">
@@ -51,9 +51,9 @@ const FooterComponent = () => {
                 Sản phẩm doanh nghiệp
               </h3>
               <ul>
-                <li className="mb-2">Máy lọc nước</li>
-                <li className="mb-2">Lõi lọc nước</li>
-                <li className="mb-2">Linh kiện</li>
+                <li className="mb-2 cursor-pointer">Máy lọc nước</li>
+                <li className="mb-2 cursor-pointer">Lõi lọc nước</li>
+                <li className="mb-2 cursor-pointer">Linh kiện</li>
               </ul>
             </div>
             <div className="text-white">
@@ -61,7 +61,7 @@ const FooterComponent = () => {
                 Theo dõi cửa hàng qua mạng xã hội
               </h3>
               <ul className="flex justify-between">
-                <li>
+                <li className="cursor-pointer">
                   <a
                     href="http://zalo.me/4087784932765661863"
                     target="_blank"
@@ -71,7 +71,7 @@ const FooterComponent = () => {
                     <img src="/image/home/frame.svg" alt="" />
                   </a>
                 </li>
-                <li>
+                <li className="cursor-pointer">
                   <a
                     href="http://zalo.me/4087784932765661863"
                     target="_blank"
@@ -81,7 +81,7 @@ const FooterComponent = () => {
                     <img src="/image/home/frame1.svg" alt="" />
                   </a>
                 </li>
-                <li>
+                <li className="cursor-pointer">
                   <a
                     href="http://zalo.me/4087784932765661863"
                     target="_blank"
@@ -91,7 +91,7 @@ const FooterComponent = () => {
                     <img src="/image/home/frame2.svg" alt="" />
                   </a>
                 </li>
-                <li>
+                <li className="cursor-pointer">
                   <a
                     href="http://zalo.me/4087784932765661863"
                     target="_blank"
@@ -101,7 +101,7 @@ const FooterComponent = () => {
                     <img src="/image/home/frame3.svg" alt="" />
                   </a>
                 </li>
-                <li>
+                <li className="cursor-pointer">
                   <a
                     href="http://zalo.me/4087784932765661863"
                     target="_blank"
