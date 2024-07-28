@@ -11,7 +11,7 @@ const NewsPage = () => {
   return (
     <div>
       <div className="flex justify-center">
-            <NewsComponents paramSlug={""} valueProduct={dataProduct}/>
+            <NewsComponents />
       </div>
     </div>
   );

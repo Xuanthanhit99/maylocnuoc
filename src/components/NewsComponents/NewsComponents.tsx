@@ -4,7 +4,7 @@ import HomeNews from "./DetailNew";
 import { Tabs, TabsProps } from "antd";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { TypeProduct } from "../../../utils/TypeProduct";
+import { TypeProduct, TypeProductNews } from "../../../utils/TypeProduct";
 import Image from "next/image";
 import CardItem from "../CardItem/CardItem";
 import ListProduct from "../ListProduct/ListProduct";
@@ -28,7 +28,7 @@ const itemsmenu = [
   },
 ];
 
-const NewsComponents = ({ valueProduct }: any) => {
+const NewsComponents = () => {
 
   return (
     <div className="w-full h-auto">
@@ -74,7 +74,6 @@ const NewsComponents = ({ valueProduct }: any) => {
         <div className="flex justify-center w-full">
           <div className="flex w-9/12 flex-col my-6">
             <div>
-              <ListProduct valueProduct={valueProduct}/>
             </div>
           </div>
         </div>
