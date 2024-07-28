@@ -8,13 +8,27 @@ import InformationProduct from "./InformationDetail/InformationProduct/Informati
 import ComboProduct from "./InformationDetail/ComboProduct/ComboProduct";
 import DetailReviewProduct from "./InformationDetail/DetailReviewProduct/DetailReviewProduct";
 import { AuthContextDefault } from "../../../../app/context/AuthContext";
-import ChatComponent from "@/components/ChatComponent/ChatComponent";
 import { TypeProductNews } from "../../../../utils/TypeProduct";
-const ProductDetailComponent = ({ paramSlug, valueproduct }: {paramSlug: string | string[], valueproduct: TypeProductNews[]}) => {
+import WriteComment from "@/components/Comment/Comments/WriteComponent";
+import { getComments } from "@/components/Comment/Comments/Comments";
+import { LoadComments } from "@/components/Comment/Comments/LoadComponent";
+const ProductDetailComponent = ({
+  paramSlug,
+  valueproduct,
+}: {
+  paramSlug: string | string[];
+  valueproduct: TypeProductNews[];
+}) => {
   const [collapseHeight, setCollapseHeight] = useState(true);
   const [recentlyViewed, setRecentlyViewed] = useState<any>([]);
   const [api, contextHolder] = notification.useNotification();
-  const key = 'home';
+  const [comments, setComments] = useState<any>([]);
+
+  useEffect(() => {
+    getComments(paramSlug, setComments);
+  }, []);
+
+  const key = "home";
   useEffect(() => {
     const localRecentlyViewed = JSON.parse(
       localStorage.getItem("Recently-Viewed")!
@@ -23,21 +37,24 @@ const ProductDetailComponent = ({ paramSlug, valueproduct }: {paramSlug: string 
   }, []);
 
   const onOpenNoti = () => {
-    {api.open({
-      key,
-      message: 'Bình luận thành công',
-      description: 'Cảm ơn bạn đã đánh giá, đánh giá của bạn sẽ được kiểm duyệt trước khi hiện lên',
-    });
-
-    setTimeout(() => {
+    {
       api.open({
         key,
-        message: 'Bình luận thành công',
-        description: 'Cảm ơn bạn đã đánh giá, đánh giá của bạn sẽ được kiểm duyệt trước khi hiện lên',
+        message: "Bình luận thành công",
+        description:
+          "Cảm ơn bạn đã đánh giá, đánh giá của bạn sẽ được kiểm duyệt trước khi hiện lên",
       });
-    }, 1000);
-  }
-}
+
+      setTimeout(() => {
+        api.open({
+          key,
+          message: "Bình luận thành công",
+          description:
+            "Cảm ơn bạn đã đánh giá, đánh giá của bạn sẽ được kiểm duyệt trước khi hiện lên",
+        });
+      }, 1000);
+    }
+  };
 
   return (
     <div className="flex justify-center bg-[#f3f3f3]">
@@ -65,16 +82,25 @@ const ProductDetailComponent = ({ paramSlug, valueproduct }: {paramSlug: string 
           />
         </div>
         {/* thông tin sản phẩm đã chọn */}
-        <InformationProduct
-          valueproduct={valueproduct}
-          paramSlug={paramSlug}
-        />
+        <InformationProduct valueproduct={valueproduct} paramSlug={paramSlug} />
         {/* comment */}
-        {/* <ChatComponent slugParam={paramSlug} onOpenNoti={onOpenNoti}/> */}
+        <WriteComment setComments={setComments} slug={paramSlug} />
+        <div className="mt-4 pt-4 w-full border-t dark:border-gray-500">
+          <button
+            onClick={() => getComments(paramSlug, setComments)}
+            className="w-[200px] appearance-none py-2 px-5 text-center rounded border hover:bg-gray-100 dark:hover:bg-[#28282B]   dark:border-gray-500"
+          >
+            Load bình luận
+          </button>
+        </div>
+        <LoadComments comments={comments} />
         {/* combo sản phẩm */}
-        <ComboProduct valueproduct={valueproduct} paramSlug={paramSlug}/>
+        <ComboProduct valueproduct={valueproduct} paramSlug={paramSlug} />
         {/* thông tin chi tiết sản phẩm đã xem */}
-        <DetailReviewProduct collapseHeight={collapseHeight} onClickCollapseHeight={() => setCollapseHeight(!collapseHeight)}/>
+        <DetailReviewProduct
+          collapseHeight={collapseHeight}
+          onClickCollapseHeight={() => setCollapseHeight(!collapseHeight)}
+        />
         <div className="mt-4 bg-white">
           <div className="p-3 flex justify-start items-center ">
             <b>SẢN PHẨM TƯƠNG TỰ</b>
