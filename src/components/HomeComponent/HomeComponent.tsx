@@ -8,7 +8,7 @@ import { AuthContextDefault } from "../../../app/context/AuthContext";
 import { useEffect } from "react";
 import { TypeProductNews } from "../../../utils/TypeProduct";
 
-const HomeComponent = ({ productnews, isLoadingProduct }: {productnews: TypeProductNews, isLoadingProduct: boolean}) => {
+const HomeComponent = ({ productnews, isLoadingProduct }: {productnews: TypeProductNews[], isLoadingProduct: boolean}) => {
   const { isLoadingAuth } = AuthContextDefault();
   const key = "home";
   const [api, contextHolder] = notification.useNotification();
