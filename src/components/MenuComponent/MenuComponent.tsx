@@ -8,7 +8,11 @@ import CustomInput from "../FormItemFloatLabel/CustomInput";
 import { AuthContextDefault } from "../../../app/context/AuthContext";
 import { Router } from "next/router";
 import { useRouter } from "next/navigation";
-import { TypeProduct } from "../../../utils/TypeProduct";
+import {
+  itemsMenu,
+  typeMenuItem,
+  TypeProduct,
+} from "../../../utils/TypeProduct";
 import { Badge, Result } from "antd";
 import axios from "axios";
 import { toNonAccentVietnamese } from "../../../utils/format";
@@ -20,7 +24,7 @@ type typeUserGoogle = {
   name: string;
 };
 
-const Menu = (props: any) => {
+const Menu = () => {
   const { data: session } = useSession<any>();
   const [providers, setProviders] = useState<any>(null);
   const [isMenuMobile, setIsMenuMobile] = useState<any>(false);
@@ -61,39 +65,6 @@ const Menu = (props: any) => {
     }
   }, [session, user]);
 
-  const itemsMenu = [
-    {
-      label: "Trang chủ",
-      key: "home",
-      url: "/",
-    },
-    {
-      label: "Sản phẩm",
-      key: "product",
-      url: "/product",
-    },
-    {
-      label: "Dịch vụ",
-      key: "service",
-      url: "/service",
-    },
-    {
-      label: "Tin tức",
-      key: "news",
-      url: "/news",
-    },
-    {
-      label: "Tra cứu đơn hàng",
-      key: "tracuudonhang",
-      url: "/tracuudonhang",
-    },
-    {
-      label: "signin",
-      key: "signin",
-      url: "/signin",
-    },
-  ];
-
   const router = useRouter();
 
   useEffect(() => {
@@ -113,6 +84,7 @@ const Menu = (props: any) => {
 
     textSearch && setResultSearch([...filterApiNew]);
   }, [textSearch, dataProduct]);
+
 
   return (
     <>
@@ -148,28 +120,17 @@ const Menu = (props: any) => {
                       onClick={() => setIsMenuLeft(false)}
                     />
                   </li>
-                  <li className="p-3 border-b cursor-pointer hover:bg-slate-400 hover:text-slate-900">
-                    <Link href={"/"}>Trang chủ</Link>
-                  </li>
-                  <li className="p-3 border-b cursor-pointer hover:bg-slate-400 hover:text-slate-900">
-                    <Link href={"/"}>Về chúng tôi</Link>
-                  </li>
-                  <li className="p-3 border-b cursor-pointer hover:bg-slate-400 hover:text-slate-900">
-                    <Link href={"/product"}>Sản phẩm</Link>
-                  </li>
-                  <li className="p-3 border-b cursor-pointer hover:bg-slate-400 hover:text-slate-900">
-                    <Link href={"/product"}>Tin tức</Link>
-                  </li>
-                  <li className="p-3 border-b cursor-pointer hover:bg-slate-400 hover:text-slate-900">
-                    <Link href={"/product"}>Dịch vụ</Link>
-                  </li>
-                  {isSign ? (
-                    ""
-                  ) : (
-                    <li className="p-3 rounded-b-lg cursor-pointer hover:bg-slate-400 hover:text-slate-900">
-                      <Link href={"/signin"}>sign In</Link>
-                    </li>
-                  )}
+                  {itemsMenu?.map((items: typeMenuItem, key: number) => {
+                    console.log("first", items?.label == "Signin" && isSign ? "hidden" : "");
+                    return (
+                      <li
+                        key={key}
+                        className={`${items?.label == "Signin" && isSign ? "hidden" : ""} p-3 border-b cursor-pointer hover:bg-slate-400 hover:text-slate-900`}
+                      >
+                        <Link href={items?.url || ""}>{items?.label}</Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>
@@ -202,7 +163,7 @@ const Menu = (props: any) => {
                   isMenuMobile
                     ? "block absolute top-12 right-3 shadow-2xl z-30"
                     : "hidden"
-                } lg:block lg:flex xl:block xl:flex bg-slate-700 lg:bg-white xl:bg-white`}
+                } lg:flex xl:flex  xl:bg-white`}
               >
                 <div className="flex justify-center items-center w-40 lg:w-auto xl:w-auto h-12 p-3 rounded-t-lg ">
                   <Image
@@ -212,7 +173,7 @@ const Menu = (props: any) => {
                     height={22}
                     className="mr-2"
                   />
-                  <a href="tel:0366683747">Hotline: 0962.594.358</a>
+                  <a href="tel:0366683747">Hotline: 0366.683.747</a>
                 </div>
                 <hr className="lg:hidden xl:hidden" />
                 <div className="flex xl-ml-6 h-12 p-3 rounded-b-lg w-40">
@@ -234,11 +195,11 @@ const Menu = (props: any) => {
             {/* <Link href={"/"}><img src="/image/home/logo.png" alt="" /></Link> */}
           </div>
           <div className="w-9/12 lg:block sm:hidden md:hidden xl:block">
-            <ul className="flex justify-center">
-              {itemsMenu?.map((items) => {
+            <ul className="flex justify-center text-white ">
+              {itemsMenu?.map((items: typeMenuItem, key: number) => {
                 return (
                   <li
-                    key={items?.key}
+                    key={key}
                     className={`cursor-pointer flex justify-center items-center ${
                       items?.label === "signin" && isSign
                         ? "signin-user relative"
@@ -283,7 +244,7 @@ const Menu = (props: any) => {
                           {items?.label}
                         </Link>
                       ))}
-                    {items?.label !== "signin" && (
+                    {items?.label !== "Signin" && (
                       <Link href={items?.url || ""} className="p-4 ">
                         {items?.label}
                       </Link>

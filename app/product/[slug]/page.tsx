@@ -1,14 +1,12 @@
 "use client";
 import ProductDetailComponent from "@/components/ProductComponent/ProductDetailComponent/ProductDetailComponent";
-import { useParams, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { getApiProduct } from "../../context/QueryApi";
+import { useParams } from "next/navigation";
 import { AuthContextDefault } from "../../context/AuthContext";
 
-const ProductDetail = (props: any) => {
+const ProductDetail = () => {
   const params = useParams()
   const paramSlug = params.slug;
-  const { isLoadingProduct, dataProduct } = AuthContextDefault();
+  const { dataProduct } = AuthContextDefault();
 
   return (
     <ProductDetailComponent paramSlug={paramSlug} valueproduct={dataProduct} />

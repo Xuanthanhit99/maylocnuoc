@@ -313,7 +313,7 @@ const InformationProduct = ({ valueproduct, paramSlug }: any) => {
                   width={23}
                   height={23}
                 />
-                Hotline: 0962.594.358
+                Hotline: 0366.683.747
               </p>
             </a>
           </div>

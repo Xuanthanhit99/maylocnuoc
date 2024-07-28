@@ -2,12 +2,8 @@
 import { Breadcrumb, Col, Row } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import Image from "next/image";
-import ComboProduct from "../ProductComponent/ProductDetailComponent/InformationDetail/ComboProduct/ComboProduct";
-import DetailReviewProduct from "../ProductComponent/ProductDetailComponent/InformationDetail/DetailReviewProduct/DetailReviewProduct";
 import ListProduct from "../ListProduct/ListProduct";
 import CustomInput from "../FormItemFloatLabel/CustomInput";
 import { useMutation, useQuery } from "react-query";
@@ -23,16 +19,13 @@ import { VND } from "../../../utils/format";
 import {
   PayPalButtons,
   PayPalScriptProvider,
-  PayPalButtonsComponentProps,
 } from "@paypal/react-paypal-js";
-import e from "express";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export const dynamicParams = false;
 
 const PayComponent = ({ paramSlug, valueproduct }: any) => {
-  const [collapseHeight, setCollapseHeight] = useState(true);
   const [recentlyViewed, setRecentlyViewed] = useState<any>([]);
   const [quantity, setQuantity] = useState<any>(1);
   const [valueCity, setValueCity] = useState<any>(null);

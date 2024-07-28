@@ -36,6 +36,7 @@ interface TypeAuthContext {
   isResultFormTT: boolean;
   dataProduct: any;
   isLoadingProduct: boolean;
+  LoginGoogle: (dataGoogle: any) => Promise<any>;
 }
 
 export const AuthContext = createContext<TypeAuthContext>({
@@ -59,6 +60,7 @@ export const AuthContext = createContext<TypeAuthContext>({
   isResultFormTT: false,
   dataProduct: [],
   isLoadingProduct: false,
+  LoginGoogle: async (dataGoogle: any) => await Promise,
 });
 
 export const AuthContextProvider = ({
@@ -93,7 +95,6 @@ export const AuthContextProvider = ({
   }, []);
 
   const onClickShowFormTT = () => {
-    console.log("onClickShowFormTT", isShowFormTT);
     setIsShowFormTT(!isShowFormTT);
   };
 
@@ -205,6 +206,12 @@ export const AuthContextProvider = ({
     }
   };
 
+  const LoginGoogle = async (dataGoogle: any) => {
+    console.log("dataGoogle", dataGoogle);
+    await setUser(dataGoogle);
+  }
+
+
   return (
     <AuthContext.Provider
       value={{
@@ -229,6 +236,7 @@ export const AuthContextProvider = ({
         isResultFormTT,
         isLoadingProduct,
         dataProduct,
+        LoginGoogle,
       }}
     >
       {children}

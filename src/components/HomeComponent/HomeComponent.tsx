@@ -6,8 +6,9 @@ import ListProduct from "../ListProduct/ListProduct";
 import Image from "next/image";
 import { AuthContextDefault } from "../../../app/context/AuthContext";
 import { useEffect } from "react";
+import { TypeProductNews } from "../../../utils/TypeProduct";
 
-const HomeComponent = ({ productnews, isLoadingProduct }: any) => {
+const HomeComponent = ({ productnews, isLoadingProduct }: {productnews: TypeProductNews, isLoadingProduct: boolean}) => {
   const { isLoadingAuth } = AuthContextDefault();
   const key = "home";
   const [api, contextHolder] = notification.useNotification();

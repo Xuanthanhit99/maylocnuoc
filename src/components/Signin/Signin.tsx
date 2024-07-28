@@ -28,7 +28,7 @@ const Signin = ({ type }: TypeSignin) => {
     setInformationTextAgainPassRegister,
   ] = useState<string>();
   const [isLoadding, setIsLoadding] = useState<boolean>(false);
-  const {Register, Login} = AuthContextDefault()
+  const {Register, Login, LoginGoogle} = AuthContextDefault()
   const router = useRouter();
 
   useEffect(() => {
@@ -41,31 +41,11 @@ const Signin = ({ type }: TypeSignin) => {
   useEffect(() => {
     if(session) {
       router.push("/")
+      LoginGoogle(session)
     }
   }, [session]) 
 
     const searchParams = useSearchParams();
-
-
-  const postCreateUser = async () => {
-    setIsLoadding(true);
-    try {
-      const fetchApi = await fetch("/api/user", {
-        method: "POST",
-        body: JSON.stringify({
-          username: informationTextNameLogin,
-          password: informationTextPassword,
-          email: informationTextNameEmail,
-        }),
-      });
-      if (fetchApi?.ok) {
-        setIsLoadding(false);
-        router.push("/");
-      }
-    } catch (error) {
-      setIsLoadding(false);
-    }
-  };
 
   return (
     <div>

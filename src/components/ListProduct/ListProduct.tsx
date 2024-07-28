@@ -3,8 +3,9 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { AuthContextDefault } from '../../../app/context/AuthContext';
 import { VND } from '../../../utils/format';
+import { TypeProductNews } from '../../../utils/TypeProduct';
 
-const ListProduct = ({valueproduct}: any) => {
+const ListProduct = ({valueproduct}: {valueproduct: TypeProductNews[]}) => {
   const { onClickrecentlyViewed } = AuthContextDefault()
   return (
       <div className="w-full grid grid-cols-1 gap-1 lg:grid-cols-4 lg:gap-4 sm:grid-cols-2 sm:gap-2 md:grid-cols-2 md:gap-2 xl:grid-cols-6 xl:gap-6">

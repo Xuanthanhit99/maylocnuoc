@@ -1,22 +1,20 @@
 // "use client";
-import { Breadcrumb, Button, Card, Checkbox, Col, Row, notification } from "antd";
+import { Breadcrumb, notification } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-import Image from "next/image";
 import ListProduct from "@/components/ListProduct/ListProduct";
 import InformationProduct from "./InformationDetail/InformationProduct/InformationProduct";
 import ComboProduct from "./InformationDetail/ComboProduct/ComboProduct";
 import DetailReviewProduct from "./InformationDetail/DetailReviewProduct/DetailReviewProduct";
 import { AuthContextDefault } from "../../../../app/context/AuthContext";
 import ChatComponent from "@/components/ChatComponent/ChatComponent";
-const ProductDetailComponent = ({ paramSlug, valueproduct }: any) => {
+import { TypeProductNews } from "../../../../utils/TypeProduct";
+const ProductDetailComponent = ({ paramSlug, valueproduct }: {paramSlug: string | string[], valueproduct: TypeProductNews[]}) => {
   const [collapseHeight, setCollapseHeight] = useState(true);
   const [recentlyViewed, setRecentlyViewed] = useState<any>([]);
   const [api, contextHolder] = notification.useNotification();
   const key = 'home';
-
   useEffect(() => {
     const localRecentlyViewed = JSON.parse(
       localStorage.getItem("Recently-Viewed")!
@@ -72,7 +70,7 @@ const ProductDetailComponent = ({ paramSlug, valueproduct }: any) => {
           paramSlug={paramSlug}
         />
         {/* comment */}
-        <ChatComponent slugParam={paramSlug} onOpenNoti={onOpenNoti}/>
+        {/* <ChatComponent slugParam={paramSlug} onOpenNoti={onOpenNoti}/> */}
         {/* combo sản phẩm */}
         <ComboProduct valueproduct={valueproduct} paramSlug={paramSlug}/>
         {/* thông tin chi tiết sản phẩm đã xem */}
